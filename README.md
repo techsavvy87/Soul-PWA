@@ -54,7 +54,7 @@ It provides offline support, responsive UI, and a modern API-driven architecture
 
 \- Laravel
 
-\- Sanctum authentication)
+\- Sanctum (authentication)
 
 \- MySQL (database)
 
