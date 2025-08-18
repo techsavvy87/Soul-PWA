@@ -1,0 +1,164 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Ovo:ital@0;1&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-lora: "Lora";
+  --font-poppins: "Poppins";
+}
+.layout-auth {
+  background-image: url("/auth-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.layout-home {
+  position: relative;
+  background-image: url("/home-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  z-index: 0;
+}
+.layout-home::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, #ca2b82, #505095);
+  opacity: 0.8;
+  z-index: 0;
+}
+.layout-home > * {
+  position: relative;
+  z-index: 1; /* lift the content above the gradient */
+}
+.emotional,
+.favorite {
+  position: relative;
+  background-image: url("/emo-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  z-index: 0;
+}
+.emotional::before,
+.favorite::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, #ca2b82, #505095);
+  opacity: 0.8;
+  z-index: 0;
+}
+.emotional > *,
+.favorite > * {
+  position: relative;
+  z-index: 1; /* lift the content above the gradient */
+}
+.layout-card {
+  background-image: url("/card-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+/* toast customization */
+.fail-toast {
+  background: #c12888 !important;
+  border: none;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  min-width: 100vw;
+  min-height: 105px;
+  display: flex;
+  justify-content: left !important;
+}
+.success-toast {
+  background: #43a047 !important;
+  border: none;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  min-width: 100vw;
+  min-height: 105px;
+  display: flex;
+  justify-content: left !important;
+}
+.toast__message {
+  min-width: 100%;
+  top: 0 !important;
+}
+/* Disable Paid Image */
+.img-disabled {
+  pointer-events: none;
+  cursor: none;
+}
+.situation-unchecked {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 4px 24px rgba(252, 230, 255, 0.2);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+.situation-unchecked p {
+  color: #e9e4f2;
+  font-weight: 400;
+}
+.situation-checked {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 -5px 12px rgb(255, 218, 185, 0.2);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.situation-checked p {
+  color: white;
+  font-weight: 600;
+}
+.swiper-pagination-bullet-active {
+  background: #5f50a5 !important;
+  width: 8px;
+}
+.swiper-pagination-bullet {
+  background: 5f50a54d;
+}
+.swiper-pagination {
+  position: unset !important;
+}
+.swiper,
+.swiper-wrapper {
+  position: unset !important;
+}
+
+/* Layout for Burger Menu */
+
+.layout-burger {
+  position: relative;
+  background-image: url("/emo-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  z-index: 0;
+}
+.layout-burger::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, #ca2b82, #505095);
+  opacity: 0.8;
+  z-index: 0;
+}
+.layout-burger > * {
+  position: relative;
+  z-index: 1; /* lift the content above the gradient */
+}
+.faq-list {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 4px 24px rgba(252, 230, 255, 0.2);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
