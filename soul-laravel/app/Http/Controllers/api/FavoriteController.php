@@ -14,6 +14,7 @@ class FavoriteController extends Controller
         $userId = $request->userId;
         $cardId = $request->cardId;
 
+
         // Find the favorite record
         $favorite = Favorite::where('user_id', $userId)->where('card_id', $cardId)->first();
 
@@ -30,9 +31,9 @@ class FavoriteController extends Controller
 
     public function checkFavorite(Request $request)
     {
-        $userId = $request->user_id;
-        $cardId = $request->card_id;
-
+        $userId = $request->userId;
+        $cardId = $request->cardId;
+        
         // Check if the favorite record exists
         $isFavorite = Favorite::where('user_id', $userId)->where('card_id', $cardId)->exists();
 
@@ -41,7 +42,7 @@ class FavoriteController extends Controller
 
     public function listFavorites(Request $request)
     {
-        $userId = $request->user_id;
+        $userId = $request->userId;
 
         // Get all favorite cards for the user
         $favorites = Favorite::where('user_id', $userId)->get();

@@ -24,8 +24,9 @@ const LayoutCard = ({ children }) => {
   };
 
   const onClickFavoriteIcon = () => {
+    console.log("kch");
     try {
-      post("/toggle-favorite", { user_id, card_id })
+      post("/toggle-favorite", { userId, cardId })
         .then((response) => {
           console.log("Favorite status updated:", response.data);
         })

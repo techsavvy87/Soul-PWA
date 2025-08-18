@@ -18,22 +18,22 @@ const Cards = () => {
   const hasSubmitted = useRef(false);
   const [cards, setCards] = useState([]);
   const [isFavorited, setIsFavorited] = useState(false);
-  const user_id = useSelector((state) => state.auth.user.id);
-  const [card_id, setCardId] = useState(null);
+  const userId = useSelector((state) => state.auth.user.id);
+  const [cardId, setCardId] = useState(null);
   const { isLoading } = useSelector((state) => state.appsetting);
 
   // Check if the card is favorited
   useEffect(() => {
     const checkIfFavorited = async () => {
       try {
-        const result = await post("/check-favorite", { user_id, card_id });
+        const result = await post("/check-favorite", { userId, cardId });
         setIsFavorited(result.data.isFavorited);
       } catch (error) {
         console.error("Error checking favorite status:", error);
       }
     };
     checkIfFavorited();
-  }, [user_id, card_id]);
+  }, [userId, cardId]);
 
   const showCardView = (id, title, description, imgUrl) => {
     window.sessionStorage.setItem("cardId", id);
@@ -122,7 +122,7 @@ const Cards = () => {
               <CardIcon
                 isFavorited={isFavorited}
                 description={card.description}
-                userId={user_id}
+                userId={userId}
                 cardId={card.id}
               />
               <img
