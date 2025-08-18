@@ -53,14 +53,14 @@ const Deck = () => {
       </p>
       {decks.map((deck, index) => (
         <div className="relative" key={index}>
-          {userTier === "Free" && deck.level === "Paid" ? (
+          {/* {userTier === "Free" && deck.level === "Paid" ? (
             <Tooltip
               title="Included in Blended Soul Unlimited"
               className="cursor-not-allowed"
             >
               <span className="absolute inset-0 z-10 cursor-not-allowed py-4 px-5" />
             </Tooltip>
-          ) : null}
+          ) : null} */}
           <div
             className={`rounded-[12px] ${
               userTier === "Free" && deck.level === "Paid" ? "blur-[3px]" : ""
@@ -82,11 +82,16 @@ const Deck = () => {
             </div>
           </div>
           {userTier === "Free" && deck.level === "Paid" ? (
-            <img
-              src={lock}
-              className="absolute top-[42%] left-[47%]"
-              logo="locked"
-            />
+            <>
+              <img
+                src={lock}
+                className="absolute top-[42%] left-[47%]"
+                logo="locked"
+              />
+              <p className="absolute bottom-[15%] left-[30%] font-poppins">
+                Included in Blended Soul Unlimited
+              </p>
+            </>
           ) : null}
         </div>
       ))}
