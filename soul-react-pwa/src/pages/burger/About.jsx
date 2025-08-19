@@ -41,9 +41,9 @@ const About = () => {
         {about && (
           <div className="px-2">
             <div className="flex justify-between items-end mb-5">
-              <h2 className="text-yellow-400 text-2xl font-poppins pb-2">
+              <p className="font-poppins font-semibold text-yellow-400 text-2xl  pb-2">
                 {about.title}
-              </h2>
+              </p>
               {about.cover_img_url && (
                 <img
                   src={about.cover_img_url}
@@ -53,12 +53,12 @@ const About = () => {
               )}
             </div>
 
-            <div
-              className="pr-1 text-white text-lg leading-relaxed font-poppins mb-24"
+            <p
+              className="pr-1 text-white text-lg leading-relaxed font-ovo mb-24"
               style={{ whiteSpace: "pre-wrap" }}
             >
               {about.description}
-            </div>
+            </p>
           </div>
         )}
       </div>

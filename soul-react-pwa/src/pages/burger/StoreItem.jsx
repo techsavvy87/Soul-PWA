@@ -10,10 +10,8 @@ const StoreItem = () => {
   const [storeItem, setStoreItem] = useState([]);
 
   const dispatch = useDispatch();
-  const productCss =
-    "text-[12px] text-[#4dc187] bg-[#0c272b] border border-[#0c272b] px-2 py-1 rounded-[6px]";
-  const serviceCss =
-    "text-[12px] text-[#eab764] bg-[#282625] border border-[#282625] px-2 py-1 rounded-[6px]";
+  const productCss = "text-[12px] text-[#4dc187] font-bold";
+  const serviceCss = "text-[12px] text-[#eab764] font-bold";
 
   useEffect(() => {
     getStoreItems();
@@ -69,9 +67,9 @@ const StoreItem = () => {
                 >
                   {item.type}
                 </p>
-                <p className="text-base font-bold text-black text-right text-[14px]">
+                <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-red-900 dark:text-red-300">
                   ${item.price}
-                </p>
+                </span>
               </div>
             </div>
           </div>

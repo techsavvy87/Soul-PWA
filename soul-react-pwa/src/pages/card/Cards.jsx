@@ -8,6 +8,7 @@ import { post } from "../../utils/axios";
 import { siteBaseUrl } from "../../utils/constants";
 import CardIcon from "../../components/CardIcon";
 import LoadingModal from "../../components/LoadingModal";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -72,7 +73,12 @@ const Cards = () => {
     }
   }, []);
   return (
-    <div className="min-h-screen layout-card flex items-center justify-center px-5 py-10">
+    <div className="min-h-screen layout-card px-5 py-10">
+      <ArrowBackIcon
+        sx={{ fontSize: 35, color: "#8690FD" }}
+        onClick={() => navigate(-1)}
+      />
+
       {cards.length === 1 ? (
         <div className="w-full">
           <CardIcon
@@ -102,7 +108,7 @@ const Cards = () => {
         <Swiper
           modules={[Pagination, Autoplay]}
           pagination={{ clickable: true }}
-          autoplay={{ delay: 3000 }}
+          autoplay={{ delay: 5000 }}
           loop={true}
           spaceBetween={0}
           slidesPerView={1}
