@@ -11,6 +11,7 @@ use App\Http\Controllers\api\FavoriteController;
 use App\Http\Controllers\api\FaqController;
 use App\Http\Controllers\api\SettingsController;
 use App\Http\Controllers\api\StoreItemController;
+use App\Http\Controllers\api\NotificationController;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/signup', [AuthController::class, 'register']);
@@ -39,4 +40,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/concept', [SettingsController::class, 'getConcept']);
 
     Route::get('/list-store', [StoreItemController::class, 'listStore']);
+
+    Route::post('/notification/subscribe', [NotificationController::class, 'subscribe']);
 });

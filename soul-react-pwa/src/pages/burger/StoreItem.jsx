@@ -38,10 +38,10 @@ const StoreItem = () => {
   };
   return (
     <div>
-      <p className="font-poppins font-semibold text-white text-2xl text-center pt-5 pb-5">
+      <p className="font-poppins font-semibold text-white text-2xl text-center pt-5">
         Store
       </p>
-      <div className="flex justify-between flex-wrap mt-10">
+      <div className="flex justify-between flex-wrap mt-5">
         {storeItem.map((item, index) => (
           <div
             key={index}
@@ -67,7 +67,7 @@ const StoreItem = () => {
                 >
                   {item.type}
                 </p>
-                <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-red-900 dark:text-red-300">
+                <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-red-900 dark:text-red-300">
                   ${item.price}
                 </span>
               </div>

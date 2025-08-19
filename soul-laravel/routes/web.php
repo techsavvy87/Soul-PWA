@@ -11,6 +11,7 @@ use App\Http\Controllers\web\GuidanceController;
 use App\Http\Controllers\web\FaqController;
 use App\Http\Controllers\web\SettingsController;
 use App\Http\Controllers\web\StoreItemController;
+use App\Http\Controllers\web\NotificationController;
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'login')->name('login');
@@ -90,5 +91,15 @@ Route::middleware(['auth'])->group(function (){
         Route::post('/store/update', 'updateStore')->name('update-store');
         Route::post('/store/delete', 'deleteStore')->name('delete-store');
         Route::get('/store/edit/{id}', 'editStore')->name('edit-store');
+    });
+
+    Route::controller(NotificationController::class)->group(function () {
+        Route::get('/notification/send/{id}', 'send')->name('send-notification');
+        Route::get('/notification/list', 'list')->name('list-notification');
+        Route::get('/notification/add', 'add')->name('add-notification');
+        Route::post('/notification/create', 'create')->name('create-notification');
+        Route::get('/notification/edit/{id}', 'edit')->name('edit-notification');
+        Route::post('/notification/update', 'update')->name('update-notification');
+        Route::post('/notification/delete', 'delete')->name('delete-notification');
     });
 });

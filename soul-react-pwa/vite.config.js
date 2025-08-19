@@ -59,6 +59,9 @@ export default defineConfig({
         scope: "/",
         icons: manifestIcons,
       },
+      workbox: {
+        importScripts: ["/service-worker/push.js"],
+      },
     }),
   ],
   server: {

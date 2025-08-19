@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import LoadingModal from "../../components/LoadingModal";
 import lock from "../../assets/imgs/lock.png";
 import Tooltip from "@mui/material/Tooltip";
+import { NEW_PUSH_NOTI_PUBLIC_KEY } from "../../utils/constants";
+import { post } from "../../utils/axios";
 
 const Home = () => {
   const [events, setEvents] = useState([]);
@@ -36,6 +38,8 @@ const Home = () => {
       hasSubmitted.current = true;
       getEvents();
     }
+
+    subscribeNotification();
   }, []);
 
   // Deck Click
@@ -55,6 +59,50 @@ const Home = () => {
       return;
     }
     navigate("/cards");
+  };
+
+  const subscribeNotification = async () => {
+    //  Request permission for notifications
+    const permission = await Notification.requestPermission();
+    if (permission !== "granted") {
+      console.log("Permission not granted for Notification");
+      return;
+    }
+
+    const registration = await navigator.serviceWorker.ready;
+    try {
+      const subscription = await registration.pushManager.getSubscription();
+      if (subscription) {
+        // check if user was subscribed with a different VAPID key
+        let json = subscription.toJSON();
+        let publicKey = json?.keys?.p256dh;
+
+        if (publicKey != NEW_PUSH_NOTI_PUBLIC_KEY) {
+          await subscription.unsubscribe();
+        }
+      }
+      const newSubscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        // Replace with your own VAPID public key
+        applicationServerKey: NEW_PUSH_NOTI_PUBLIC_KEY,
+      });
+
+      const url = "/notification/subscribe";
+      try {
+        const result = await post(url, newSubscription);
+        const resResult = result.data;
+        if (resResult.status) {
+          console.log("notification subscription success");
+        } else {
+          console.log("notification subscription failed");
+        }
+      } catch (err) {
+        console.log("Error: ", err);
+      }
+      console.log("User is subscribed:", newSubscription);
+    } catch (err) {
+      console.log("Failed to subscribe the user: ", err);
+    }
   };
 
   return (
@@ -113,7 +161,7 @@ const Home = () => {
           className="flex justify-center items-center bg-[wheat] rounded-lg"
           onClick={() => onClickDecksBtn()}
         >
-          <p>Browse All Cards</p>
+          <p>Browse Decks</p>
         </div>
       </div>
       <LoadingModal open={isLoading} />
