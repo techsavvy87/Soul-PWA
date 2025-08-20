@@ -6,3 +6,6 @@ export const siteBaseUrl = "http://192.168.13.116:8000/storage/";
 
 export const NEW_PUSH_NOTI_PUBLIC_KEY =
   "BLfb7k6QZVtnNxd5xP7gIXoj8PPoCt9viAZ4Z7J65RCA8x30kAweUBceiiiL6xxRlzaqQt5FDHnr3F-1AC0b4-U";
+
+export const PAYPAL_CLIENT_ID =
+  "AQ4J5RBmpGO94oUylFDdC_v9OLgSW1mo71RaHNQoE6yI_JjLAhxN582tgC3szVgmHLWAw3QMXM_DNf1l";

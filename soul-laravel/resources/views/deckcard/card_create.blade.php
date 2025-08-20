@@ -113,6 +113,28 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="emotion" style="margin-bottom: 2px">Emotion*</label>
+                                            <select name="emotion" class="form-select form-control-sm" id="emotion">
+                                                <option value="" selected hidden>Choose Emotion</option>
+                                                @foreach($emotions as $emotion)
+                                                <option value="{{ $emotion->id }}">{{ $emotion->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="emotion" style="margin-bottom: 2px">Guidance*</label>
+                                            <select name="guidance" class="form-select form-control-sm" id="guidance">
+                                                <option value="" selected hidden>Choose Guidance</option>
+                                                @foreach($guidances as $guidance)
+                                                <option value="{{ $guidance->id }}">{{ $guidance->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="form-group">
@@ -199,8 +221,11 @@ $(document).ready(function() {
 function save() {
     const title = $('#title').val();
     const category = $('#category').val();
+    const description = $('#description').val();
+    const emotion = $('#emotion').val();
+    const guidance = $('#guidance').val();
 
-    if (title === '' || category === '') {
+    if (title === '' || category === '' || description === '' || emotion === '' || guidance === '') {
         Swal.fire({
             icon: 'error',
             title: 'The required fields should not be empty.',

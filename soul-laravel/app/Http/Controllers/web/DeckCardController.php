@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\DeckCard;
 use App\Models\DeckCardCategory;
+use App\Models\Emotion;
+use App\Models\Guidance;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,9 +24,11 @@ class DeckCardController extends Controller
     public function cardAdd(Request $request)
     {
         $decks = DeckCardCategory::all();
+        $emotions = Emotion::all();
+        $guidances = Guidance::all();
 
         $active = 'deckcard';
-        return view('deckcard.card_create', compact('active', 'decks'));
+        return view('deckcard.card_create', compact('active', 'decks', 'emotions', 'guidances'));
     }
 
     public function cardDelete(Request $request) {
@@ -53,7 +57,9 @@ class DeckCardController extends Controller
         $request->validate([
             'card_img' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'title' => 'required|string',
-            'category' => 'required|string',
+            'category' => 'required|integer',
+            'emotion' => 'required|integer',
+            'guidance' => 'required|integer',
             'status' => 'required|string',
         ]);
 
@@ -61,6 +67,8 @@ class DeckCardController extends Controller
         $deckCard->title = $request->title;
         $deckCard->description = $request->description;
         $deckCard->category_id = $request->category;
+        $deckCard->emotion_id = $request->emotion;
+        $deckCard->guidance_id = $request->guidance;
         $deckCard->status = $request->status;
 
         if ($request->status === 'published')
@@ -87,8 +95,11 @@ class DeckCardController extends Controller
     {
         $deckCard = DeckCard::find($id);
         $decks = DeckCardCategory::all();
+        $emotions = Emotion::all();
+        $guidances = Guidance::all();
+
         $active = 'deckcard';
-        return view('deckcard.card_update', compact('deckCard', 'active', 'decks'));
+        return view('deckcard.card_update', compact('deckCard', 'active', 'decks', 'emotions', 'guidances'));
     }
 
     public function cardUpdate(Request $request) 
@@ -96,7 +107,9 @@ class DeckCardController extends Controller
         $request->validate([
             'card_img' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'title' => 'required|string',
-            'category' => 'required|string',
+            'category' => 'required|integer',
+            'emotion' => 'required|integer',
+            'guidance' => 'required|integer',
             'status' => 'required|string',
             'card_id' => 'required'
         ]);
@@ -106,6 +119,8 @@ class DeckCardController extends Controller
         $deckCard->title = $request->title;
         $deckCard->description = $request->description;
         $deckCard->category_id = $request->category;
+        $deckCard->emotion_id = $request->emotion;
+        $deckCard->guidance_id = $request->guidance;
         $deckCard->status = $request->status;
 
         if ($request->status != $deckCard->status) {

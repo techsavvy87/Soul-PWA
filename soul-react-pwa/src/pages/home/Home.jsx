@@ -114,11 +114,11 @@ const Home = () => {
       <div className="grid grid-cols-2 gap-4">
         {events.map((event, index) => (
           <div className="relative w-full" key={index}>
-            {userTier === "Free" && event.level === "Paid" ? (
+            {/* {userTier === "Free" && event.level === "Paid" ? (
               <Tooltip title="Upgrade to Paid" className="cursor-not-allowed">
                 <span className="absolute inset-0 z-10 cursor-not-allowed py-4 px-5" />
               </Tooltip>
-            ) : null}
+            ) : null} */}
             <div
               key={index}
               className={`relative ${
@@ -131,7 +131,7 @@ const Home = () => {
               <img
                 src={siteBaseUrl + "deckcardcategories/" + event.info_img}
                 alt={`event-${index}`}
-                className="rounded-[16px] min-w-full"
+                className="rounded-[16px] min-w-full h-[150px] object-cover"
               />
               <p className="w-full font-poppins text-[13.5px] text-white text-center absolute top-[80%] left-1/2 -translate-x-1/2 -translate-y-1/2">
                 {event.cname}

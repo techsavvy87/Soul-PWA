@@ -21,7 +21,9 @@ import LayoutBurger from "../components/LayoutBurger";
 import About from "../pages/burger/About";
 import CreativeLab from "../pages/burger/CreativeLab";
 import Concept from "../pages/burger/Concept";
-import StoreItem from "../pages/burger/StoreItem";
+import Store from "../pages/burger/Store";
+import ProductDetail from "../pages/burger/ProductDetail";
+import ProductPayment from "../pages/burger/ProductPayment";
 
 export const routes = [
   {
@@ -125,6 +127,18 @@ export const routes = [
     path: "/store",
     layout: LayoutBurger,
     guard: AuthRequire,
-    component: <StoreItem />,
+    component: <Store />,
+  },
+  {
+    path: "/product/:id",
+    layout: LayoutBurger,
+    guard: AuthRequire,
+    component: <ProductDetail />,
+  },
+  {
+    path: "/product-payment/:id",
+    layout: LayoutBurger,
+    guard: AuthRequire,
+    component: <ProductPayment />,
   },
 ];

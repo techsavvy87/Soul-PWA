@@ -12,6 +12,8 @@ use App\Http\Controllers\api\FaqController;
 use App\Http\Controllers\api\SettingsController;
 use App\Http\Controllers\api\StoreItemController;
 use App\Http\Controllers\api\NotificationController;
+use App\Http\Controllers\api\PayPalController;
+use App\Http\Controllers\api\ProductController;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/signup', [AuthController::class, 'register']);
@@ -42,4 +44,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/list-store', [StoreItemController::class, 'listStore']);
 
     Route::post('/notification/subscribe', [NotificationController::class, 'subscribe']);
+
+    Route::post('/paypal/create-order', [PayPalController::class, 'createOrder']);
+    Route::post('/paypal/capture-order', [PayPalController::class, 'captureOrder']);
+
+    Route::get('/product/detail/{id}', [ProductController::class, 'detail']);
+    Route::get('/product/purchased/{id}', [ProductController::class, 'purchasedCheck']);
 });

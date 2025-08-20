@@ -28,6 +28,8 @@
                         <th>Title</th>
                         <th class="mobile-hide">Description</th>
                         <th>Category</th>
+                        <th>Emotion</th>
+                        <th>Guidance</th>
                         <th>Status</th>
                         <th>Published Date</th>
                         <th>Actions</th>
@@ -58,6 +60,12 @@
                         </td>
                         <td>
                             <span style="white-space:pre-wrap; word-wrap:break-word">{{ $card->category->cname }}</span>
+                        </td>
+                        <td>
+                            <span style="white-space:pre-wrap; word-wrap:break-word">{{ $card->emotion->name }}</span>
+                        </td>
+                        <td>
+                            <span style="white-space:pre-wrap; word-wrap:break-word">{{ $card->guidance->name }}</span>
                         </td>
                         <td>
                             @if ($card->status === 'published')

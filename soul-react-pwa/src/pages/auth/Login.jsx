@@ -113,7 +113,7 @@ const Login = () => {
 
         <p className="text-center font-poppins text-[13px] font-light text-[#433971] mt-5">
           Forgot Password?
-          <span className="text-center font-poppins text-[13px] font-light text-[#433971] underline font-medium">
+          <span className="text-center font-poppins text-[13px] text-[#433971] underline font-medium">
             <Link className="text-golden-color ml-2" to="/forgot-password">
               Reset Here
             </Link>
@@ -129,7 +129,7 @@ const Login = () => {
         <p className="mt-5 text-center font-poppins text-[13px] font-light text-[#433971]">
           Don't have an account?{" "}
         </p>
-        <p className="text-center font-poppins text-[13px] font-light text-[#433971] underline font-medium">
+        <p className="text-center font-poppins text-[13px]  text-[#433971] underline font-medium">
           <Link to="/signup">Sign up Here</Link>
         </p>
       </form>

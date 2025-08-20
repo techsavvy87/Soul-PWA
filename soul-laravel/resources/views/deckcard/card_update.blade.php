@@ -119,43 +119,72 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="row mb-3">
+                                    <div class="col-md-3">
                                         <div class="form-group">
-                                            <label style="margin-bottom: 2px">Status</label>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <div class="form-check form-check-primary form-check-inline">
-                                                <input class="form-check-input" type="radio" name="status"
-                                                    id="publish_option" value="published" @if ($deckCard->status ===
-                                                'published') checked @endif>
-                                                <label class="form-check-label" for="publish_option">
-                                                    Publish
-                                                </label>
-                                            </div>
-                                            <div class="form-check form-check-primary form-check-inline">
-                                                <input class="form-check-input" type="radio" name="status"
-                                                    id="draft_option" value="draft" @if ($deckCard->status === 'draft')
-                                                checked @endif>
-                                                <label class="form-check-label" for="draft_option">
-                                                    Save as Draft
-                                                </label>
-                                            </div>
+                                            <label for="emotion" style="margin-bottom: 2px">Emotion*</label>
+                                            <select name="emotion" class="form-select form-control-sm" id="emotion"
+                                                value="{{ $deckCard->emotion }}">
+                                                <option value="" selected hidden>Choose Emotion</option>
+                                                @foreach($emotions as $emotion)
+                                                <option value="{{ $emotion->id }}" @if ($deckCard->emotion_id ===
+                                                    $emotion->id)
+                                                    selected @endif>{{ $emotion->name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
-                                    <div class="d-flex flex-row-reverse">
-                                        <div>
-                                            <a href="{{ route('list-card') }}"
-                                                class="btn btn-outline-secondary">Cancel</a>
-                                            <a href="javascript:save();" class="btn btn-primary">Save</a>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="guidance" style="margin-bottom: 2px">Guidance*</label>
+                                            <select name="guidance" class="form-select form-control-sm" id="guidance"
+                                                value="{{ $deckCard->guidance }}">
+                                                <option value="" selected hidden>Choose Guidance</option>
+                                                @foreach($guidances as $guidance)
+                                                <option value="{{ $guidance->id }}" @if ($deckCard->guidance_id ===
+                                                    $guidance->id)
+                                                    selected @endif>{{ $guidance->name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="row mb-3">
+                                <div class="form-group">
+                                    <label style="margin-bottom: 2px">Status</label>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-check form-check-primary form-check-inline">
+                                        <input class="form-check-input" type="radio" name="status" id="publish_option"
+                                            value="published" @if ($deckCard->status ===
+                                        'published') checked @endif>
+                                        <label class="form-check-label" for="publish_option">
+                                            Publish
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-primary form-check-inline">
+                                        <input class="form-check-input" type="radio" name="status" id="draft_option"
+                                            value="draft" @if ($deckCard->status === 'draft')
+                                        checked @endif>
+                                        <label class="form-check-label" for="draft_option">
+                                            Save as Draft
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-row-reverse">
+                                <div>
+                                    <a href="{{ route('list-card') }}" class="btn btn-outline-secondary">Cancel</a>
+                                    <a href="javascript:save();" class="btn btn-primary">Save</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-            </form>
+                </div>
         </div>
+        </form>
     </div>
+</div>
 </div>
 @endsection
 
@@ -220,8 +249,11 @@ $(document).ready(function() {
 function save() {
     const title = $('#title').val();
     const category = $('#category').val();
+    const description = $('#description').val();
+    const emotion = $('#emotion').val();
+    const guidance = $('#guidance').val();
 
-    if (title === '' || category === '') {
+    if (title === '' || category === '' || description === '' || emotion === '' || guidance === '') {
         Swal.fire({
             icon: 'error',
             title: 'The required fields should not be empty.',

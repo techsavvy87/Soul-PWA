@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import toast from "react-simple-toasts";
 import { setIsLoading } from "../../redux/appsettingSlice";
 import { get } from "../../utils/axios";
 import ToastLayout from "../../components/ToastLayout";
 import { siteBaseUrl } from "../../utils/constants";
 
-const StoreItem = () => {
+const Store = () => {
   const [storeItem, setStoreItem] = useState([]);
 
   const dispatch = useDispatch();
-  const productCss = "text-[12px] text-[#4dc187] font-bold";
-  const serviceCss = "text-[12px] text-[#eab764] font-bold";
+  const navigate = useNavigate();
+  const productCss = "text-[12px] text-[#5E6BFD]";
+  const serviceCss = "text-[12px] text-[#3D9EFF]";
 
   useEffect(() => {
     getStoreItems();
@@ -46,6 +48,11 @@ const StoreItem = () => {
           <div
             key={index}
             className="mb-4 bg-white rounded-[16px] overflow-hidden w-[48%] shadow-[0_4px_20px_rgba(0,0,0,0.1)]"
+            onClick={() =>
+              navigate(`/product-payment/${item.id}`, {
+                state: { type: item.type },
+              })
+            }
           >
             <img
               src={`${siteBaseUrl}store/${item.img}`}
@@ -61,13 +68,13 @@ const StoreItem = () => {
               </p>
               <div className="flex justify-between items-center">
                 <p
-                  className={`first-letter:uppercase text-base text-right ${
+                  className={`first-letter:uppercase font-poppins font-semibold text-[14px] ${
                     item.type === "product" ? productCss : serviceCss
                   }`}
                 >
                   {item.type}
                 </p>
-                <span className="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-red-900 dark:text-red-300">
+                <span className="text-[#c12888] text-[14px] bg-[#fceef7] px-[15px] py-[3px] rounded-full font-poppins font-semibold">
                   ${item.price}
                 </span>
               </div>
@@ -79,4 +86,4 @@ const StoreItem = () => {
   );
 };
 
-export default StoreItem;
+export default Store;
