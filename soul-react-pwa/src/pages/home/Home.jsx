@@ -42,11 +42,6 @@ const Home = () => {
     subscribeNotification();
   }, []);
 
-  // Deck Click
-  const onClickDecksBtn = () => {
-    navigate("/deck-list");
-  };
-
   // Free Iamge Click
   const onClickFreeImg = (type, name) => {
     window.sessionStorage.setItem("tier", userTier);
@@ -157,12 +152,6 @@ const Home = () => {
             )}
           </div>
         ))}
-        <div
-          className="flex justify-center items-center bg-[wheat] rounded-lg"
-          onClick={() => onClickDecksBtn()}
-        >
-          <p>Browse Decks</p>
-        </div>
       </div>
       <LoadingModal open={isLoading} />
     </div>

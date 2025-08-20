@@ -16,13 +16,6 @@ const LayoutCard = ({ children }) => {
 
   const navigate = useNavigate();
 
-  const onClickLoopIcon = () => {
-    const card_description = window.sessionStorage.getItem("description");
-    navigate("/card-body", {
-      state: { description: card_description },
-    });
-  };
-
   const onClickFavoriteIcon = () => {
     console.log("kch");
     try {
@@ -69,12 +62,6 @@ const LayoutCard = ({ children }) => {
             ) : (
               <FavoriteBorderIcon size={24} />
             )}
-          </button>
-          <button
-            className="w-12 h-12 ml-2 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
-            onClick={() => onClickLoopIcon()}
-          >
-            <LoopIcon size={24} />
           </button>
         </div>
       </div>

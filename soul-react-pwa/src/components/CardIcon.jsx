@@ -5,7 +5,14 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import LoopIcon from "@mui/icons-material/Loop";
 import { post } from "../utils/axios";
 
-const CardIcon = ({ isFavorited, description, userId, cardId }) => {
+const CardIcon = ({
+  isFavorited,
+  description,
+  userId,
+  cardId,
+  title,
+  imgUrl,
+}) => {
   const navigate = useNavigate();
 
   const [favoriteStatus, setFavoriteStatus] = useState();
@@ -14,9 +21,12 @@ const CardIcon = ({ isFavorited, description, userId, cardId }) => {
     setFavoriteStatus(isFavorited);
   }, [isFavorited]);
 
-  const handleLoopIcon = (description) => {
-    navigate("/card-body", {
-      state: { description: description },
+  const showCardView = () => {
+    window.sessionStorage.setItem("cardId", cardId);
+    window.sessionStorage.setItem("description", description);
+
+    navigate("/card-view", {
+      state: { title, description, imgUrl },
     });
   };
 
@@ -47,7 +57,7 @@ const CardIcon = ({ isFavorited, description, userId, cardId }) => {
       </button>
       <button
         className="w-12 h-12 ml-2 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
-        onClick={() => handleLoopIcon(description)}
+        onClick={() => showCardView()}
       >
         <LoopIcon size={24} />
       </button>

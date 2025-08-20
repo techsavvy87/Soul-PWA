@@ -84,8 +84,10 @@ const Cards = () => {
           <CardIcon
             isFavorited={isFavorited}
             description={cards[0].description}
-            userId={user_id}
+            userId={userId}
             cardId={cards[0].id}
+            title={cards[0].title}
+            imgUrl={cards[0].card_img}
           />
           <img
             src={siteBaseUrl + "deckcards/" + cards[0].card_img}
@@ -130,6 +132,8 @@ const Cards = () => {
                 description={card.description}
                 userId={userId}
                 cardId={card.id}
+                title={card.title}
+                imgUrl={card.card_img}
               />
               <img
                 src={siteBaseUrl + "deckcards/" + card.card_img}
