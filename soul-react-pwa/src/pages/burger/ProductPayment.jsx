@@ -22,7 +22,7 @@ const Checkout = ({ amount, productId }) => {
   const onApprove = async (data) => {
     const url = "/paypal/capture-order";
     const res = await post(url, { orderId: data.orderID, productId });
-    console.log("Order captured:", res.data);
+
     if (res.data.status === "COMPLETED") {
       // Handle successful payment
       toast(

@@ -68,6 +68,7 @@ const Login = () => {
             isAuthenticated: true,
             user: resResult.result.user,
             token: resResult.result.access_token,
+            tier: resResult.result.tier,
           })
         );
         window.sessionStorage.setItem("isAuthenticated", "done");
@@ -76,6 +77,7 @@ const Login = () => {
           JSON.stringify(resResult.result.user)
         );
         window.sessionStorage.setItem("token", resResult.result.access_token);
+        window.sessionStorage.setItem("tier", resResult.result.tier);
         navigate(from, { replace: true });
       } else {
         toast(<ToastLayout message={resResult.message} type="fail-toast" />, {

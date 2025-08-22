@@ -57,10 +57,6 @@ const Emotional = () => {
   };
 
   useEffect(() => {
-    console.log("Updated checkedStates:", checkedStates);
-  }, [checkedStates]);
-
-  useEffect(() => {
     const getEmotions = async () => {
       const data = {
         tier,

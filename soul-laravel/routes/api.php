@@ -14,6 +14,7 @@ use App\Http\Controllers\api\StoreItemController;
 use App\Http\Controllers\api\NotificationController;
 use App\Http\Controllers\api\PayPalController;
 use App\Http\Controllers\api\ProductController;
+use App\Http\Controllers\api\PayPalPlanController;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/signup', [AuthController::class, 'register']);
@@ -50,4 +51,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/product/detail/{id}', [ProductController::class, 'detail']);
     Route::get('/product/purchased/{id}', [ProductController::class, 'purchasedCheck']);
+
+    Route::get('/get-plans', [PayPalPlanController::class, 'getPlans']);
+    Route::post('/subscriptions', [PayPalPlanController::class, 'storeSubscription']);
 });

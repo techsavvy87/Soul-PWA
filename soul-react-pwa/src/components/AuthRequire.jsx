@@ -1,9 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { login } from "../redux/authSlice";
 
 const AuthRequire = ({ children }) => {
-  const location = useLocation();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   const dispatch = useDispatch();
@@ -15,11 +14,13 @@ const AuthRequire = ({ children }) => {
     if (isAuthStorage === "done") {
       let userStorage = sessionStorage.getItem("user");
       let tokenStorage = sessionStorage.getItem("token");
+      let tierStorage = sessionStorage.getItem("tier");
       dispatch(
         login({
           isAuthenticated: true,
           user: JSON.parse(userStorage),
           token: tokenStorage,
+          tier: tierStorage,
         })
       );
     } else {

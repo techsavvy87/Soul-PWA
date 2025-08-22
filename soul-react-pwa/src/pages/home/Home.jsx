@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import NavigationDrawer from "../../components/NavigationDrawer";
 import { get } from "../../utils/axios";
 import { siteBaseUrl } from "../../utils/constants";
@@ -10,17 +10,22 @@ import lock from "../../assets/imgs/lock.png";
 import Tooltip from "@mui/material/Tooltip";
 import { NEW_PUSH_NOTI_PUBLIC_KEY } from "../../utils/constants";
 import { post } from "../../utils/axios";
+import toast from "react-simple-toasts";
+import ToastLayout from "../../components/ToastLayout";
 
 const Home = () => {
   const [events, setEvents] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const hasSubmitted = useRef(false);
 
   const { isLoading } = useSelector((state) => state.appsetting);
 
   // Check if user is paid or free.
-  const userTier = useSelector((state) => state.auth.user.tier);
+  const userTier = useSelector((state) => state.auth.tier);
+
+  // const fromPage = location.state?.from;
 
   useEffect(() => {
     const getEvents = async () => {
@@ -34,26 +39,45 @@ const Home = () => {
         dispatch(setIsLoading({ isLoading: false }));
       }
     };
+
     if (!hasSubmitted.current) {
       hasSubmitted.current = true;
       getEvents();
+
+      const fromPage = location.state?.from;
+      if (fromPage === "subscription") {
+        toast(
+          <ToastLayout
+            message="Subscription successful! Enjoy your upgraded access."
+            type="success-toast"
+          />,
+          {
+            className: "success-toast",
+          }
+        );
+        // Clear the state to prevent repeated toasts on re-renders
+        navigate(location.pathname, { replace: true, state: {} });
+      }
     }
 
     subscribeNotification();
   }, []);
 
   // Free Iamge Click
-  const onClickFreeImg = (type, name) => {
+  const onClickFreeImg = (type, name, level) => {
     window.sessionStorage.setItem("tier", userTier);
     window.sessionStorage.setItem("type", type);
     window.sessionStorage.setItem("eventName", name);
 
-    // In case event is Emotional or Guidance.
-    if (type === "All") {
-      navigate("/emotional");
-      return;
+    if (userTier === "Free" && level === "Paid") {
+      navigate("/subscription");
+    } else {
+      if (type === "All") {
+        navigate("/emotional");
+        return;
+      }
+      navigate("/cards");
     }
-    navigate("/cards");
   };
 
   const subscribeNotification = async () => {
@@ -113,7 +137,11 @@ const Home = () => {
       </p>
       <div className="grid grid-cols-2 gap-4">
         {events.map((event, index) => (
-          <div className="relative w-full" key={index}>
+          <div
+            className="relative w-full"
+            key={index}
+            onClick={() => onClickFreeImg(event.type, event.cname, event.level)}
+          >
             {/* {userTier === "Free" && event.level === "Paid" ? (
               <Tooltip title="Upgrade to Paid" className="cursor-not-allowed">
                 <span className="absolute inset-0 z-10 cursor-not-allowed py-4 px-5" />
@@ -123,10 +151,9 @@ const Home = () => {
               key={index}
               className={`relative ${
                 userTier === "Free" && event.level === "Paid"
-                  ? "blur-[3px] img-disabled"
+                  ? "blur-[3px]"
                   : ""
               }`}
-              onClick={() => onClickFreeImg(event.type, event.cname)}
             >
               <img
                 src={siteBaseUrl + "deckcardcategories/" + event.info_img}

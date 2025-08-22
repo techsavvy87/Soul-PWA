@@ -12,6 +12,7 @@ use App\Http\Controllers\web\FaqController;
 use App\Http\Controllers\web\SettingsController;
 use App\Http\Controllers\web\StoreItemController;
 use App\Http\Controllers\web\NotificationController;
+use App\Http\Controllers\web\PayPalPlanController;
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'login')->name('login');
@@ -101,5 +102,15 @@ Route::middleware(['auth'])->group(function (){
         Route::get('/notification/edit/{id}', 'edit')->name('edit-notification');
         Route::post('/notification/update', 'update')->name('update-notification');
         Route::post('/notification/delete', 'delete')->name('delete-notification');
+    });
+
+    Route::controller(PayPalPlanController::class)->group(function () {
+        Route::get('/plan/list', 'listPlans')->name('list-plan');
+        Route::get('/plan/create/form', 'createPlanForm')->name('create-plan-form');
+        Route::post('/plan/store', 'storePlan')->name('store-plan');
+        Route::get('/plan/edit/{id}', 'editPlan')->name('edit-plan');
+        Route::post('/plan/update', 'updatePlan')->name('update-plan');
+        Route::post('/plan/archive', 'archivePlan')->name('archive-plan');
+        Route::post('/plan/unarchive', 'unarchivePlan')->name('unarchive-plan');
     });
 });

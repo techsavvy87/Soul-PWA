@@ -24,6 +24,7 @@ import Concept from "../pages/burger/Concept";
 import Store from "../pages/burger/Store";
 import ProductDetail from "../pages/burger/ProductDetail";
 import ProductPayment from "../pages/burger/ProductPayment";
+import Subscription from "../pages/burger/Subscription";
 
 export const routes = [
   {
@@ -140,5 +141,11 @@ export const routes = [
     layout: LayoutBurger,
     guard: AuthRequire,
     component: <ProductPayment />,
+  },
+  {
+    path: "/subscription",
+    layout: LayoutBurger,
+    guard: AuthRequire,
+    component: <Subscription />,
   },
 ];

@@ -41,10 +41,16 @@ class AuthController extends Controller
 
             $token = $user->createToken('Personal Access Token')->plainTextToken;
 
+            // Check if the user has an active subscription
+            $hasActiveSubscription = $user->planSubscriptions()
+                ->where('current_period_end', '>', now())
+                ->exists();
+
             $result = [
                 'user'  => $user,
                 'access_token' => $token,
                 'token_type'   => 'Bearer',
+                'tier'         => $hasActiveSubscription ? 'Paid' : 'Free'
             ];
 
             return response()->json([

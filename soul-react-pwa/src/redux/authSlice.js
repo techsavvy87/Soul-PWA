@@ -4,6 +4,7 @@ const initialState = {
   isAuthenticated: false,
   user: null,
   token: null,
+  tier: "free", // Default tier
 };
 
 const authSlice = createSlice({
@@ -11,10 +12,11 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     login(state, action) {
-      const { isAuthenticated, user, token } = action.payload;
+      const { isAuthenticated, user, token, tier } = action.payload;
       state.isAuthenticated = isAuthenticated;
       state.user = user;
       state.token = token;
+      state.tier = tier;
     },
 
     logout(state) {
