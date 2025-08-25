@@ -12,7 +12,7 @@ const NotificationModal = ({ open, onClose, title, description }) => {
       width: "90%",
       borderRadius: 8,
       border: "1px solid #ebd371",
-      background: "#1E234C",
+      background: "linear-gradient(to bottom, #ca2b82, #505095)",
     },
   };
 
@@ -33,8 +33,8 @@ const NotificationModal = ({ open, onClose, title, description }) => {
           alt="Push Notification"
         />
         <div>
-          <p className="text-white font-lora bold">{title}</p>
-          <p className="text-gray-100 text-sm font-lora leading-5 pt-1">
+          <p className="text-[#ebd371] font-poppins font-semibold">{title}</p>
+          <p className="text-gray-100  text-[15px] font-poppins leading-5 pt-1">
             {description}
           </p>
         </div>

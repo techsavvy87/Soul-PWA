@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { routes } from "./utils/routes";
 import { toastConfig } from "react-simple-toasts";
 import NotificationModal from "./components/NotificationModal";
+import { useDispatch } from "react-redux";
+import { setIsShowPlan } from "./redux/appsettingSlice";
+import { updateUser } from "./redux/authSlice";
 import "react-simple-toasts/dist/style.css";
 import "react-simple-toasts/dist/theme/success.css";
 import "react-simple-toasts/dist/theme/failure.css";
@@ -14,9 +17,17 @@ function App() {
   const [isNotification, setIsNotification] = useState(false);
   const [notificationTitle, setNotificationTitle] = useState("");
   const [notificationDescription, setNotificationDescription] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     onPushNotification();
+
+    // Show subscription modal every 5 seconds
+    const subscriptionModal = setInterval(() => {
+      dispatch(setIsShowPlan({ isShowPlan: true }));
+    }, 5000);
+
+    return () => clearInterval(subscriptionModal);
   }, []);
 
   const onPushNotification = async () => {
@@ -24,6 +35,22 @@ function App() {
       setNotificationTitle(event.data.title || "");
       setNotificationDescription(event.data.body || "");
       setIsNotification(true);
+      console.log("Push notification received:", event.data);
+      if (event.data.data?.context === "paypal") {
+        console.log("PayPal");
+        dispatch(
+          updateUser({
+            subscription: event.data.data.subscription,
+          })
+        );
+
+        const currentUser = JSON.parse(sessionStorage.getItem("user") || "{}");
+        const updatedUser = {
+          ...currentUser,
+          subscription: event.data.data.subscription,
+        };
+        sessionStorage.setItem("user", JSON.stringify(updatedUser));
+      }
     });
   };
 

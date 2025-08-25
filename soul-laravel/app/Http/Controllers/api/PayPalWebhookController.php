@@ -1,0 +1,49 @@
+<?php
+
+namespace App\Http\Controllers\api;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Notifications\PayPalWebhookNotification;
+use App\Models\User;
+use App\Models\PlanSubscription;
+use Illuminate\Support\Facades\Log;
+
+class PayPalWebhookController extends Controller
+{
+    public function handleWebhook(Request $request)
+    {
+        $webhookEvent = $request->all();
+
+        $subscriptionId = $webhookEvent['resource']['id'] ?? null;
+        $eventType = $webhookEvent['event_type'] ?? null;
+
+        // Update database
+        if ($eventType === 'BILLING.SUBSCRIPTION.CANCELLED' && $subscriptionId) {
+            PlanSubscription::where('paypal_subscription_id', $subscriptionId)->delete();
+        }
+
+        // Notify user via WebPush
+        $userId = $webhookEvent['resource']['custom_id'] ?? null;
+        $user = User::find($userId);
+        
+
+        if ($user) {
+            try {
+                $user->notify(new PayPalWebhookNotification([
+                    'title' => 'Subscription Canceled',
+                    'body' => 'Your PayPal subscription has been canceled.',
+                    'subscription' => $subscriptionId,
+                    'event_type' => $eventType,
+                    'data' => [
+                        'context' => 'paypal'
+                    ]
+                ]));
+            } catch (\Exception $e) {
+                Log::error('WebPush Notification failed: '.$e->getMessage());
+            }
+        }
+
+        return response()->json(['status' => 'success']);
+    }
+}

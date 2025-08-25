@@ -50,7 +50,8 @@ class AuthController extends Controller
                 'user'  => $user,
                 'access_token' => $token,
                 'token_type'   => 'Bearer',
-                'tier'         => $hasActiveSubscription ? 'Paid' : 'Free'
+                'tier'         => $hasActiveSubscription ? 'Paid' : 'Free',
+                'subscription' => $hasActiveSubscription,
             ];
 
             return response()->json([

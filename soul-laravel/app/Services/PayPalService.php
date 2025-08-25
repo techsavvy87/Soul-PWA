@@ -212,4 +212,32 @@ class PayPalService
             throw new \Exception("PayPal activate plan failed: " . $responseBody);
         }
     }
+
+    /**
+     * Cancel a subscription
+     */
+    public function cancelSubscription($subscriptionId, $reason = 'User requested cancellation')
+    {
+        $accessToken = $this->getAccessToken();
+        if (!$accessToken) {
+            throw new \Exception("Unable to get PayPal access token.");
+        }
+
+        $response = $this->client->post("{$this->baseUrl}/v1/billing/subscriptions/{$subscriptionId}/cancel", [
+            'headers' => [
+                'Authorization' => "Bearer $accessToken",
+                'Content-Type'  => 'application/json',
+            ],
+            'json' => [
+                'reason' => $reason
+            ]
+        ]);
+
+        // PayPal returns 204 No Content on success
+        if ($response->getStatusCode() === 204) {
+            return true;
+        }
+
+        return false;
+    }
 }

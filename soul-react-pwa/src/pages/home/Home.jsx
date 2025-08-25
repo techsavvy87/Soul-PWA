@@ -25,8 +25,6 @@ const Home = () => {
   // Check if user is paid or free.
   const userTier = useSelector((state) => state.auth.tier);
 
-  // const fromPage = location.state?.from;
-
   useEffect(() => {
     const getEvents = async () => {
       dispatch(setIsLoading({ isLoading: true }));

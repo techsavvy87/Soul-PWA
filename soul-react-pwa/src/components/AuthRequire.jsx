@@ -1,11 +1,18 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { login } from "../redux/authSlice";
+import SubscriptionModal from "./SubscriptionModal";
+import { setIsShowPlan } from "../redux/appsettingSlice";
 
 const AuthRequire = ({ children }) => {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
   const dispatch = useDispatch();
+  const location = useLocation();
+  const pagePath = location.pathname;
+
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const isShowPlan = useSelector((state) => state.appsetting.isShowPlan);
+  const subscription = useSelector((state) => state.auth.subscription);
 
   if (!isAuthenticated) {
     // when redux store is initialized but data in localstorage is still alive, then get data from
@@ -15,12 +22,15 @@ const AuthRequire = ({ children }) => {
       let userStorage = sessionStorage.getItem("user");
       let tokenStorage = sessionStorage.getItem("token");
       let tierStorage = sessionStorage.getItem("tier");
+      let subscriptionStorage = sessionStorage.getItem("subscription");
+
       dispatch(
         login({
           isAuthenticated: true,
           user: JSON.parse(userStorage),
           token: tokenStorage,
           tier: tierStorage,
+          subscription: subscriptionStorage === "true",
         })
       );
     } else {
@@ -28,7 +38,21 @@ const AuthRequire = ({ children }) => {
     }
   }
 
-  return children;
+  return (
+    <>
+      {children}
+
+      {pagePath !== "/subscription" && (
+        <SubscriptionModal
+          open={isShowPlan && !subscription}
+          onClose={() => dispatch(setIsShowPlan({ isShowPlan: false }))}
+          closeOnOverlayClick={true}
+          title="Ready to go deeper?"
+          description="Get full access to mystical card decks, guided meditations, and soulful sessions with Susan."
+        />
+      )}
+    </>
+  );
 };
 
 export default AuthRequire;

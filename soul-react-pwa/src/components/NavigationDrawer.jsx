@@ -4,6 +4,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import InfoIcon from "@mui/icons-material/Info";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
+import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import LogoImg from "../assets/imgs/logo.png";
 import cancelImg from "../assets/imgs/cancel.png";
 import Drawer from "@mui/material/Drawer";
@@ -86,7 +87,14 @@ const NavigationDrawer = () => {
                 Browse Decks
               </Link>
               <Link
-                to="/favorites"
+                to="/subscription"
+                className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[15.5px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
+              >
+                <SubscriptionsIcon className="w-[15px] mr-3" />
+                Subscription
+              </Link>
+              <Link
+                to="/subscription"
                 className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[15.5px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
               >
                 <FavoriteIcon className="w-[15px] mr-3" />

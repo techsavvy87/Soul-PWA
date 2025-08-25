@@ -15,6 +15,7 @@ use App\Http\Controllers\api\NotificationController;
 use App\Http\Controllers\api\PayPalController;
 use App\Http\Controllers\api\ProductController;
 use App\Http\Controllers\api\PayPalPlanController;
+use App\Http\Controllers\api\PayPalWebhookController;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/signup', [AuthController::class, 'register']);
@@ -22,6 +23,9 @@ Route::post('/signup/verify', [AuthController::class, 'verifyRegister']);
 Route::post('/forgot/password', [AuthController::class, 'forgotPassword']);
 Route::post('/verify/code', [AuthController::class, 'verifyCode']);
 Route::post('/reset/password', [AuthController::class, 'resetPassword']);
+
+
+Route::post('/paypal/webhook', [PayPalWebhookController::class, 'handleWebhook']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
@@ -54,4 +58,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/get-plans', [PayPalPlanController::class, 'getPlans']);
     Route::post('/subscriptions', [PayPalPlanController::class, 'storeSubscription']);
+    Route::post('/cancel-subscription', [PayPalPlanController::class, 'cancelSubscription']);
+
+    
 });
