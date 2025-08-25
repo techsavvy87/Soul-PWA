@@ -268,7 +268,10 @@ const Subscription = () => {
                   </span>
 
                   {plan.interval_unit === "year" && (
-                    <Badge classes="bg-green-900" label={`${savePercent}%`} />
+                    <Badge
+                      classes="bg-green-900"
+                      label={`Save ${savePercent}%`}
+                    />
                   )}
                 </div>
                 <div>
