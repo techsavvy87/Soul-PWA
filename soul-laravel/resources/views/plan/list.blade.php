@@ -44,7 +44,7 @@
                             <span>${{ $plan->price }}</span>
                         </td>
                         <td>
-                            <span>{{ $plan->interval_unit }}</span>
+                            <span>{{ ucfirst($plan->interval_unit) }}</span>
                         </td>
                         <td class="mobile-hide">
                             <p class="align-self-center mb-0 user-name"

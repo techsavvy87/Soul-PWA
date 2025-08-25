@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, use } from "react";
+import { useState, useEffect, useRef } from "react";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import Badge from "../../components/Badge";
@@ -30,6 +30,9 @@ const Subscription = () => {
   const [subscriptionID, setSubscriptionID] = useState("");
 
   const hasRendered = useRef(false);
+  // Ref to check if the plan is already subscribed.
+  const onlyOnce = useRef(false);
+
   const CHECKLIST = [
     "Mystical & body-based card decks",
     "Audio meditations from Susan",
@@ -45,10 +48,10 @@ const Subscription = () => {
         if (resResult.status) {
           setPlans(resResult.result);
           const monthlyTier = resResult.result.find(
-            (tier) => tier.interval_unit === "MONTH"
+            (tier) => tier.interval_unit === "month"
           );
           const annualTier = resResult.result.find(
-            (tier) => tier.interval_unit === "YEAR"
+            (tier) => tier.interval_unit === "year"
           );
           if (monthlyTier && annualTier) {
             const percent = Math.round(
@@ -63,8 +66,13 @@ const Subscription = () => {
           const subscribedPlan = resResult.result.find(
             (plan) => plan.is_subscribed === true
           );
-          setCheckedPlanId(subscribedPlan.id);
-          setSubscriptionID(subscribedPlan.subscription_id);
+
+          // In case user is already subscribed.
+          if (subscribedPlan) {
+            setCheckedPlanId(subscribedPlan.id);
+            setSubscriptionID(subscribedPlan.subscription_id);
+            onlyOnce.current = true;
+          }
         }
       } catch (error) {
         console.error("Error fetching plans:", error);
@@ -135,7 +143,7 @@ const Subscription = () => {
   };
 
   const handlePlanSelect = (plan) => {
-    if (checkedPlanId === null) {
+    if (!onlyOnce.current) {
       setSelectedPlan(plan);
       setCheckedPlanId(plan.id);
     } else {
@@ -256,17 +264,17 @@ const Subscription = () => {
                     <RadioButtonUncheckedIcon className="text-white text-[20px]" />
                   )}
                   <span className="text-white font-ovo text-[18px]">
-                    {plan.interval_unit === "MONTH" ? "Monthly" : "Annual"}
+                    {plan.interval_unit === "month" ? "Monthly" : "Annual"}
                   </span>
 
-                  {plan.interval_unit === "YEAR" && (
+                  {plan.interval_unit === "year" && (
                     <Badge classes="bg-green-900" label={`${savePercent}%`} />
                   )}
                 </div>
                 <div>
                   <span className="text-gray-100 font-lora">${plan.price}</span>
                   <span className="text-gray-400 font-lora">
-                    /{plan.interval_unit === "MONTH" ? "Month" : "Year"}
+                    /{plan.interval_unit === "month" ? "Month" : "Year"}
                   </span>
                 </div>
               </div>

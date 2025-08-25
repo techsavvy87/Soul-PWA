@@ -50,30 +50,13 @@ class EventCategoryController extends Controller
     {
         $request->validate([
             'category_id' => 'required',
-            'category_name' => 'required|string',
-            'category_type' => 'required|string',
             'category_level' => 'required|string',
             'info_img' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
 
         $id = $request->category_id;
         $category = EventCategory::find($id);
-        $category->cname = $request->category_name;
-        $category->type = $request->category_type;
         $category->level = $request->category_level;
-
-        if (isset($request->info_img))
-        {
-            // delete existing file
-            if (!empty($category->info_img)) {
-                Storage::delete('public/deckcardcategories/' . $category->info_img);
-            }
-
-            // save the image file
-            $path = $request->info_img->store('public/deckcardcategories');
-            $paths = explode("/", $path);
-            $category->info_img = end($paths);
-        }
 
         if (isset($request->info_img))
         {
@@ -100,14 +83,6 @@ class EventCategoryController extends Controller
         $request->validate([
             'category_id' => 'required',
         ]);
-
-        // $isEvent = DeckPost::where('category_id', $request->category_id)->exists();
-        // if ($isDeckPost) {
-        //     return back()->with([
-        //         'status' => 'fail',
-        //         'message' => "Can't delete because there're deck posts under it."
-        //     ]);
-        // }
 
         $category = EventCategory::find($request->category_id);
         if (!empty($category->info_img)) {

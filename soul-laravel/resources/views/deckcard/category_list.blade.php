@@ -368,7 +368,7 @@ function openEditModal(category) {
 
     $('#category_form').attr('action', "{{ route('update-deck-category') }}")
     $('#category_form #category_id').val(category.id)
-    $('#category_form #category_name').val(category.cname)
+    $('#category_form #category_name').val(category.cname).prop('disabled', true);
     $(`#category_form #category_level option[value='${category.level}']`).prop('selected', true)
     $('#category_form #info_title').val(category.info_title)
     $('#category_form #info_description').val(category.info_description)

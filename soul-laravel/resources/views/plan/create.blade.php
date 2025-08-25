@@ -46,17 +46,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <div class="form-group">
-                                                <label for="product_description">Product Description</label>
-                                                <textarea name="product_description" id="product_description"
-                                                    class="form-control"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 <div class="row mb-3">
                                     <div class="col-md-3">
                                         <div class="form-group">
@@ -78,14 +68,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4" style="margin-left: 50px">
                                         <div class="form-group">
-                                            <!-- <label for="interval_unit">Interval Unit*</label>
-                                            <select name="interval_unit" id="interval_unit" class="form-control"
-                                                required>
-                                                <option value="MONTH">Monthly</option>
-                                                <option value="ANNUAL">Annual</option>
-                                            </select> -->
                                             <label style="margin-bottom: 2px">Type</label>
                                             <div class="row">
                                                 <div class="form-check form-check-primary form-check-inline col-md-4">
@@ -105,12 +89,24 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <!-- <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="interval_count">Interval Count*</label>
                                             <input type="text" class="form-control" name="interval_count"
                                                 id="interval_count" inputmode="numeric" pattern="[0-9]*"
                                                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/^0+(\d)/, '$1');">
+                                        </div>
+                                    </div> -->
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <label for="product_description">Product Description</label>
+                                                <textarea name="product_description" id="product_description"
+                                                    class="form-control" style="height: 120px;"
+                                                    placeholder="Write the description here..."></textarea>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -134,14 +130,16 @@
 <script src="{{ asset('vendors/autonumeric/autoNumeric.js') }}" type=text/javascript></script>
 <script>
 $(document).ready(function() {
-    // $('#price').autoNumeric('init');
+    $('#price').autoNumeric('init');
 });
 
 function save() {
-    const title = $('#title').val();
+    const productName = $('#product_name').val();
     const price = $('#price').val();
+    const planName = $('#plan_name').val();
+    const productDescription = $('#product_description').val();
 
-    if (title === '' || price === '') {
+    if (productName === '' || price === '' || planName === '' || productDescription === '') {
         Swal.fire({
             icon: 'error',
             title: 'The required fields should not be empty.',

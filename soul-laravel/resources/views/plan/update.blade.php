@@ -81,7 +81,7 @@
                                                 <div class="form-check form-check-primary form-check-inline col-md-4">
                                                     <input class="form-check-input" type="radio" name="type"
                                                         id="monthly_option" value="MONTH" @if ($plan->interval_unit ===
-                                                    'MONTH') checked @endif>
+                                                    'month') checked @endif>
                                                     <label class="form-check-label" for="monthly_option">
                                                         Monthly
                                                     </label>
@@ -89,7 +89,7 @@
                                                 <div class="form-check form-check-primary form-check-inline col-md-4">
                                                     <input class="form-check-input" type="radio" name="type"
                                                         id="annual_option" value="ANNUAL" @if ($plan->interval_unit ===
-                                                    'YEAR') checked @endif>
+                                                    'year') checked @endif>
                                                     <label class="form-check-label" for="annual_option">
                                                         Annual
                                                     </label>

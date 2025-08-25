@@ -80,7 +80,6 @@ class DeckCardCategoryController extends Controller
     {
         $request->validate([
             'category_id' => 'required',
-            'category_name' => 'required|string',
             'category_level' => 'required|string',
             'info_img' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'info_title' => 'required|string',
@@ -89,7 +88,6 @@ class DeckCardCategoryController extends Controller
 
         $id = $request->category_id;
         $category = DeckCardCategory::find($id);
-        $category->cname = $request->category_name;
         $category->level = $request->category_level;
         $category->info_title = $request->info_title;
         $category->info_description = $request->info_description;

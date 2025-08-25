@@ -25,7 +25,7 @@ function App() {
     // Show subscription modal every 5 seconds
     const subscriptionModal = setInterval(() => {
       dispatch(setIsShowPlan({ isShowPlan: true }));
-    }, 5000);
+    }, 1000 * 60 * 5);
 
     return () => clearInterval(subscriptionModal);
   }, []);
@@ -40,16 +40,12 @@ function App() {
         console.log("PayPal");
         dispatch(
           updateUser({
-            subscription: event.data.data.subscription,
+            subscription: false,
+            tier: "Free",
           })
         );
-
-        const currentUser = JSON.parse(sessionStorage.getItem("user") || "{}");
-        const updatedUser = {
-          ...currentUser,
-          subscription: event.data.data.subscription,
-        };
-        sessionStorage.setItem("user", JSON.stringify(updatedUser));
+        sessionStorage.setItem("subscription", false);
+        sessionStorage.setItem("tier", "Free");
       }
     });
   };

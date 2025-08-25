@@ -369,9 +369,9 @@ function openEditModal(category) {
 
     $('#category_form').attr('action', "{{ route('update-event-category') }}")
     $('#category_form #category_id').val(category.id)
-    $('#category_form #category_name').val(category.cname)
+    $('#category_form #category_name').val(category.cname).prop('disabled', true);
     $(`#category_form #category_level option[value='${category.level}']`).prop('selected', true)
-    $(`#category_form #category_type option[value='${category.type}']`).prop('selected', true)
+    $(`#category_form #category_type`).val(category.type).prop('disabled', true)
     $('input[type=file]').val('')
 
     if (category.info_img)

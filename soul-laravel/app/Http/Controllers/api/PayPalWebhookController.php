@@ -17,6 +17,8 @@ class PayPalWebhookController extends Controller
 
         $subscriptionId = $webhookEvent['resource']['id'] ?? null;
         $eventType = $webhookEvent['event_type'] ?? null;
+        $userId = PlanSubscription::where('paypal_subscription_id', $subscriptionId)->value('user_id');
+        $user = User::find($userId);
 
         // Update database
         if ($eventType === 'BILLING.SUBSCRIPTION.CANCELLED' && $subscriptionId) {
@@ -24,9 +26,6 @@ class PayPalWebhookController extends Controller
         }
 
         // Notify user via WebPush
-        $userId = PlanSubscription::where('paypal_subscription_id', $subscriptionId)->value('user_id');
-        $user = User::find($userId);
-
 
         if ($user) {
             try {

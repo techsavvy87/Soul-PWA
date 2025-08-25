@@ -38,9 +38,9 @@ class PayPalPlanController extends Controller
             'plan_name' => 'required|string',
             'price' => 'required|numeric',
             'type' => 'required',
-            'interval_count' => 'required|integer|min:1',
         ]);
        
+        $interval_count = 1;
         // Create Product
         $product = $this->paypal->createProduct($request->product_name, $request->product_description);
         $productId = $product['id'];
@@ -51,7 +51,7 @@ class PayPalPlanController extends Controller
             $request->plan_name,
             $request->price,
             $request->type,
-            $request->interval_count
+            $interval_count
         );
         $planId = $plan['id'];
 
@@ -64,7 +64,7 @@ class PayPalPlanController extends Controller
             'price' => $request->price,
             'status' => $plan['status'],
             'interval_unit' => strtolower($request->type),
-            'interval_count' => $request->interval_count,
+            'interval_count' => $interval_count,
         ]);
 
         return redirect()->route('list-plan')->with([

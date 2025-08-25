@@ -30,12 +30,10 @@ const authSlice = createSlice({
       state.subscription = null;
     },
     updateUser(state, action) {
-      if (state.user) {
-        state.user = {
-          ...state.user,
-          ...action.payload,
-        };
-      }
+      return {
+        ...state,
+        ...action.payload,
+      };
     },
   },
 });
