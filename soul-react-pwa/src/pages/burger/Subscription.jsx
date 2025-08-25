@@ -135,8 +135,20 @@ const Subscription = () => {
   };
 
   const handlePlanSelect = (plan) => {
-    setSelectedPlan(plan);
-    setCheckedPlanId(plan.id);
+    if (checkedPlanId === null) {
+      setSelectedPlan(plan);
+      setCheckedPlanId(plan.id);
+    } else {
+      toast(
+        <ToastLayout
+          message="You’ve already selected a plan. Please cancel your current plan before choosing a new one."
+          type="fail-toast"
+        />,
+        {
+          className: "fail-toast",
+        }
+      );
+    }
   };
 
   // Subscription cancel
@@ -171,6 +183,16 @@ const Subscription = () => {
         );
       }
     } catch (error) {
+      console.error("Error cancelling subscription:", error);
+      toast(
+        <ToastLayout
+          message="Could not cancel subscription. Please contact support."
+          type="fail-toast"
+        />,
+        {
+          className: "fail-toast",
+        }
+      );
     } finally {
       dispatch(setIsLoading({ isLoading: false }));
     }

@@ -42,7 +42,7 @@ const ConfirmDialog = ({ isOpen, onClose, onClick, description }) => {
         <button
           type="button"
           className={`mt-6 text-black bg-gradient-to-r from-amber-400 via-amber-200 to-amber-400 hover:bg-gradient-to-br focus:ring-0 focus:outline-none focus:ring-blue-300 font-lora font-bold rounded-md text-md w-full px-5 py-2.5 text-center`}
-          onClick={() => onClose(true)}
+          onClick={() => onClick(true)}
         >
           OK
         </button>

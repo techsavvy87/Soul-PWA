@@ -5,6 +5,7 @@ namespace App\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\WebPush\WebPushMessage;
+use NotificationChannels\WebPush\WebPushChannel;
 
 class PayPalWebhookNotification extends Notification
 {
@@ -19,7 +20,7 @@ class PayPalWebhookNotification extends Notification
 
     public function via($notifiable)
     {
-        return ['webpush'];
+        return [WebPushChannel::class];
     }
 
     public function toWebPush($notifiable, $notification)

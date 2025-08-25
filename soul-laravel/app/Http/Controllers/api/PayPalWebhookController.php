@@ -24,9 +24,9 @@ class PayPalWebhookController extends Controller
         }
 
         // Notify user via WebPush
-        $userId = $webhookEvent['resource']['custom_id'] ?? null;
+        $userId = PlanSubscription::where('paypal_subscription_id', $subscriptionId)->value('user_id');
         $user = User::find($userId);
-        
+
 
         if ($user) {
             try {
