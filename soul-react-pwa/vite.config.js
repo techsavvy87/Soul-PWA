@@ -65,7 +65,6 @@ export default defineConfig({
     }),
   ],
   server: {
-    // host: "127.0.0.1", // or try '0.0.0.0' if needed
     host: true,
     port: 5173, // change if the port is blocked
     strictPort: true, // force port usage or fail
