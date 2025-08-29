@@ -67,7 +67,7 @@ const Deck = () => {
             }
           >
             <img
-              src={siteBaseUrl + "deckcardcategories/" + deck.info_img}
+              src={siteBaseUrl + "decks/" + deck.info_img}
               alt={deck.info_title}
               className="max-w-1/4 mr-3"
             />

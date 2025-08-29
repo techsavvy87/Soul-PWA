@@ -15,7 +15,7 @@ class StatusEmotionController extends Controller
         $type = $request->type;
         $name = $request->name;
 
-        if ($name === "Emotional State") {
+        if ($type === "emotion") {
             $emotions = Emotion::all();
             return response()->json([
                 'status' => true,
@@ -24,7 +24,7 @@ class StatusEmotionController extends Controller
             ], 200);
         }
 
-        if ($name === "Situation Guidance") {
+        if ($type === "guidance") {
             $guidances = Guidance::all();
             return response()->json([
                 'status' => true,
