@@ -25,6 +25,7 @@ import Store from "../pages/burger/Store";
 import ProductDetail from "../pages/burger/ProductDetail";
 import ProductPayment from "../pages/burger/ProductPayment";
 import Subscription from "../pages/burger/Subscription";
+import DeckCard from "../pages/deck/DeckCard";
 
 export const routes = [
   {
@@ -147,5 +148,10 @@ export const routes = [
     layout: LayoutBurger,
     guard: AuthRequire,
     component: <Subscription />,
+  },
+  {
+    path: "/deck/:id",
+    guard: AuthRequire,
+    component: <DeckCard />,
   },
 ];

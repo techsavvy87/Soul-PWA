@@ -76,7 +76,7 @@
 <div class="row ps-5 pe-5" id="cancel-row">
     <div class="col-xl-12 col-lg-12 col-sm-12 layout-top-spacing layout-spacing">
         @include('layouts.alerts')
-        <h5 class="pt-2 pb-2">Categories for Deck Card</h5>
+        <h5 class="pt-2 pb-2">Deck List</h5>
         <div class="widget-content widget-content-area br-8">
             <table id="deck-category-list" class="table dt-table-hover" style="width:100%">
                 <thead>
@@ -94,7 +94,7 @@
                     <tr>
                         <td class="checkbox-column">{{ $loop->index + 1 }}</td>
                         <td>
-                            <img src="{{ asset('storage/deckcardcategories/'. $category->info_img) }}" class="rounded"
+                            <img src="{{ asset('storage/decks/'. $category->info_img) }}" class="rounded"
                                 alt="deck category picture" style="object-fit: contain; width: 80px; height: 60px">
                         </td>
                         <td>
@@ -145,8 +145,8 @@
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title add-title" id="add_category_title">Add Category</h5>
-                <h5 class="modal-title edit-title" id="edit_category_title">Edit Category</h5>
+                <h5 class="modal-title add-title" id="add_category_title">Add Deck</h5>
+                <h5 class="modal-title edit-title" id="edit_category_title">Edit Deck</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -368,14 +368,14 @@ function openEditModal(category) {
 
     $('#category_form').attr('action', "{{ route('update-deck-category') }}")
     $('#category_form #category_id').val(category.id)
-    $('#category_form #category_name').val(category.cname).prop('disabled', true);
+    $('#category_form #category_name').val(category.cname);
     $(`#category_form #category_level option[value='${category.level}']`).prop('selected', true)
     $('#category_form #info_title').val(category.info_title)
     $('#category_form #info_description').val(category.info_description)
     $('input[type=file]').val('')
 
     if (category.info_img)
-        $('.imagePreview').css('background-image', "url({{ asset('storage/deckcardcategories/') }}/" + category
+        $('.imagePreview').css('background-image', "url({{ asset('storage/decks/') }}/" + category
             .info_img + ")")
 
     $('#category_modal').modal('show');

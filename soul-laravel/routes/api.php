@@ -32,6 +32,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
     
     Route::get('/all-decks', [DeckController::class, 'listDeck']);
+    Route::get('/deck-cards/{id}', [DeckController::class, 'listDeckCards']);
+
     Route::get('/all-events', [EventController::class, 'listEvent']);
     Route::post('/get-cards', [CardController::class, 'getCards']);
 

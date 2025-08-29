@@ -5,7 +5,7 @@ import LoopIcon from "@mui/icons-material/Loop";
 import { useSelector } from "react-redux";
 import LoadingModal from "./LoadingModal";
 import { post } from "../utils/axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const LayoutCard = ({ children }) => {
@@ -15,9 +15,9 @@ const LayoutCard = ({ children }) => {
   const cardId = window.sessionStorage.getItem("cardId");
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const onClickFavoriteIcon = () => {
-    console.log("kch");
     try {
       post("/toggle-favorite", { userId, cardId })
         .then((response) => {

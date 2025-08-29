@@ -36,7 +36,7 @@ class DeckCardCategoryController extends Controller
         $category->info_description = $request->info_description;
         
         // Save the button image file
-        $path = $request->info_img->store('public/deckcardcategories');
+        $path = $request->info_img->store('public/decks');
         $paths = explode("/", $path);
         $category->info_img = end($paths);
         
@@ -65,7 +65,7 @@ class DeckCardCategoryController extends Controller
         $category = DeckCardCategory::find($request->category_id);
         if (!empty($category->info_img)) {
 ;
-            Storage::delete('public/deckcardcategories/' . $category->info_img);
+            Storage::delete('public/decks/' . $category->info_img);
         }
         $category->delete();
 
@@ -96,11 +96,11 @@ class DeckCardCategoryController extends Controller
         {
             // delete existing file
             if (!empty($category->info_img)) {
-                Storage::delete('public/deckcardcategories/' . $category->info_img);
+                Storage::delete('public/decks/' . $category->info_img);
             }
 
             // save the image file
-            $path = $request->info_img->store('public/deckcardcategories');
+            $path = $request->info_img->store('public/decks');
             $paths = explode("/", $path);
             $category->info_img = end($paths);
         }

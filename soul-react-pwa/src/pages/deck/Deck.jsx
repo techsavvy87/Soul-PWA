@@ -17,7 +17,7 @@ const Deck = () => {
   const hasSubmitted = useRef(false);
 
   const { isLoading } = useSelector((state) => state.appsetting);
-  const userTier = useSelector((state) => state.auth.user.tier);
+  const userTier = useSelector((state) => state.auth.tier);
 
   useEffect(() => {
     const getDecks = async () => {
@@ -58,6 +58,13 @@ const Deck = () => {
               userTier === "Free" && deck.level === "Paid" ? "blur-[3px]" : ""
             }  flex justify-start items-stretch bg-white py-5 px-[9px] mb-[20px]`}
             key={index}
+            onClick={() =>
+              userTier === "Free" && deck.level === "Paid"
+                ? navigate("/subscription")
+                : navigate(`/deck/${deck.id}`, {
+                    state: { deckTitle: deck.info_title },
+                  })
+            }
           >
             <img
               src={siteBaseUrl + "deckcardcategories/" + deck.info_img}

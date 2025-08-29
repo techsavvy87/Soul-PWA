@@ -62,19 +62,21 @@ const Home = () => {
   }, []);
 
   // Free Iamge Click
-  const onClickFreeImg = (type, name, level) => {
+  const onClickFreeImg = (type, name, level, id) => {
     window.sessionStorage.setItem("tier", userTier);
     window.sessionStorage.setItem("type", type);
     window.sessionStorage.setItem("eventName", name);
+    window.sessionStorage.setItem("eventId", id);
 
     if (userTier === "Free" && level === "Paid") {
       navigate("/subscription");
     } else {
-      if (type === "All") {
+      if (type) {
         navigate("/emotional");
         return;
+      } else {
+        navigate("/cards");
       }
-      navigate("/cards");
     }
   };
 
@@ -138,7 +140,14 @@ const Home = () => {
           <div
             className="relative w-full"
             key={index}
-            onClick={() => onClickFreeImg(event.type, event.cname, event.level)}
+            onClick={() =>
+              onClickFreeImg(
+                event.scroll_sort,
+                event.name,
+                event.level,
+                event.id
+              )
+            }
           >
             {/* {userTier === "Free" && event.level === "Paid" ? (
               <Tooltip title="Upgrade to Paid" className="cursor-not-allowed">
@@ -154,12 +163,15 @@ const Home = () => {
               }`}
             >
               <img
-                src={siteBaseUrl + "deckcardcategories/" + event.info_img}
+                src={siteBaseUrl + "events/" + event.img_url}
                 alt={`event-${index}`}
                 className="rounded-[16px] min-w-full h-[150px] object-cover"
               />
               <p className="w-full font-poppins text-[13.5px] text-white text-center absolute top-[80%] left-1/2 -translate-x-1/2 -translate-y-1/2">
-                {event.cname}
+                {(userTier === "Free" && event.level === "Free") ||
+                userTier === "Paid"
+                  ? event.name
+                  : null}
               </p>
             </div>
 

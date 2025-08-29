@@ -80,13 +80,6 @@ const NavigationDrawer = () => {
             </p>
             <ul className="py-4 space-y-4">
               <Link
-                to="/"
-                className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[15.5px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
-              >
-                <SearchIcon className="w-[15px] mr-3" />
-                Browse Decks
-              </Link>
-              <Link
                 to="/subscription"
                 className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[15.5px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
               >
@@ -149,6 +142,12 @@ const NavigationDrawer = () => {
               <li className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[15.5px] text-[#3F356E] font-normal py-3">
                 Schedule a Session
               </li>
+              <Link
+                to="/deck-list"
+                className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[15.5px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
+              >
+                Browse Decks
+              </Link>
             </ul>
           </div>
         </Box>

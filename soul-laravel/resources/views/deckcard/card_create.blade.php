@@ -225,7 +225,7 @@ function save() {
     const emotion = $('#emotion').val();
     const guidance = $('#guidance').val();
 
-    if (title === '' || category === '' || description === '' || emotion === '' || guidance === '') {
+    if (title === '' || category === '' || description === '') {
         Swal.fire({
             icon: 'error',
             title: 'The required fields should not be empty.',

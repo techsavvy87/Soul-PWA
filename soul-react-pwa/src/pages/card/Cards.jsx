@@ -49,17 +49,18 @@ const Cards = () => {
     let tier = sessionStorage.getItem("tier");
     let type = sessionStorage.getItem("type");
     let name = sessionStorage.getItem("eventName");
+    let id = sessionStorage.getItem("eventId");
     const getCards = async () => {
       const url = "/get-cards";
       const data = {
         tier,
         type,
         name,
+        id,
       };
       dispatch(setIsLoading({ isLoading: true }));
       try {
         const response = await post(url, data);
-
         setCards(response.data.result);
       } catch (error) {
         console.log("Error:", error);
