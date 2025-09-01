@@ -17,8 +17,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('card_img')->nullable();
             $table->foreignId('category_id');
-            $table->foreignId('emotion_id');
-            $table->foreignId('guidance_id');
+            $table->json('emotions_id');
+            $table->json('guidances_id');
             $table->timestamp('published_at')->nullable();
             $table->enum('status', ['published', 'draft'])->default('draft');
             $table->timestamps();

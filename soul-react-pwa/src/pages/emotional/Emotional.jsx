@@ -29,33 +29,6 @@ const Emotional = () => {
   // Ensure `checkedStates` is initialized properly to avoid it being undefined
   const [checkedStates, setCheckedStates] = useState({});
 
-  // Handle checkbox state change
-  const handleCheckboxChange = (emotionId) => (event) => {
-    // Count how many items are checked (true)
-    const selectedCount = Object.values(checkedStates).filter(
-      (value) => value === true
-    ).length;
-
-    // If 3 items are already checked, prevent selecting more
-    if (selectedCount >= 3 && event.target.checked) {
-      toast(
-        <ToastLayout
-          message="You can select up to 3 items only."
-          type="fail-toast"
-        />,
-        {
-          className: "fail-toast",
-        }
-      );
-      return; // Don't update the state if 3 items are already checked
-    }
-
-    setCheckedStates((prev) => ({
-      ...prev,
-      [emotionId]: event.target.checked,
-    }));
-  };
-
   useEffect(() => {
     const getEmotions = async () => {
       const data = {
@@ -93,7 +66,12 @@ const Emotional = () => {
   }, []); // This effect only runs once when the component mounts
 
   const onClickOKBtn = () => {
-    navigate("/cards");
+    const selectedEmotions = Object.keys(checkedStates).filter(
+      (emotionId) => checkedStates[emotionId]
+    );
+    const adjSort = type;
+    const adjIds = selectedEmotions;
+    navigate("/cards-adjective", { state: { adjSort, adjIds } });
   };
 
   return (

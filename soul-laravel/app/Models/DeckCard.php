@@ -14,13 +14,9 @@ class DeckCard extends Model
         return $this->belongsTo(DeckCardCategory::class, 'category_id', 'id');
     }
 
-    public function emotion()
-    {
-        return $this->belongsTo(Emotion::class, 'emotion_id', 'id');
-    }
-
-    public function guidance()
-    {
-        return $this->belongsTo(Guidance::class, 'guidance_id', 'id');
-    }
+    // Cast JSON columns to array automatically
+    protected $casts = [
+        'emotions_id' => 'array',
+        'guidances_id' => 'array',
+    ];
 }

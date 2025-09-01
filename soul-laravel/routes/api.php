@@ -35,7 +35,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/deck-cards/{id}', [DeckController::class, 'listDeckCards']);
 
     Route::get('/all-events', [EventController::class, 'listEvent']);
+
     Route::post('/get-cards', [CardController::class, 'getCards']);
+    Route::post('/get-adj-cards', [CardController::class, 'getAdjCards']);
 
     Route::post('/get-status-emotion', [StatusEmotionController::class, 'getStatusEmotion']);
     

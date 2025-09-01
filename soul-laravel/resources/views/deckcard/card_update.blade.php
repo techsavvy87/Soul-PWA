@@ -52,6 +52,47 @@
     /* Custom title font size */
     font-weight: bold;
 }
+
+.select2-container--default .select2-selection--multiple {
+    box-shadow: none;
+    border-color: #1b2e4b !important;
+    color: #22c7d5;
+    background-color: #1b2e4b;
+    padding: 7px 16px;
+    font-size: 13px;
+    border-radius: 6px;
+}
+
+/* Options inside dropdown */
+.select2-container--default .select2-results__option {
+    padding: 5px 12px;
+    color: #009688;
+    background-color: #1b2e4b;
+}
+
+/* Hover/selected option */
+.select2-container--default .select2-results__option--highlighted {
+    background-color: #1e90ff;
+    color: #fff;
+}
+
+.select2-container .select2-results__options {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    color: #ffffff;
+    background-color: #1e90ff;
+    border: 1px solid #104e8b;
+}
+
+.select2-container--default .select2-selection__choice__remove {
+    color: red !important;
+    /* text color of the × */
+    font-weight: bold;
+    /* make it bold if you want */
+}
 </style>
 @endsection
 
@@ -121,30 +162,43 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="emotion" style="margin-bottom: 2px">Emotion*</label>
-                                            <select name="emotion" class="form-select form-control-sm" id="emotion"
-                                                value="{{ $deckCard->emotion }}">
-                                                <option value="" selected hidden>Choose Emotion</option>
+                                            <label for="emotion" style="margin-bottom: 2px">Emotion</label>
+                                            <select class="emotion-select2 form-select form-control-sm"
+                                                name="emotions[]" multiple="multiple" id="emotion">
+                                                <option value="" hidden>Choose Emotion</option>
+                                                @php
+                                                $emotionIds = is_array($deckCard->emotions_id) ? $deckCard->emotions_id
+                                                : [$deckCard->emotions_id];
+                                                @endphp
                                                 @foreach($emotions as $emotion)
-                                                <option value="{{ $emotion->id }}" @if ($deckCard->emotion_id ===
-                                                    $emotion->id)
-                                                    selected @endif>{{ $emotion->name }}</option>
+                                                <option value="{{ $emotion->id }}"
+                                                    {{ in_array($emotion->id, $emotionIds) ? 'selected' : '' }}>
+                                                    {{ $emotion->name }}
+                                                </option>
                                                 @endforeach
                                             </select>
+
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="guidance" style="margin-bottom: 2px">Guidance*</label>
-                                            <select name="guidance" class="form-select form-control-sm" id="guidance"
-                                                value="{{ $deckCard->guidance }}">
-                                                <option value="" selected hidden>Choose Guidance</option>
+                                            <label for="guidance" style="margin-bottom: 2px">Guidance</label>
+                                            <select class="guidance-select2 form-select form-control-sm"
+                                                name="guidances[]" multiple="multiple" id="guidance">
+                                                <option value="" hidden>Choose Guidance</option>
+                                                @php
+                                                $guidanceIds = is_array($deckCard->guidances_id) ?
+                                                $deckCard->guidances_id
+                                                : [$deckCard->guidances_id];
+                                                @endphp
                                                 @foreach($guidances as $guidance)
-                                                <option value="{{ $guidance->id }}" @if ($deckCard->guidance_id ===
-                                                    $guidance->id)
-                                                    selected @endif>{{ $guidance->name }}</option>
+                                                <option value="{{ $guidance->id }}"
+                                                    {{ in_array($guidance->id, $guidanceIds) ? 'selected' : '' }}>
+                                                    {{ $guidance->name }}
+                                                </option>
                                                 @endforeach
                                             </select>
+
                                         </div>
                                     </div>
                                 </div>
@@ -191,6 +245,9 @@
 @section('page-js')
 <script>
 $(document).ready(function() {
+    // Select2 initialization.
+    $('.emotion-select2').select2();
+    $('.guidance-select2').select2();
     $('.uploadFile').change(function() {
         var maxSizeInBytes = 1024 * 1024 * 2; //2M
 

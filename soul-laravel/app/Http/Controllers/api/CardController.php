@@ -127,4 +127,23 @@ class CardController extends Controller
             ], 200);
         }
     }
+
+    public function getAdjCards(Request $request) 
+    {
+        $adjSort = $request->adjSort;
+        $adjIds = $request->adjIds;
+
+        $cards = DeckCard::where(function($query) use ($adjIds, $adjSort) {
+            foreach ($adjIds as $id) {
+                $query->orWhereJsonContains($adjSort.'s_id', $id) // matches JSON arrays
+                    ->orWhere($adjSort.'s_id', $id);           // matches single integers
+            }
+        })->get();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'OK',
+            'result' => $cards
+        ], 200);
+    }
 }

@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Emotion extends Model
 {
-    //
+    public function card() {
+        return $this->belongsTo(DeckCard::class);
+    }
 }

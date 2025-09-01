@@ -26,6 +26,7 @@ import ProductDetail from "../pages/burger/ProductDetail";
 import ProductPayment from "../pages/burger/ProductPayment";
 import Subscription from "../pages/burger/Subscription";
 import DeckCard from "../pages/deck/DeckCard";
+import CardAdj from "../pages/card/CardAdj";
 
 export const routes = [
   {
@@ -153,5 +154,10 @@ export const routes = [
     path: "/deck/:id",
     guard: AuthRequire,
     component: <DeckCard />,
+  },
+  {
+    path: "/cards-adjective",
+    guard: AuthRequire,
+    component: <CardAdj />,
   },
 ];

@@ -61,11 +61,27 @@
                         <td>
                             <span style="white-space:pre-wrap; word-wrap:break-word">{{ $card->category->cname }}</span>
                         </td>
-                        <td>
-                            <span style="white-space:pre-wrap; word-wrap:break-word">{{ $card->emotion->name }}</span>
+                        <td style="max-width: 120px; word-break: break-word; white-space: normal;">
+                            @php
+                            $emotionIds = is_array($card->emotions_id) ? $card->emotions_id : [$card->emotions_id];
+                            @endphp
+                            @foreach ($emotionIds as $emotionId)
+                            @if(isset($emotions[$emotionId]))
+                            <span class="badge badge-light-info inv-status"
+                                style="display:inline-block; margin-bottom:2px;">{{ $emotions[$emotionId]->name }}</span>
+                            @endif
+                            @endforeach
                         </td>
-                        <td>
-                            <span style="white-space:pre-wrap; word-wrap:break-word">{{ $card->guidance->name }}</span>
+                        <td style="max-width: 120px; word-break: break-word; white-space: normal;">
+                            @php
+                            $guidanceIds = is_array($card->guidances_id) ? $card->guidances_id : [$card->guidances_id];
+                            @endphp
+                            @foreach ($guidanceIds as $guidanceId)
+                            @if(isset($guidances[$guidanceId]))
+                            <span class="badge badge-light-warning inv-status"
+                                style="display:inline-block; margin-bottom:2px;">{{ $guidances[$guidanceId]->name }}</span>
+                            @endif
+                            @endforeach
                         </td>
                         <td>
                             @if ($card->status === 'published')
