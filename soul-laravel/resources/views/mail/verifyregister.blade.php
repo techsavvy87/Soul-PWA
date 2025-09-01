@@ -9,14 +9,14 @@
     <table>
         <tr>
             <td>
-                <h4>Welcome to Elevate To Love!</h4>
+                <h4>Welcome to Blended Soul!</h4>
             </td>
         </tr>
         <tr>
             <td>
-                <p>We received your request to become a Elevate To Love member.</p>
+                <p>We received your request to become a Blended Soul member.</p>
                 <p>
-                    Please enter the code below to verify your email address and activate your new Elevate To Love
+                    Please enter the code below to verify your email address and activate your new Blended Soul
                     account.
                 </p>
             </td>
@@ -30,8 +30,8 @@
         </tr>
         <tr>
             <td>
-                <div>The ElevateToLove Team</div>
-                <div>susandrury.com</div>
+                <div>The Blended Soul Team</div>
+                <div>paul@paulwagner.com</div>
             </td>
         </tr>
     </table>

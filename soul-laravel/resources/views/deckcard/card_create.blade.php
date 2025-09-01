@@ -52,6 +52,43 @@
     /* Custom title font size */
     font-weight: bold;
 }
+
+.select2-container--default .select2-selection--multiple {
+    box-shadow: none;
+    border-color: #3b3f5c !important;
+    color: #22c7d5;
+    background-color: #1b2e4b;
+    padding: 7px 16px;
+    font-size: 13px;
+    border-radius: 6px;
+}
+
+/* Options inside dropdown */
+.select2-container--default .select2-results__option {
+    padding: 5px 12px;
+    color: #009688;
+    background-color: #1b2e4b;
+}
+
+/* Hover/selected option */
+.select2-container--default .select2-results__option--highlighted {
+    background-color: #1e90ff;
+    color: #fff;
+}
+
+.select2-container .select2-results__options {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    color: #ffffff;
+    /* text color */
+    background-color: #1e90ff;
+    /* tag background */
+    border: 1px solid #104e8b;
+    /* border color */
+}
 </style>
 @endsection
 
@@ -115,9 +152,16 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="emotion" style="margin-bottom: 2px">Emotion*</label>
-                                            <select name="emotion" class="form-select form-control-sm" id="emotion">
+                                            <label for="emotion" style="margin-bottom: 2px">Emotion</label>
+                                            <!-- <select name="emotion" class="form-select form-control-sm" id="emotion">
                                                 <option value="" selected hidden>Choose Emotion</option>
+                                                @foreach($emotions as $emotion)
+                                                <option value="{{ $emotion->id }}">{{ $emotion->name }}</option>
+                                                @endforeach
+                                            </select> -->
+
+                                            <select class="emotion-select2 form-select form-control-sm"
+                                                name="emotions[]" multiple="multiple" id="emotion">
                                                 @foreach($emotions as $emotion)
                                                 <option value="{{ $emotion->id }}">{{ $emotion->name }}</option>
                                                 @endforeach
@@ -126,7 +170,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="emotion" style="margin-bottom: 2px">Guidance*</label>
+                                            <label for="guidance" style="margin-bottom: 2px">Guidance</label>
                                             <select name="guidance" class="form-select form-control-sm" id="guidance">
                                                 <option value="" selected hidden>Choose Guidance</option>
                                                 @foreach($guidances as $guidance)
@@ -176,6 +220,8 @@
 @section('page-js')
 <script>
 $(document).ready(function() {
+    // Select2 initialization.
+    $('.emotion-select2').select2();
     $('.uploadFile').change(function() {
         var maxSizeInBytes = 1024 * 1024 * 2; //2M
 

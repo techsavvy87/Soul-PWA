@@ -152,6 +152,8 @@ class AuthController extends Controller
                 'user' => $user,
                 'access_token' => $token,
                 'token_type' => 'Bearer',
+                'tier' => 'Free',
+                'subscription' => false
             ];
             
             return response()->json([
@@ -254,11 +256,19 @@ class AuthController extends Controller
         $user->save();
 
         $token = $user->createToken('Personal Access Token')->plainTextToken;
+
+        // Check if the user has an active subscription
+        $hasActiveSubscription = $user->planSubscriptions()
+            ->where('current_period_end', '>', now())
+            ->exists();
+
         $result = [
-            'user' => $user,
-            'access_token' => $token,
-            'token_type' => 'Bearer'
-        ];
+                'user' => $user,
+                'access_token' => $token,
+                'token_type' => 'Bearer',
+                'tier'         => $hasActiveSubscription ? 'Paid' : 'Free',
+                'subscription' => $hasActiveSubscription,
+            ];
 
         return response()->json([
             'status' => true,

@@ -111,6 +111,8 @@ const ResetPassword = () => {
             isAuthenticated: true,
             user: resResult.result.user,
             token: resResult.result.access_token,
+            tier: resResult.result.tier,
+            subscription: resResult.result.subscription,
           })
         );
         window.sessionStorage.setItem("isAuthenticated", "done");
@@ -119,6 +121,11 @@ const ResetPassword = () => {
           JSON.stringify(resResult.result.user)
         );
         window.sessionStorage.setItem("token", resResult.result.access_token);
+        window.sessionStorage.setItem("tier", resResult.result.tier);
+        window.sessionStorage.setItem(
+          "subscription",
+          resResult.result.subscription
+        );
 
         navigate("/welcome-reset");
       }

@@ -17,6 +17,8 @@
     <link href="{{ asset('src/plugins/src/sweetalerts2/sweetalerts2.css') }}" rel="stylesheet">
     <link href="{{ asset('src/plugins/css/dark/sweetalerts2/custom-sweetalert.css') }}" rel="stylesheet"
         type="text/css" />
+    <!-- Select 2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     @yield('page-css')
 </head>
 
@@ -368,6 +370,7 @@
     <script src="{{ asset('vendors/theme/app.js') }}"></script>
     <script src="{{ asset('src/assets/js/custom.js') }}"></script>
     <script src="{{ asset('src/plugins/src/sweetalerts2/sweetalerts2.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     @yield('page-js')
 
 </body>

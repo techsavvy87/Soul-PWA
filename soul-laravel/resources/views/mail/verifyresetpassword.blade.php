@@ -2,14 +2,14 @@
 <html>
 
 <head>
-    <title>Reset Password for ElevateToLove Account</title>
+    <title>Reset Password for Blended Soul Account</title>
 </head>
 
 <body>
     <table>
         <tr>
             <td>
-                <h4>Welcome to Elevate To Love!</h4>
+                <h4>Welcome to Blended Soul!</h4>
             </td>
         </tr>
         <tr>
@@ -29,8 +29,8 @@
         </tr>
         <tr>
             <td>
-                <div>The ElevateToLove Team</div>
-                <div>susandrury.com</div>
+                <div>The Blended Soul Team</div>
+                <div>paul@paulwagner.com</div>
             </td>
         </tr>
     </table>

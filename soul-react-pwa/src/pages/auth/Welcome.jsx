@@ -73,11 +73,15 @@ const Welcome = () => {
         isAuthenticated: true,
         user: userInfo.user,
         token: userInfo.access_token,
+        tier: userInfo.tier,
+        subscription: userInfo.subscription,
       })
     );
     window.sessionStorage.setItem("isAuthenticated", "done");
     window.sessionStorage.setItem("user", JSON.stringify(userInfo.user));
     window.sessionStorage.setItem("token", userInfo.access_token);
+    window.sessionStorage.setItem("tier", userInfo.tier);
+    window.sessionStorage.setItem("subscription", userInfo.subscription);
     navigate("/");
   };
 
