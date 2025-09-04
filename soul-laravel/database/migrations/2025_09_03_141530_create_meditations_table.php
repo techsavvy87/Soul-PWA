@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('meditations', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('type')->default('Audio');
+            $table->string('type')->default('Audio');
             $table->text('description')->nullable();
             $table->string('media_src')->nullable();
             $table->string('media_original_name')->nullable();

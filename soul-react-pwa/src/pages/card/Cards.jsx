@@ -48,11 +48,11 @@ const Cards = () => {
   return (
     <div>
       {cards.length === 1 ? (
-        <div className="w-full">
+        <div className="max-w-[80%] m-auto bg-white p-[10px] relative">
           <img
             src={siteBaseUrl + "deckcards/" + cards[0].card_img}
             alt={`slide-0`}
-            className="max-w-[80%] m-auto rounded-[15px]"
+            className="w-full m-auto rounded-[15px]"
             onClick={() => {
               window.sessionStorage.setItem("card", JSON.stringify(cards[0]));
               navigate("/card/fullscreen");
