@@ -10,14 +10,38 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { post } from "../../utils/axios";
+import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
 
 const Favorites = () => {
   const hasSubmitted = useRef(false);
-  const [favorites, setFavorites] = useState([]);
+  const [cardFavorites, setCardFavorites] = useState([]);
+  const [readFavorites, setReadFavorites] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoading = useSelector((state) => state.appsetting.isLoading);
   const userId = useSelector((state) => state.auth.user.id);
+  const type = "card";
+  // Tab setting
+  const [value, setValue] = useState("1");
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
+  };
+  const tabCss = {
+    width: "50%",
+    fontFamily: "Poppins",
+    fontSize: "18px",
+    textTransform: "none",
+    color: "gray",
+    borderBottom: "2px solid gray",
+    "&.Mui-selected": {
+      color: "white",
+      fontWeight: "bold",
+    },
+  };
 
   useEffect(() => {
     const getFavorites = async () => {
@@ -25,10 +49,18 @@ const Favorites = () => {
       try {
         const response = await getWithParams("/all-favorites", { userId });
 
-        setFavorites(
-          response.data.favorites.map((fav) => ({
+        setCardFavorites(
+          response.data.cards.map((fav) => ({
             ...fav,
             favorited: true, // assume all returned favorites are already favorited
+            type: "card",
+          }))
+        );
+
+        setReadFavorites(
+          response.data.readings.map((fav) => ({
+            ...fav,
+            type: "reading",
           }))
         );
       } catch (error) {
@@ -43,26 +75,30 @@ const Favorites = () => {
     }
   }, []);
 
-  const showCardView = (id, title, description, imgUrl) => {
+  const showCardView = (id, title, description, imgUrl, type) => {
     window.sessionStorage.setItem("cardId", id);
-    navigate("/card-view", {
-      state: { title, description, imgUrl },
-    });
+    if (type === "reading") {
+      navigate(`/reading/detail/${id}`);
+    } else {
+      navigate("/card-view", {
+        state: { title, description, imgUrl },
+      });
+    }
   };
 
   const onClickFavoriteIcon = (e, favoriteId) => {
     e.stopPropagation();
 
-    const updatedFavorites = favorites.map((fav) => {
+    const updatedCardFavorites = cardFavorites.map((fav) => {
       if (fav.id === favoriteId) {
         return { ...fav, favorited: !fav.favorited };
       }
       return fav;
     });
-    setFavorites(updatedFavorites);
+    setCardFavorites(updatedCardFavorites);
 
     // Call API to update favorite status
-    post("/toggle-favorite", { userId, cardId: favoriteId })
+    post("/toggle-favorite", { userId, cardId: favoriteId, type })
       .then((response) => {
         console.log("Favorite status updated:", response.data);
       })
@@ -84,47 +120,104 @@ const Favorites = () => {
       <p className="font-poppins font-semibold text-white text-2xl text-center pt-5 pb-5">
         Favorites
       </p>
-      {favorites.map((favorite, index) => (
-        <div
-          key={index}
-          className="rounded-[12px] flex justify-start items-stretch bg-white py-5 px-[9px] mb-[10px]"
-          onClick={() =>
-            showCardView(
-              favorite.id,
-              favorite.title,
-              favorite.description,
-              favorite.card_img
-            )
-          }
-        >
-          <img
-            src={siteBaseUrl + "deckcards/" + favorite.card_img}
-            alt={favorite.title}
-            className="max-w-1/4 mr-3"
-          />
-          <div className="flex flex-col justify-between">
-            <div className="flex items-center justify-between">
-              <p className="font-poppins font-semibold text-4 text-[#3F356E]">
-                {favorite.title}
-              </p>
 
-              <button
-                className="w-8 h-8 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
-                onClick={(e) => onClickFavoriteIcon(e, favorite.id)}
+      <Box sx={{ width: "100%", typography: "body1" }}>
+        <TabContext value={value}>
+          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <TabList
+              onChange={handleTabChange}
+              aria-label="lab API tabs example"
+              TabIndicatorProps={{
+                sx: {
+                  backgroundColor: "#FFD141", // your desired color
+                  height: "2px", // optional: change thickness
+                },
+              }}
+            >
+              <Tab label="Readings" value="1" sx={tabCss} />
+              <Tab label="Cards" value="2" sx={tabCss} />
+            </TabList>
+          </Box>
+          <TabPanel style={{ padding: "24px 0px" }} value="2">
+            {cardFavorites.map((cfavorite, index) => (
+              <div
+                key={index}
+                className="rounded-[12px] flex justify-start items-stretch bg-white py-5 px-[9px] mb-[10px]"
+                onClick={() =>
+                  showCardView(
+                    cfavorite.id,
+                    cfavorite.title,
+                    cfavorite.description,
+                    cfavorite.card_img,
+                    cfavorite.type
+                  )
+                }
               >
-                {favorite.favorited ? (
-                  <FavoriteIcon sx={{ fontSize: 20 }} />
-                ) : (
-                  <FavoriteBorderIcon sx={{ fontSize: 20 }} />
-                )}
-              </button>
-            </div>
-            <p className="font-poppins text-[rgba(63,53,110,0.95)] text-[14px] font-light leading-[160%] text-base line-clamp-4">
-              {favorite.description}
-            </p>
-          </div>
-        </div>
-      ))}
+                <img
+                  src={siteBaseUrl + "deckcards/" + cfavorite.card_img}
+                  alt={cfavorite.title}
+                  className="max-w-1/4 mr-3"
+                />
+                <div className="flex flex-col justify-between">
+                  <div className="flex items-center justify-between">
+                    <p className="font-poppins font-semibold text-4 text-[#3F356E]">
+                      {cfavorite.title}
+                    </p>
+
+                    <button
+                      className="w-8 h-8 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
+                      onClick={(e) => onClickFavoriteIcon(e, cfavorite.id)}
+                    >
+                      {cfavorite.favorited ? (
+                        <FavoriteIcon sx={{ fontSize: 20 }} />
+                      ) : (
+                        <FavoriteBorderIcon sx={{ fontSize: 20 }} />
+                      )}
+                    </button>
+                  </div>
+                  <p className="font-poppins text-[rgba(63,53,110,0.95)] text-[14px] font-light leading-[160%] text-base line-clamp-4">
+                    {cfavorite.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </TabPanel>
+          <TabPanel style={{ padding: "24px 0px" }} value="1">
+            {readFavorites.map((rfavorite, index) => (
+              <div
+                key={index}
+                className="rounded-[12px] flex justify-start items-stretch bg-white py-5 px-[9px] mb-[10px]"
+                onClick={() =>
+                  showCardView(
+                    rfavorite.id,
+                    rfavorite.title,
+                    rfavorite.description,
+                    rfavorite.img,
+                    rfavorite.type
+                  )
+                }
+              >
+                <img
+                  src={siteBaseUrl + "reading/" + rfavorite.img}
+                  alt={rfavorite.title}
+                  className="max-w-1/4 mr-3"
+                />
+                <div className="flex flex-col justify-between">
+                  <div className="flex items-center justify-between">
+                    <p className="font-poppins font-semibold text-4 text-[#3F356E]">
+                      {rfavorite.title}
+                    </p>
+                  </div>
+                  <p className="font-poppins text-[rgba(63,53,110,0.95)] text-[14px] font-light leading-[160%] text-base line-clamp-4">
+                    {rfavorite.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </TabPanel>
+        </TabContext>
+      </Box>
+
       <LoadingModal open={isLoading} />
     </div>
   );

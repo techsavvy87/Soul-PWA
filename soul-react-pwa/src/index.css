@@ -162,3 +162,55 @@
     rgba(255, 255, 255, 0) 100%
   );
 }
+.journal-home {
+  position: relative;
+  background-image: url("/j-h-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  z-index: 0;
+}
+.layout-journal {
+  background-image: url("/auth-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+/* Left/right slides smaller width */
+.swiper-slide-prev > img,
+.swiper-slide-next > img {
+  transform: scale(0.9); /* reduce size */
+  opacity: 0.7; /* optional fade */
+  z-index: 1;
+}
+
+.swiper-slide-prev > p,
+.swiper-slide-next > p {
+  display: none;
+}
+
+/* Smooth transition */
+.swiper-slide > img {
+  transition: transform 0.3s, opacity 0.3s;
+}
+.swiper-slide-active {
+  background: white;
+  padding: 10px;
+}
+.react-responsive-modal-overlay {
+  background-color: rgba(63, 53, 110, 0.5);
+  backdrop-filter: blur(5px);
+}
+.meditation-list {
+  background-image: url("/m-list.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.meditation-media {
+  background-image: url("/m-media.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

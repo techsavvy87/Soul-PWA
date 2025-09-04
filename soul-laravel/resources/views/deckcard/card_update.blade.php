@@ -134,6 +134,13 @@
                                                 id="title" value="{{ $deckCard->title }}">
                                         </div>
                                     </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="number" style="margin-bottom: 2px">Number*</label>
+                                            <input type="text" class="form-control form-control-sm" name="number"
+                                                id="number" value="{{ $deckCard->number }}">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row mb-4">
                                     <div class="col-md-12">

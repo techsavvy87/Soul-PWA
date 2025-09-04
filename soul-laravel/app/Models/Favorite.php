@@ -9,6 +9,7 @@ class Favorite extends Model
     protected $fillable = [
         'user_id',
         'card_id',
+        'type'
     ];
 
     public function card()

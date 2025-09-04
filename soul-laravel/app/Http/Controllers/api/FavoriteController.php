@@ -6,17 +6,32 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Favorite;
 use App\Models\DeckCard;
+use App\Models\Reading;
+use Illuminate\Support\Facades\Log;
 
 class FavoriteController extends Controller
 {
     public function toggleFavorite(Request $request)
     {
-        $userId = $request->userId;
-        $cardId = $request->cardId;
-
+        $type = $request->type;
+        Log::info('Toggling favorite', ['type' => $type]);
+        // Card Favorite
+        if ($type === 'card') {
+            $userId = $request->userId;
+            $cardId = $request->cardId;
+        }
+        // Reading Favorite
+        if ($type === 'reading') {
+            $userId = $request->userId;
+            $cardId = $request->readingId;
+        }
 
         // Find the favorite record
-        $favorite = Favorite::where('user_id', $userId)->where('card_id', $cardId)->first();
+        $favorite = Favorite::where([
+            'user_id' => $userId,
+            'type' => $type,
+            'card_id' => $cardId
+        ])->first();
 
         if ($favorite) {
             // If it exists, delete it (unfavorite)
@@ -24,18 +39,31 @@ class FavoriteController extends Controller
             return response()->json(['message' => 'Card unfavorited successfully.']);
         } else {
             // If it doesn't exist, create it (favorite)
-            Favorite::create(['user_id' => $userId, 'card_id' => $cardId]);
+            Favorite::create(['user_id' => $userId, 'card_id' => $cardId, 'type' => $type]);
             return response()->json(['message' => 'Card favorited successfully.']);
         }
     }
 
     public function checkFavorite(Request $request)
     {
-        $userId = $request->userId;
-        $cardId = $request->cardId;
+        $type = $request->type;
+        // Card Favorite
+        if ($type === 'card') {
+            $userId = $request->userId;
+            $cardId = $request->cardId;
+        }
+        // Reading Favorite
+        if ($type === 'reading') {
+            $userId = $request->userId;
+            $cardId = $request->readingId;
+        }
         
         // Check if the favorite record exists
-        $isFavorite = Favorite::where('user_id', $userId)->where('card_id', $cardId)->exists();
+        $isFavorite = Favorite::where([
+            'user_id' => $userId,
+            'card_id' => $cardId,
+            'type' => $type
+        ])->exists();
 
         return response()->json(['isFavorited' => $isFavorite]);
     }
@@ -44,11 +72,26 @@ class FavoriteController extends Controller
     {
         $userId = $request->userId;
 
-        // Get all favorite cards for the user
-        $favorites = Favorite::where('user_id', $userId)->get();
-        $favoritedCards = $favorites->map(function ($favorite) {
-            return $favorite->card;
+        // Get all favorited cards ids for the user
+        $cardFavoritesIds = Favorite::where([
+            'user_id' => $userId,
+            'type' => 'card'
+        ])->pluck('card_id');
+
+        $favoritedCards = $cardFavoritesIds->map(function ($cardId) {
+            return DeckCard::find($cardId);
         });
-        return response()->json(['favorites' => $favoritedCards]);
+
+        // Get all favorited readings ids for the user
+        $readingFavoritesIds = Favorite::where([
+            'user_id' => $userId,
+            'type' => 'reading'
+        ])->pluck('card_id');
+
+        $favoritedReadings = $readingFavoritesIds->map(function ($readingId) {
+            return Reading::find($readingId);
+        });
+
+        return response()->json(['cards' => $favoritedCards, 'readings' => $favoritedReadings]);
     }
 }

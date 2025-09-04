@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isLoading: false,
   isShowPlan: false,
+  readingId: null,
+  cardId: null,
 };
 
 const appsettingSlice = createSlice({
@@ -15,9 +17,20 @@ const appsettingSlice = createSlice({
     setIsShowPlan(state, action) {
       state.isShowPlan = action.payload.isShowPlan;
     },
+    setActiveReadingId(state, action) {
+      state.readingId = action.payload.readingId;
+    },
+    setActiveCardId(state, action) {
+      state.cardId = action.payload.cardId;
+    },
   },
 });
 
-export const { setIsLoading, setIsShowPlan } = appsettingSlice.actions;
+export const {
+  setIsLoading,
+  setIsShowPlan,
+  setActiveReadingId,
+  setActiveCardId,
+} = appsettingSlice.actions;
 
 export default appsettingSlice.reducer;

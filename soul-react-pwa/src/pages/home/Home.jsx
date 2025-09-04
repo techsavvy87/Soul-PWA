@@ -127,13 +127,14 @@ const Home = () => {
   return (
     <div>
       <div className="flex justify-between items-center">
-        <p className="font-poppins text-white font-medium text-[18.5px]">
+        <p className="font-poppins text-white font-medium text-[22.5px]">
           Welcome Back, Paul&nbsp;&nbsp;✨
         </p>
         <NavigationDrawer />
       </div>
-      <p className="font-poppins text-white font-light text-[13px] pt-5 pb-10">
-        Choose the situation that resonates <br /> and reveal your next step.
+      <p className="w-[75%] font-poppins text-white font-light text-[17px] pt-5 pb-10">
+        Choose a topic below to enjoy an oracle card reading and illuminate your
+        life!
       </p>
       <div className="grid grid-cols-2 gap-4">
         {events.map((event, index) => (
@@ -167,7 +168,7 @@ const Home = () => {
                 alt={`event-${index}`}
                 className="rounded-[16px] min-w-full h-[150px] object-cover"
               />
-              <p className="w-full font-poppins text-[13.5px] text-white text-center absolute top-[80%] left-1/2 -translate-x-1/2 -translate-y-1/2">
+              <p className="w-full font-poppins text-[17.5px] text-white text-center absolute top-[80%] left-1/2 -translate-x-1/2 -translate-y-1/2">
                 {(userTier === "Free" && event.level === "Free") ||
                 userTier === "Paid"
                   ? event.name
@@ -182,8 +183,8 @@ const Home = () => {
                   alt="locked"
                   className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
                 />
-                <p className="absolute font-poppins text-[13.5px] text-white/60 top-[85%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-                  Locked
+                <p className="w-full font-poppins text-[17.5px] text-white text-center absolute top-[80%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+                  {event.name}
                 </p>
               </>
             )}

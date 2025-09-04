@@ -16,6 +16,9 @@ use App\Http\Controllers\api\PayPalController;
 use App\Http\Controllers\api\ProductController;
 use App\Http\Controllers\api\PayPalPlanController;
 use App\Http\Controllers\api\PayPalWebhookController;
+use App\Http\Controllers\api\JournalController;
+use App\Http\Controllers\api\ReadingController;
+use App\Http\Controllers\api\MeditationController;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/signup', [AuthController::class, 'register']);
@@ -38,6 +41,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/get-cards', [CardController::class, 'getCards']);
     Route::post('/get-adj-cards', [CardController::class, 'getAdjCards']);
+    Route::get('/card/detail/{id}', [CardController::class, 'getCardById']);
+    Route::post('/send-card-email', [CardController::class, 'sendCardEmail']);
 
     Route::post('/get-status-emotion', [StatusEmotionController::class, 'getStatusEmotion']);
     
@@ -64,5 +69,20 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/subscriptions', [PayPalPlanController::class, 'storeSubscription']);
     Route::post('/cancel-subscription', [PayPalPlanController::class, 'cancelSubscription']);
 
-    
+    Route::post('/journal/create', [JournalController::class, 'createJournal']);
+    Route::get('/journal/all', [JournalController::class, 'getAllJournals']);
+    Route::get('/journal/{id}', [JournalController::class, 'getJournalById']);
+    Route::post('/journal/update/{id}', [JournalController::class, 'updateJournal']);
+    Route::post('/journal/delete/{id}', [JournalController::class, 'deleteJournal']);
+
+    Route::get('/reading/all', [ReadingController::class, 'listReadings']);
+    Route::get('/reading/detail/{id}', [ReadingController::class, 'getReadingById']);
+    Route::post('/send-reading-email', [ReadingController::class, 'sendReadingEmail']);
+
+    Route::get('/meditation/all', [MeditationController::class, 'listMeditations']);
+    Route::get('/meditation/detail/{id}', [MeditationController::class, 'getMeditationById']);
 });
+
+// Client-specific on Email reading details
+Route::get('/reading/client-detail/{id}', [ReadingController::class, 'getReadingById']);
+Route::get('/card/client-detail/{id}', [CardController::class, 'getCardById']);

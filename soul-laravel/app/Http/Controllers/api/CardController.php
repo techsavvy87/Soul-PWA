@@ -9,7 +9,8 @@ use App\Models\Emotion;
 use App\Models\Guidance;
 use App\Models\DeckCard;
 use App\Models\Event;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendCard;
 
 
 class CardController extends Controller
@@ -145,5 +146,37 @@ class CardController extends Controller
             'message' => 'OK',
             'result' => $cards
         ], 200);
+    }
+
+    public function getCardById($id)
+    {
+        $card = DeckCard::find($id);
+        if (!$card) {
+            return response()->json(['status' => false, 'message' => 'Card not found.'], 404);
+        }
+
+        return response()->json(['status' => true, 'data' => $card]);
+    }
+
+    public function sendCardEmail(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'cardUrl' => 'required|string',
+        ]);
+
+        $email = $request->email;
+        $cardUrl = $request->cardUrl;
+
+        $mailData = [
+            'cardUrl' => $cardUrl     
+        ];
+
+        Mail::to($email)->send(new SendCard($mailData));
+
+        return response()->json([
+            'status' => true,
+            'message' => "Card has been sent to {$email}.",
+        ]);
     }
 }

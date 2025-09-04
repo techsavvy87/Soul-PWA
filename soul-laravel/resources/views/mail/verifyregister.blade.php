@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Verify ElevateToLove Account</title>
+    <title>Verify Blended Soul Account</title>
 </head>
 
 <body>

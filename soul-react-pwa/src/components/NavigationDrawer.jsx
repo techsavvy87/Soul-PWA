@@ -15,6 +15,13 @@ import { logout } from "../redux/authSlice";
 import { get } from "../utils/axios";
 import LoadingModal from "./LoadingModal";
 import { setIsLoading } from "../redux/appsettingSlice";
+import DeckIcon from "@mui/icons-material/Deck";
+import ScheduleIcon from "@mui/icons-material/Schedule";
+import StoreIcon from "@mui/icons-material/Store";
+import QuizIcon from "@mui/icons-material/Quiz";
+import BookmarksIcon from "@mui/icons-material/Bookmarks";
+import EditIcon from "@mui/icons-material/Edit";
+import PsychologyIcon from "@mui/icons-material/Psychology";
 
 const NavigationDrawer = () => {
   const dispatch = useDispatch();
@@ -87,6 +94,13 @@ const NavigationDrawer = () => {
                 Subscription
               </Link>
               <Link
+                to="/deck-list"
+                className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[15.5px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
+              >
+                <DeckIcon className="w-[15px] mr-3" />
+                Browse Decks
+              </Link>
+              <Link
                 to="/favorites"
                 className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[15.5px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
               >
@@ -94,11 +108,25 @@ const NavigationDrawer = () => {
                 Favorites
               </Link>
               <Link
-                to="/faq"
+                to="/journal"
                 className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[15.5px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
               >
-                <InfoIcon className="w-[15px] mr-3" />
-                FAQ
+                <EditIcon
+                  className="w-[15px] mr-3"
+                  sx={{ transform: "rotate(-45deg)" }}
+                />
+                Journal
+              </Link>
+              <li className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[15.5px] text-[#3F356E] font-normal py-3">
+                <ScheduleIcon className="w-[15px] mr-3" />
+                Schedule A Session
+              </li>
+              <Link
+                to="/store"
+                className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[15.5px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
+              >
+                <StoreIcon className="w-[15px] mr-3" />
+                Store
               </Link>
               <li
                 onClick={() => onClickLogout()}
@@ -119,34 +147,38 @@ const NavigationDrawer = () => {
                 What is Blended Soul?
               </Link>
               <Link
+                to="/faq"
+                className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[15.5px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
+              >
+                FAQ
+              </Link>
+              <Link
                 to="/about"
                 className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[15.5px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
               >
                 About Paul
               </Link>
+              <li className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[15.5px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3">
+                Paul's Website
+              </li>
               <Link
                 to="/creative-lab"
                 className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[15.5px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
               >
                 About Creative Lab
               </Link>
+
               <Link
-                to="/store"
+                to="/reading"
                 className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[15.5px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
               >
-                Store
+                Reading
               </Link>
-              <li className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[15.5px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3">
-                Website
-              </li>
-              <li className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[15.5px] text-[#3F356E] font-normal py-3">
-                Schedule a Session
-              </li>
               <Link
-                to="/deck-list"
+                to="/meditation"
                 className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[15.5px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
               >
-                Browse Decks
+                Meditation
               </Link>
             </ul>
           </div>

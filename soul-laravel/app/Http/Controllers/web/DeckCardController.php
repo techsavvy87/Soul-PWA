@@ -61,6 +61,7 @@ class DeckCardController extends Controller
         $request->validate([
             'card_img' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'title' => 'required|string',
+            'number' => 'required|integer',
             'category' => 'required|integer',
             'status' => 'required|string',
         ]);
@@ -69,6 +70,7 @@ class DeckCardController extends Controller
         $deckCard->title = $request->title;
         $deckCard->description = $request->description;
         $deckCard->category_id = $request->category;
+        $deckCard->number = $request->number;
         // Save multiple IDs as JSON
         $deckCard->emotions_id = $request->input('emotions', []);
         $deckCard->guidances_id = $request->input('guidances', []);
@@ -113,6 +115,7 @@ class DeckCardController extends Controller
         $request->validate([
             'card_img' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'title' => 'required|string',
+            'number' => 'required|integer',
             'category' => 'required|integer',
             'status' => 'required|string',
             'card_id' => 'required'
@@ -123,6 +126,7 @@ class DeckCardController extends Controller
         $deckCard->title = $request->title;
         $deckCard->description = $request->description;
         $deckCard->category_id = $request->category;
+        $deckCard->number = $request->number;
         // Save multiple IDs as JSON
         $deckCard->emotions_id = $request->input('emotions', []);
         $deckCard->guidances_id = $request->input('guidances', []);

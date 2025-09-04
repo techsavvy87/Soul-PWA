@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('deck_cards', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->integer('number');
             $table->text('description')->nullable();
             $table->string('card_img')->nullable();
             $table->foreignId('category_id');

@@ -13,6 +13,8 @@ use App\Http\Controllers\web\SettingsController;
 use App\Http\Controllers\web\StoreItemController;
 use App\Http\Controllers\web\NotificationController;
 use App\Http\Controllers\web\PayPalPlanController;
+use App\Http\Controllers\web\ReadingController;
+use App\Http\Controllers\web\MeditationController;
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'login')->name('login');
@@ -112,5 +114,21 @@ Route::middleware(['auth'])->group(function (){
         Route::post('/plan/update', 'updatePlan')->name('update-plan');
         Route::post('/plan/archive', 'archivePlan')->name('archive-plan');
         Route::post('/plan/unarchive', 'unarchivePlan')->name('unarchive-plan');
+    });
+
+    Route::controller(ReadingController::class)->group(function () {
+        Route::get('/reading/list', 'listReadings')->name('list-reading');
+        Route::post('/reading/add', 'addReading')->name('add-reading');
+        Route::post('/reading/update', 'updateReading')->name('update-reading');
+        Route::post('/reading/delete', 'deleteReading')->name('delete-reading');
+    });
+
+    Route::controller(MeditationController::class)->group(function () {
+        Route::get('/meditation/list', 'listMeditations')->name('list-meditation');
+        Route::get('/meditation/add', 'addMeditation')->name('add-meditation');
+        Route::post('/meditation/create', 'createMeditation')->name('create-meditation');
+        Route::get('/meditation/edit/{id}', 'editMeditation')->name('edit-meditation');
+        Route::post('/meditation/update', 'updateMeditation')->name('update-meditation');
+        Route::post('/meditation/delete', 'deleteMeditation')->name('delete-meditation');
     });
 });

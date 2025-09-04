@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users', 'id')->onDelete('cascade');
             $table->foreignId('card_id')->constrained('deck_cards', 'id')->onDelete('cascade');
+            $table->string('type'); // Added column for favorite type (e.g., 'card' or 'reading')
             $table->timestamps();
         });
     }
