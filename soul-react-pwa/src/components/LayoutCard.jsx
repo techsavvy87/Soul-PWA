@@ -34,13 +34,12 @@ const LayoutCard = ({ children }) => {
     try {
       post("/toggle-favorite", { userId, cardId, type })
         .then((response) => {
-          console.log("Favorite status updated:", response.data);
+          setIsFavorited(!isFavorited);
         })
         .catch((error) => {
           console.error("Error updating favorite status:", error);
         });
     } catch (error) {}
-    setIsFavorited(!isFavorited);
   };
 
   useEffect(() => {
@@ -106,41 +105,42 @@ const LayoutCard = ({ children }) => {
   };
 
   return (
-    <div className="min-h-screen layout-card px-5 py-10 flex flex-col justify-center">
-      <div className="flex items-center justify-between  mb-5 fixed top-[3%] right-5">
-        <ArrowBackIcon
-          sx={{ fontSize: 35, color: "#8690FD" }}
-          className="fixed left-5"
-          onClick={() => navigate(-1)}
-        />
+    <div className="min-h-screen layout-card">
+      <div className="sticky top-0 mx-4">
+        <div className="flex items-center justify-between pt-8">
+          <ArrowBackIcon
+            sx={{ fontSize: 35, color: "#8690FD" }}
+            onClick={() => navigate(-1)}
+          />
 
-        <div className="flex">
-          {!path.startsWith("/card/detail") && (
-            <button className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition">
-              <IoIosSend size={24} onClick={() => setOpen(true)} />
-            </button>
-          )}
-          <button
-            className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition mx-2"
-            onClick={onClickFavoriteIcon}
-          >
-            {isFavorited ? (
-              <FavoriteIcon size={24} />
-            ) : (
-              <FavoriteBorderIcon size={24} />
+          <div className="flex">
+            {!path.startsWith("/card/detail") && (
+              <button className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition">
+                <IoIosSend size={24} onClick={() => setOpen(true)} />
+              </button>
             )}
-          </button>
-          {!(path === "/cards" || path === "/cards/") && (
             <button
-              className="w-24 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
-              onClick={() => navigate("/card/detail/" + cardId)}
+              className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition mx-2"
+              onClick={onClickFavoriteIcon}
             >
-              <img src={FlipImg} alt="" />
-              <span className="ml-2 font-poppins font-semibold text-[16px]">
-                FLIP
-              </span>
+              {isFavorited ? (
+                <FavoriteIcon size={24} />
+              ) : (
+                <FavoriteBorderIcon size={24} />
+              )}
             </button>
-          )}
+            {!(path === "/cards" || path === "/cards/") && (
+              <button
+                className="w-24 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
+                onClick={() => navigate("/card/detail/" + cardId)}
+              >
+                <img src={FlipImg} alt="" />
+                <span className="ml-2 font-poppins font-semibold text-[16px]">
+                  FLIP
+                </span>
+              </button>
+            )}
+          </div>
         </div>
       </div>
       {children}

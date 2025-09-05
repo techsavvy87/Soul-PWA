@@ -32,6 +32,9 @@ const Cards = () => {
       dispatch(setIsLoading({ isLoading: true }));
       try {
         const response = await post(url, data);
+        if (response.data.result.length === 1) {
+          window.sessionStorage.setItem("cardId", response.data.result[0].id);
+        }
         setCards(response.data.result);
       } catch (error) {
         console.log("Error:", error);
@@ -46,9 +49,13 @@ const Cards = () => {
   }, []);
 
   return (
-    <div>
-      {cards.length === 1 ? (
-        <div className="max-w-[80%] m-auto bg-white p-[10px] relative">
+    <div className="h-[calc(100vh-80px)] flex items-center">
+      {cards.length === 0 ? (
+        <p className="font-poppins text-center text-2xl">
+          There is no card to display.
+        </p>
+      ) : cards.length === 1 ? (
+        <div className="max-w-[80%] m-auto bg-white p-[10px]">
           <img
             src={siteBaseUrl + "deckcards/" + cards[0].card_img}
             alt={`slide-0`}
@@ -58,15 +65,10 @@ const Cards = () => {
               navigate("/card/fullscreen");
             }}
           />
-          <p className="font-poppins font-bold text-black inline-block  absolute bottom-[5%] left-1/2 -translate-x-1/2 py-1 px-6 text-[13px] bg-white text-center">
-            {cards[0].title}
-          </p>
-          <p className="font-bold text-black absolute bottom-[4%] w-10 h-10 bg-white rounded-full flex items-center justify-center">
-            {cards[0].number}
-          </p>
         </div>
       ) : (
         <Swiper
+          className="absolute left-1/2"
           modules={[Pagination, Autoplay]}
           pagination={{ clickable: true }}
           autoplay={{ delay: 50000 }}
@@ -99,12 +101,6 @@ const Cards = () => {
                   navigate("/card/fullscreen");
                 }}
               />
-              <p className="font-poppins font-bold text-black inline-block  absolute bottom-[5%] left-1/2 -translate-x-1/2 py-1 px-6 text-[13px] bg-white text-center">
-                {card.title}
-              </p>
-              <p className="font-bold text-black absolute bottom-[4%] w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                {card.number}
-              </p>
             </SwiperSlide>
           ))}
         </Swiper>

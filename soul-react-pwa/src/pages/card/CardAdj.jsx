@@ -45,7 +45,11 @@ const CardAdj = () => {
   }, []);
   return (
     <div>
-      {cards.length === 1 ? (
+      {cards.length === 0 ? (
+        <p className="font-poppins text-center text-2xl">
+          There is no card to display.
+        </p>
+      ) : cards.length === 1 ? (
         <div className="w-full">
           <img
             src={siteBaseUrl + "deckcards/" + cards[0].card_img}

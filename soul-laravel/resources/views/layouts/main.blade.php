@@ -206,14 +206,20 @@
                     <li class="menu @if ($active === 'reading') active @endif">
                         <a href="{{ route('list-reading') }}" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-book">
-                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
+                                    role="img" aria-labelledby="bookTitle bookDesc" fill="none" stroke="currentColor"
+                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                                    class="inline-block">
+                                    <title id="bookTitle">Book</title>
+                                    <desc id="bookDesc">Open book icon representing reading or learning</desc>
+
+                                    <!-- Left page -->
+                                    <path d="M3 4h7a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H3z"></path>
+
+                                    <!-- Right page -->
+                                    <path d="M21 4h-7a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h8z"></path>
                                 </svg>
+
                                 <span>Reading</span>
                             </div>
                         </a>
@@ -238,13 +244,32 @@
                     <li class="menu @if ($active === 'emotion') active @endif">
                         <a href="{{ route('list-emotion') }}" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-calendar">
-                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
+                                    role="img" aria-labelledby="emotionTitle emotionDesc" class="inline-block"
+                                    fill="none">
+                                    <title id="emotionTitle">Happy face</title>
+                                    <desc id="emotionDesc">A simple smiling face icon representing emotion</desc>
+
+                                    <!-- face outline -->
+                                    <path
+                                        d="M12 2.25c5.385 0 9.75 4.365 9.75 9.75S17.385 21.75 12 21.75 2.25 17.385 2.25 12 6.615 2.25 12 2.25z"
+                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round" fill="none" />
+
+                                    <!-- left eye -->
+                                    <path
+                                        d="M8.5 10.25c.69 0 1.25-.56 1.25-1.25S9.19 7.75 8.5 7.75 7.25 8.31 7.25 9s.56 1.25 1.25 1.25z"
+                                        fill="currentColor" />
+
+                                    <!-- right eye -->
+                                    <path
+                                        d="M15.5 10.25c.69 0 1.25-.56 1.25-1.25s-.56-1.25-1.25-1.25-1.25.56-1.25 1.25.56 1.25 1.25 1.25z"
+                                        fill="currentColor" />
+
+                                    <!-- smile -->
+                                    <path d="M7.5 15.25c1.1 1.1 2.6 1.75 4.5 1.75s3.4-.65 4.5-1.75"
+                                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                        stroke-linejoin="round" fill="none" />
                                 </svg>
                                 <span>Emotions</span>
                             </div>
@@ -254,14 +279,20 @@
                     <li class="menu @if ($active === 'guidance') active @endif">
                         <a href="{{ route('list-guidance') }}" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-calendar">
-                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
+                                    role="img" aria-labelledby="guidanceTitle guidanceDesc" fill="none"
+                                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" class="inline-block">
+                                    <title id="guidanceTitle">Guidance</title>
+                                    <desc id="guidanceDesc">Compass icon representing guidance and direction</desc>
+
+                                    <!-- Compass circle -->
+                                    <circle cx="12" cy="12" r="10"></circle>
+
+                                    <!-- Compass needle -->
+                                    <polygon points="14 10 10 14 9 9 15 15" fill="currentColor"></polygon>
                                 </svg>
+
                                 <span>Guidance</span>
                             </div>
                         </a>

@@ -26,7 +26,6 @@
                         <th class="checkbox-column"> No. </th>
                         <th>Cover Image</th>
                         <th>Title</th>
-                        <th>Number</th>
                         <th class="mobile-hide">Description</th>
                         <th>Category</th>
                         <th>Emotion</th>
@@ -52,10 +51,6 @@
                         <td>
                             <a href="{{ route('edit-card', ['id' => $card->id]) }}"><span class="inv-number"
                                     style="white-space:pre-wrap; word-wrap:break-word">{{ $card->title }}</span></a>
-                        </td>
-                        <td>
-                            <a href="{{ route('edit-card', ['id' => $card->id]) }}"><span class="inv-number"
-                                    style="white-space:pre-wrap; word-wrap:break-word">{{ $card->number }}</span></a>
                         </td>
                         <td class="mobile-hide">
                             <p class="align-self-center mb-0 user-name"

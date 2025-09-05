@@ -93,7 +93,6 @@ const MeditationAudio = () => {
 
     audioRef.current.currentTime = newCurrentTime;
     setCurrentTime(newCurrentTime);
-    document.querySelector("audio").currentTime = 30;
   };
 
   return (
