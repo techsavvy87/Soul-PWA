@@ -13,6 +13,7 @@ const CardClientDetail = () => {
   const { id } = useParams();
   const [cardDetail, setCardDetail] = useState([]);
   const { isLoading } = useSelector((state) => state.appsetting);
+  const [imgWidthCss, setImgWidthCss] = useState("w-[190px]");
 
   useEffect(() => {
     const fetchCardDetail = async () => {
@@ -33,25 +34,36 @@ const CardClientDetail = () => {
     }
   }, [id]);
 
+  // Get width and height of original image.
+  const handleImageLoad = (e) => {
+    const { naturalWidth, naturalHeight } = e.target;
+    if (naturalWidth > naturalHeight) {
+      setImgWidthCss("w-full");
+    }
+  };
+
   return (
-    <div className="min-h-screen layout-card px-5 py-10 flex flex-col justify-center">
-      <div className="text-center">
-        <div className="bg-white p-[15px] relative inline-block mb-[10%]">
-          <img
-            src={siteBaseUrl + "deckcards/" + cardDetail.card_img}
-            alt="card"
-            className="w-[190px] h-[285px] object-f m-auto object-cover"
-          />
-          <p className="font-poppins font-bold text-black inline-block  absolute bottom-[4%] left-1/2 -translate-x-1/2 py-[2px] px-3 text-[14px] bg-white text-center">
-            {cardDetail.title}
-          </p>
-          <p className="font-bold text-black text-[20px] absolute bottom-[3%] w-11 h-11 bg-white rounded-full flex items-center justify-center">
-            {cardDetail.number}
+    <div className="text-center mt-8 mx-4">
+      <div className="bg-white p-[15px]  inline-block">
+        <img
+          src={siteBaseUrl + "deckcards/" + cardDetail.card_img}
+          alt="card"
+          className={`${imgWidthCss} h-[285px] m-auto object-cover`}
+          onLoad={handleImageLoad}
+        />
+      </div>
+      <div className="px-5 py-4">
+        <div
+          className="overflow-y-auto overscroll-contain mt-5"
+          style={{ maxHeight: "calc(100vh - 485px)" }}
+        >
+          <p
+            className="font-poppins text-[14px] font-semibold text-[#302853] leading-6 pt-3 text-left whitespace-pre-wrap"
+            style={{ whiteSpace: "pre-wrap" }}
+          >
+            {cardDetail.description}
           </p>
         </div>
-        <p className="font-poppins text-[14px] font-light text-[#302853] leading-[160%] break-words text-left">
-          {cardDetail.description}
-        </p>
       </div>
       <LoadingModal open={isLoading} />
     </div>

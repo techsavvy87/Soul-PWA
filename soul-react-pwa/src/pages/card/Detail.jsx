@@ -11,6 +11,7 @@ const CardDetail = () => {
   const renderStatus = useRef(false);
   const { id } = useParams();
   const [cardDetail, setCardDetail] = useState([]);
+  const [imgWidthCss, setImgWidthCss] = useState("w-[190px]");
 
   useEffect(() => {
     const fetchCardDetail = async () => {
@@ -31,22 +32,31 @@ const CardDetail = () => {
     }
   }, [id]);
 
+  // Get width and height of original image.
+  const handleImageLoad = (e) => {
+    const { naturalWidth, naturalHeight } = e.target;
+    if (naturalWidth > naturalHeight) {
+      setImgWidthCss("w-full");
+    }
+  };
+
   return (
     <div className="text-center mt-8 mx-4">
       <div className="bg-white p-[15px]  inline-block">
         <img
           src={siteBaseUrl + "deckcards/" + cardDetail.card_img}
           alt="card"
-          className="m-auto object-cover"
+          className={`${imgWidthCss} h-[285px] m-auto object-cover`}
+          onLoad={handleImageLoad}
         />
       </div>
       <div className="px-5 py-4">
         <div
           className="overflow-y-auto overscroll-contain mt-5"
-          style={{ maxHeight: "calc(100vh - 428px)" }}
+          style={{ maxHeight: "calc(100vh - 485px)" }}
         >
           <p
-            className="font-poppins text-[14px] font-light text-[#302853] leading-6 pt-3"
+            className="font-poppins text-[14px] font-semibold text-[#302853] leading-6 pt-3 text-left whitespace-pre-wrap"
             style={{ whiteSpace: "pre-wrap" }}
           >
             {cardDetail.description}

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import LoopIcon from "@mui/icons-material/Loop";
 import { useSelector, useDispatch } from "react-redux";
 import LoadingModal from "./LoadingModal";
 import { post } from "../utils/axios";

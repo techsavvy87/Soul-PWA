@@ -11,6 +11,7 @@ const ReadingDetail = () => {
   const renderStatus = useRef(false);
   const { id } = useParams();
   const [readingDetail, setReadingDetail] = useState([]);
+  const [imgWidthCss, setImgWidthCss] = useState("w-[190px]");
 
   useEffect(() => {
     const fetchReadingDetail = async () => {
@@ -31,24 +32,37 @@ const ReadingDetail = () => {
     }
   }, [id]);
 
+  // Get width and height of original image.
+  const handleImageLoad = (e) => {
+    const { naturalWidth, naturalHeight } = e.target;
+    if (naturalWidth > naturalHeight) {
+      setImgWidthCss("w-full");
+    }
+  };
+
   return (
-    <div className="text-center">
-      <div className="bg-white p-[15px] relative inline-block mb-[10%]">
+    <div className="text-center mt-8 mx-4">
+      <div className="bg-white p-[15px]  inline-block">
         <img
           src={siteBaseUrl + "reading/" + readingDetail.img}
           alt="card"
-          className="w-[190px] h-[285px] object-f m-auto object-cover"
+          className={`${imgWidthCss} h-[285px] m-auto object-cover`}
+          onLoad={handleImageLoad}
         />
-        <p className="font-poppins font-bold text-black inline-block  absolute bottom-[4%] left-1/2 -translate-x-1/2 py-[2px] px-3 text-[14px] bg-white text-center">
-          {readingDetail.title}
-        </p>
-        <p className="font-bold text-black text-[20px] absolute bottom-[3%] w-11 h-11 bg-white rounded-full flex items-center justify-center">
-          {readingDetail.number}
-        </p>
       </div>
-      <p className="font-poppins text-[14px] font-light text-[#302853] leading-[160%] break-words text-left">
-        {readingDetail.description}
-      </p>
+      <div className="px-5 py-4">
+        <div
+          className="overflow-y-auto overscroll-contain mt-5"
+          style={{ maxHeight: "calc(100vh - 485px)" }}
+        >
+          <p
+            className="font-poppins text-[14px] font-semibold text-[#302853] leading-6 pt-3 text-left whitespace-pre-wrap"
+            style={{ whiteSpace: "pre-wrap" }}
+          >
+            {readingDetail.description}
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

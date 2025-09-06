@@ -8,7 +8,7 @@ const CardFullScreen = () => {
       <div
         className="absolute left-1/2"
         style={{
-          top: "50%",
+          top: "40%",
           transform: "translate(-50%, -50%)",
         }}
       >
@@ -18,7 +18,7 @@ const CardFullScreen = () => {
             alt={`Card ${card.id}`}
             className="w-auto max-w-[90vw] object-contain"
             style={{
-              maxHeight: "calc(100% - 0px)", // 100% of container, which is already 100vh-80px
+              maxHeight: "calc(100% - 0px)",
             }}
           />
         )}
