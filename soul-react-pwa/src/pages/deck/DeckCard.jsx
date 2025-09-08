@@ -38,9 +38,7 @@ const DeckCard = () => {
     window.sessionStorage.setItem("cardId", card_id);
     window.sessionStorage.setItem("description", description);
 
-    navigate("/card-view", {
-      state: { title, description, imgUrl },
-    });
+    navigate("/card/detail/" + card_id);
   };
 
   return (

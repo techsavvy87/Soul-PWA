@@ -49,7 +49,7 @@ const Cards = () => {
   }, []);
 
   return (
-    <div className="h-[calc(100vh-80px)] flex items-center">
+    <div className="h-[calc(100vh-80px)] flex items-center justify-center">
       {cards.length === 0 ? (
         <p className="font-poppins text-center text-2xl">
           There is no card to display.

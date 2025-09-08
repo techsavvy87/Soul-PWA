@@ -38,7 +38,7 @@ const ReadingList = () => {
   }, []);
 
   return (
-    <div className="h-[calc(100vh-80px)] flex items-center">
+    <div className="h-[calc(100vh-80px)] flex items-center justify-center">
       <Swiper
         modules={[Pagination, Autoplay]}
         pagination={{ clickable: true }}

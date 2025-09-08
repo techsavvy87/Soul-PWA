@@ -83,6 +83,7 @@ const Favorites = () => {
       navigate("/card-view", {
         state: { title, description, imgUrl },
       });
+      navigate(`/card/detail/${id}`);
     }
   };
 
