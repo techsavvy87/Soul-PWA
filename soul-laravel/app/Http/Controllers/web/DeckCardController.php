@@ -13,16 +13,23 @@ use Illuminate\Support\Facades\Storage;
 
 class DeckCardController extends Controller
 {
-    public function listCards()
+    public function listCards(Request $request)
     {
-        $cards = DeckCard::all();
-        $allEmotionIds = collect($cards)->pluck('emotions_id')->flatten()->unique();
-        $emotions = Emotion::whereIn('id', $allEmotionIds)->get()->keyBy('id');
-        $allGuidanceIds = collect($cards)->pluck('guidances_id')->flatten()->unique();
-        $guidances = Guidance::whereIn('id', $allGuidanceIds)->get()->keyBy('id');
-
+        $search = $request->input('search');
+        $length = $request->input('length', 5); // default 5
+        $cards = DeckCard::when($search, function ($query, $search) {
+            return $query->where('title', 'like', "%{$search}%")
+                         ->orWhere('description', 'like', "%{$search}%");
+        })
+        ->paginate($length);
+        $emotions = Emotion::all()->keyBy('id');
+        $guidances = Guidance::all()->keyBy('id');
         $active = 'deckcard';
-        return view('deckcard.card_list', compact('active', 'cards', 'emotions', 'guidances'));
+        if ($request->ajax()) {
+            return view('deckcard.partials.table', compact('cards', 'emotions', 'guidances'))->render();
+        }
+
+        return view('deckcard.index', compact('active', 'cards', 'emotions', 'guidances'));
     }
 
     public function cardAdd(Request $request)
