@@ -49,8 +49,8 @@ body.dark .table>tbody>tr>td:first-child {
                     New</span></button>
         </div>
 
-        <form id="search-form" method="GET" action="{{ route('cards.index') }}" class="my-3">
-            <input type="text" name="search" id="search" value="{{ $search ?? '' }}" placeholder="Search cards..."
+        <form id="search-form" method="GET" class="my-3">
+            <input type="text" name="search" id="search" value="{{ $search ?? '' }}" placeholder="Search emotion..."
                 class="form-control" style="max-width: 300px; display:inline-block;">
         </form>
     </div>
@@ -89,7 +89,7 @@ $(document).on('click', '.pagination a', function(e) {
 
 // 🔹 Handle search input (auto or on Enter)
 $('#search').on('keyup', function() {
-    fetch_data("{{ route('cards.index') }}");
+    fetch_data("{{ route('emotions.index') }}");
 });
 
 // 🔹 Trigger page length change

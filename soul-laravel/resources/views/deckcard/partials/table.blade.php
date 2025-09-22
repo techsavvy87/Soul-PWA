@@ -49,6 +49,7 @@
                             @endphp
 
                             @foreach ($emotionIds as $emotionId)
+                            @if($loop->index >= 2) @break; @endif
                             @if(isset($emotions[$emotionId]))
                             <span class="badge badge-light-info inv-status"
                                 style="display:inline-block; margin-bottom:2px; max-width:120px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ $emotions[$emotionId]->name }}</span>
@@ -60,6 +61,7 @@
                             $guidanceIds = is_array($card->guidances_id) ? $card->guidances_id : [$card->guidances_id];
                             @endphp
                             @foreach ($guidanceIds as $guidanceId)
+                            @if($loop->index >= 2) @break; @endif
                             @if(isset($guidances[$guidanceId]))
                             <span class="badge badge-light-warning inv-status"
                                 style="display:inline-block; margin-bottom:2px; max-width:120px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ $guidances[$guidanceId]->name }}</span>

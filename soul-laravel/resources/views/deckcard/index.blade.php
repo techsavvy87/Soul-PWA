@@ -48,7 +48,7 @@ body.dark .table>tbody>tr>td:first-child {
                     New</span></button>
         </div>
 
-        <form id="search-form" method="GET" action="{{ route('cards.index') }}" class="my-3">
+        <form id="search-form" method="GET" class="my-3">
             <input type="text" name="search" id="search" value="{{ $search ?? '' }}" placeholder="Search cards..."
                 class="form-control" style="max-width: 300px; display:inline-block;">
         </form>

@@ -139,7 +139,10 @@ class CardController extends Controller
                 $query->orWhereJsonContains($adjSort.'s_id', $id) // matches JSON arrays
                     ->orWhere($adjSort.'s_id', $id);           // matches single integers
             }
-        })->get();
+        })
+        ->inRandomOrder()  // randomize the order
+        ->take(rand(3,5)) // pick 3 to 5 random results
+        ->get();
 
         return response()->json([
             'status' => true,

@@ -33,7 +33,7 @@ body.dark .table>tbody>tr>td:first-child {
 
 @section('content')
 <div class="row ps-5 pe-5" id="cancel-row">
-    <h5 class="pt-2 pb-2 layout-top-spacing ">Guidances</h5>
+    <h5 class="pt-2 pb-2 layout-top-spacing ">Circumstances</h5>
     <div class="d-flex align-items-center justify-content-between">
         <div class="d-flex align-items-center justify-between">
             <div class="d-flex justify-content-end align-items-center me-4">
@@ -49,9 +49,10 @@ body.dark .table>tbody>tr>td:first-child {
                     New</span></button>
         </div>
 
-        <form id="search-form" method="GET" action="{{ route('cards.index') }}" class="my-3">
-            <input type="text" name="search" id="search" value="{{ $search ?? '' }}" placeholder="Search cards..."
-                class="form-control" style="max-width: 300px; display:inline-block;">
+        <form id="search-form" method="GET" class="my-3">
+            <input type="text" name="search" id="search" value="{{ $search ?? '' }}"
+                placeholder="Search Circumstances..." class="form-control"
+                style="max-width: 300px; display:inline-block;">
         </form>
     </div>
 
@@ -89,7 +90,7 @@ $(document).on('click', '.pagination a', function(e) {
 
 // 🔹 Handle search input (auto or on Enter)
 $('#search').on('keyup', function() {
-    fetch_data("{{ route('cards.index') }}");
+    fetch_data("{{ route('guidances.index') }}");
 });
 
 // 🔹 Trigger page length change

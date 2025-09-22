@@ -71,6 +71,17 @@ const Emotional = () => {
     );
     const adjSort = type;
     const adjIds = selectedEmotions;
+
+    if (selectedEmotions.length === 0) {
+      toast(
+        <ToastLayout
+          message="Please select at least one item."
+          type="fail-toast"
+        />,
+        { className: "fail-toast" }
+      );
+      return;
+    }
     navigate("/cards-adjective", { state: { adjSort, adjIds } });
   };
 
@@ -91,76 +102,81 @@ const Emotional = () => {
       <p className="font-poppins text-white font-light text-[13px] pt-5 pb-10 text-center">
         Select up to three situations you’re currently facing <br />
       </p>
-      {emotions.map((emotion) => (
-        <div
-          className={`flex justify-between items-center px-[35px] py-[10px] mb-5 rounded-[12px] ${
-            checkedStates[emotion.id]
-              ? "situation-checked"
-              : "situation-unchecked"
-          }`}
-          key={emotion.id}
-          onClick={() => {
-            // Toggle manually
-            const selectedCount = Object.values(checkedStates).filter(
-              (v) => v
-            ).length;
+      <div className="max-h-[55vh] overflow-y-auto hide-scrollbar">
+        {emotions.map((emotion) => (
+          <div
+            className={`flex justify-between items-center px-[35px] py-[10px] mb-5 rounded-[12px] ${
+              checkedStates[emotion.id]
+                ? "situation-checked"
+                : "situation-unchecked"
+            }`}
+            key={emotion.id}
+            onClick={() => {
+              // Toggle manually
+              const selectedCount = Object.values(checkedStates).filter(
+                (v) => v
+              ).length;
 
-            if (!checkedStates[emotion.id] && selectedCount >= 3) {
-              toast(
-                <ToastLayout
-                  message="You can select up to 3 items only."
-                  type="fail-toast"
-                />,
-                { className: "fail-toast" }
-              );
-              return;
-            }
+              if (!checkedStates[emotion.id] && selectedCount >= 3) {
+                toast(
+                  <ToastLayout
+                    message="You can select up to 3 items only."
+                    type="fail-toast"
+                  />,
+                  { className: "fail-toast" }
+                );
+                return;
+              }
 
-            setCheckedStates((prev) => ({
-              ...prev,
-              [emotion.id]: !prev[emotion.id],
-            }));
-          }}
-        >
-          <p className="font-poppins text-4">{emotion.name}</p>
-          <Checkbox
-            checked={checkedStates[emotion.id]}
-            checkedIcon={
-              <SvgIcon
-                sx={{
-                  background: checkedStates[emotion.id] ? "#5847C2" : "yellow",
-                  borderRadius: "5px",
-                  border: checkedStates[emotion.id]
-                    ? "none"
-                    : "1px solid white",
-                  padding: checkedStates[emotion.id] ? "3px" : "0",
-                }}
-              >
-                <CheckIcon
-                  sx={{ color: checkedStates[emotion.id] ? "white" : "black" }}
-                />
-              </SvgIcon>
-            }
-            icon={
-              <SvgIcon
-                sx={{
-                  background: "transparent",
-                  borderRadius: "5px",
-                  border: "1px solid rgba(255, 255, 255, 0.5)",
-                }}
-              >
-                <CheckIcon sx={{ color: "transparent" }} />
-              </SvgIcon>
-            }
-            sx={{
-              "& .MuiSvgIcon-root": {
-                transition: "color 0.3s ease, background 0.3s ease",
-              },
+              setCheckedStates((prev) => ({
+                ...prev,
+                [emotion.id]: !prev[emotion.id],
+              }));
             }}
-          />
-        </div>
-      ))}
-
+          >
+            <p className="font-poppins text-4">{emotion.name}</p>
+            <Checkbox
+              checked={checkedStates[emotion.id]}
+              checkedIcon={
+                <SvgIcon
+                  sx={{
+                    background: checkedStates[emotion.id]
+                      ? "#5847C2"
+                      : "yellow",
+                    borderRadius: "5px",
+                    border: checkedStates[emotion.id]
+                      ? "none"
+                      : "1px solid white",
+                    padding: checkedStates[emotion.id] ? "3px" : "0",
+                  }}
+                >
+                  <CheckIcon
+                    sx={{
+                      color: checkedStates[emotion.id] ? "white" : "black",
+                    }}
+                  />
+                </SvgIcon>
+              }
+              icon={
+                <SvgIcon
+                  sx={{
+                    background: "transparent",
+                    borderRadius: "5px",
+                    border: "1px solid rgba(255, 255, 255, 0.5)",
+                  }}
+                >
+                  <CheckIcon sx={{ color: "transparent" }} />
+                </SvgIcon>
+              }
+              sx={{
+                "& .MuiSvgIcon-root": {
+                  transition: "color 0.3s ease, background 0.3s ease",
+                },
+              }}
+            />
+          </div>
+        ))}
+      </div>
       <button
         type="button"
         className="shadow-[inset_0_0_10px_rgba(255,255,255,0.4)] tracking-wide font-poppins font-semibold text-white uppercase mt-8 bg-[#8690FD] rounded-[38px] text-md w-full px-5 py-4 text-center"

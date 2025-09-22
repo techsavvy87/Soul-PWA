@@ -51,8 +51,8 @@
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title add-title" id="add_category_title">Add Guidance</h5>
-                <h5 class="modal-title edit-title" id="edit_category_title">Edit Guidance</h5>
+                <h5 class="modal-title add-title" id="add_category_title">Add Circumstance</h5>
+                <h5 class="modal-title edit-title" id="edit_category_title">Edit Circumstance</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

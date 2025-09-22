@@ -44,7 +44,7 @@ const CardAdj = () => {
     }
   }, []);
   return (
-    <div>
+    <div className="cardswiper">
       {cards.length === 0 ? (
         <p className="font-poppins text-center text-2xl">
           There is no card to display.

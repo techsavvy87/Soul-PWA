@@ -214,3 +214,16 @@
   background-position: center;
   background-repeat: no-repeat;
 }
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+@media screen and (max-width: 768px) {
+  .cardswiper {
+    padding-top: 50px;
+  }
+}
+@media screen and (max-width: 360px) {
+  .fullscreen {
+    top: 50% !important;
+  }
+}

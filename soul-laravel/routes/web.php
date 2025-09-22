@@ -132,6 +132,7 @@ Route::middleware(['auth'])->group(function (){
         Route::post('/meditation/delete', 'deleteMeditation')->name('delete-meditation');
     });
 
-    Route::get('/users', [DeckCardController::class, 'listCards'])->name('cards.index');
-
+    Route::get('/cards', [DeckCardController::class, 'listCards'])->name('cards.index');
+    Route::get('/emotions', [EmotionController::class, 'listEmotions'])->name('emotions.index');
+    Route::get('/guidances', [GuidanceController::class, 'listGuidance'])->name('guidances.index');
 });

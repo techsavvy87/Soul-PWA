@@ -293,7 +293,7 @@
                                     <polygon points="14 10 10 14 9 9 15 15" fill="currentColor"></polygon>
                                 </svg>
 
-                                <span>Guidance</span>
+                                <span>Circumstance</span>
                             </div>
                         </a>
                     </li>

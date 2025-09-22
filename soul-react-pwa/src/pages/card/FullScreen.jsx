@@ -6,7 +6,7 @@ const CardFullScreen = () => {
   return (
     <div className="relative w-screen" style={{ height: "calc(100vh - 80px)" }}>
       <div
-        className="absolute left-1/2"
+        className="absolute left-1/2 fullscreen"
         style={{
           top: "40%",
           transform: "translate(-50%, -50%)",
