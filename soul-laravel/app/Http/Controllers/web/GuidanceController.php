@@ -8,12 +8,21 @@ use App\Models\Guidance;
 
 class GuidanceController extends Controller
 {
-    public function listGuidance()
+    public function listGuidance(Request $request)
     {
-        $guidances = Guidance::all();
+        $search = $request->input('search');
+        $length = $request->input('length', 5); // default 5
+        $guidances = Guidance::when($search, function ($query, $search) {
+            return $query->where('name', 'like', "%{$search}%");
+        })
+        ->paginate($length);
 
         $active = 'guidance';
-        return view('guidance.guidance_list', compact('active', 'guidances'));
+        if ($request->ajax()) {
+            return view('guidance.partials.table', compact('guidances'))->render();
+        }
+
+        return view('guidance.index', compact('active', 'guidances'));
     }
 
     public function addGuidance(Request $request)

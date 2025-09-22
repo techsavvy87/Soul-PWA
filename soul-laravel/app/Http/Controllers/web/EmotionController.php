@@ -8,12 +8,22 @@ use App\Models\Emotion;
 
 class EmotionController extends Controller
 {
-    public function listEmotions()
+    public function listEmotions(Request $request)
     {
-        $emotions = Emotion::all();
+        $search = $request->input('search');
+        $length = $request->input('length', 5); // default 5
+        $emotions = Emotion::when($search, function ($query, $search) {
+            return $query->where('name', 'like', "%{$search}%");
+        })
+        ->paginate($length);
 
         $active = 'emotion';
-        return view('emotion.emotion_list', compact('active', 'emotions'));
+        if ($request->ajax()) {
+            return view('emotion.partials.table', compact('emotions'))->render();
+        }
+
+        return view('emotion.index', compact('active', 'emotions'));
+
     }
 
     public function addEmotion(Request $request)
