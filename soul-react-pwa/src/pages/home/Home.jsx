@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import NavigationDrawer from "../../components/NavigationDrawer";
 import { get } from "../../utils/axios";
 import { siteBaseUrl } from "../../utils/constants";
-import { setIsLoading } from "../../redux/appsettingSlice";
+import { setIsLoading, setPrevPageName } from "../../redux/appsettingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingModal from "../../components/LoadingModal";
 import lock from "../../assets/imgs/lock.png";
@@ -12,6 +12,7 @@ import { NEW_PUSH_NOTI_PUBLIC_KEY } from "../../utils/constants";
 import { post } from "../../utils/axios";
 import toast from "react-simple-toasts";
 import ToastLayout from "../../components/ToastLayout";
+import LogoImg from "../../assets/imgs/logo.png";
 
 const Home = () => {
   const [events, setEvents] = useState([]);
@@ -75,6 +76,7 @@ const Home = () => {
         navigate("/emotional");
         return;
       } else {
+        dispatch(setPrevPageName({ pageName: "home" }));
         navigate("/cards");
       }
     }
@@ -126,13 +128,19 @@ const Home = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center">
-        <p className="font-poppins text-white font-medium text-[22.5px]">
-          Welcome Back, Paul&nbsp;&nbsp;✨
-        </p>
+      <div className="flex justify-between items-center mb-[15px]">
+        <div className="flex items-center gap-2">
+          <img className="w-11" src={LogoImg} alt="Logo" />
+          <p className="font-poppins text-white font-medium text-[25px]">
+            Blended Soul
+          </p>
+        </div>
         <NavigationDrawer />
       </div>
-      <p className="w-[75%] font-poppins text-white font-light text-[17px] pt-5 pb-10">
+      <p className="font-poppins text-white font-medium text-[22.5px]">
+        Welcome Back, Paul&nbsp;&nbsp;✨
+      </p>
+      <p className="font-poppins text-white font-light text-[17px] pt-3 pb-10">
         Choose a topic below to enjoy an oracle card reading and illuminate your
         life!
       </p>

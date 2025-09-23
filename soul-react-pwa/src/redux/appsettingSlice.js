@@ -5,6 +5,8 @@ const initialState = {
   isShowPlan: false,
   readingId: null,
   cardId: null,
+  cards: [],
+  prevPageName: "",
 };
 
 const appsettingSlice = createSlice({
@@ -23,6 +25,12 @@ const appsettingSlice = createSlice({
     setActiveCardId(state, action) {
       state.cardId = action.payload.cardId;
     },
+    setExtraCards(state, action) {
+      state.cards = action.payload.cards;
+    },
+    setPrevPageName(state, action) {
+      state.prevPageName = action.payload.pageName;
+    },
   },
 });
 
@@ -31,6 +39,8 @@ export const {
   setIsShowPlan,
   setActiveReadingId,
   setActiveCardId,
+  setExtraCards,
+  setPrevPageName,
 } = appsettingSlice.actions;
 
 export default appsettingSlice.reducer;

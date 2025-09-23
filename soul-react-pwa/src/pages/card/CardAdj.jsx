@@ -3,7 +3,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setIsLoading, setActiveCardId } from "../../redux/appsettingSlice";
+import {
+  setIsLoading,
+  setActiveCardId,
+  setExtraCards,
+} from "../../redux/appsettingSlice";
 import { post } from "../../utils/axios";
 import { siteBaseUrl } from "../../utils/constants";
 import LoadingModal from "../../components/LoadingModal";
@@ -20,6 +24,8 @@ const CardAdj = () => {
   const hasSubmitted = useRef(false);
   const [cards, setCards] = useState([]);
   const { isLoading } = useSelector((state) => state.appsetting);
+  const prevPageName = useSelector((state) => state.appsetting.prevPageName);
+  const storedCards = useSelector((state) => state.appsetting.cards);
 
   useEffect(() => {
     const getCards = async () => {
@@ -32,6 +38,7 @@ const CardAdj = () => {
       try {
         const response = await post(url, data);
         setCards(response.data.result);
+        dispatch(setExtraCards({ cards: response.data.result }));
       } catch (error) {
         console.log("Error:", error);
       } finally {
@@ -40,7 +47,15 @@ const CardAdj = () => {
     };
     if (!hasSubmitted.current) {
       hasSubmitted.current = true;
-      getCards();
+      if (prevPageName === "Adjective") {
+        getCards();
+      } else {
+        if (storedCards && storedCards.length > 0) {
+          setCards(storedCards);
+        } else {
+          getCards();
+        }
+      }
     }
   }, []);
   return (

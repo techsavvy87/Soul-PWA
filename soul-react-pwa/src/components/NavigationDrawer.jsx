@@ -159,7 +159,13 @@ const NavigationDrawer = () => {
                 About Paul
               </Link>
               <li className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[15.5px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3">
-                Paul's Website
+                <a
+                  href="https://paulwagner.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Paul's Website
+                </a>
               </li>
               <Link
                 to="/creative-lab"

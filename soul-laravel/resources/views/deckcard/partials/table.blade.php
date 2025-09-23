@@ -37,7 +37,7 @@
                         <td class="mobile-hide">
                             <p class="align-self-center mb-0 user-name"
                                 style="white-space:normal; word-wrap:break-word; width: 300px;">
-                                {{ strlen(strip_tags($card->description)) > 140 ? substr(strip_tags($card->description), 0, 140)."..." : strip_tags($card->description) }}
+                                {{ strlen(html_entity_decode(strip_tags($card->description), ENT_QUOTES | ENT_HTML5, 'UTF-8')) > 140 ? substr(html_entity_decode(strip_tags($card->description), ENT_QUOTES | ENT_HTML5, 'UTF-8'), 0, 140)."..." : html_entity_decode(strip_tags($card->description), ENT_QUOTES | ENT_HTML5, 'UTF-8') }}
                             </p>
                         </td>
                         <td>

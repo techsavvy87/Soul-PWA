@@ -11,6 +11,7 @@ import ToastLayout from "../../components/ToastLayout";
 import toast from "react-simple-toasts";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { setPrevPageName } from "../../redux/appsettingSlice";
 
 const Emotional = () => {
   let tier = sessionStorage.getItem("tier");
@@ -82,6 +83,7 @@ const Emotional = () => {
       );
       return;
     }
+    dispatch(setPrevPageName({ pageName: "Adjective" }));
     navigate("/cards-adjective", { state: { adjSort, adjIds } });
   };
 
@@ -105,7 +107,7 @@ const Emotional = () => {
       <div className="max-h-[55vh] overflow-y-auto hide-scrollbar">
         {emotions.map((emotion) => (
           <div
-            className={`flex justify-between items-center px-[35px] py-[10px] mb-5 rounded-[12px] ${
+            className={`flex justify-between items-center px-[35px] py-[5px] mb-[10px] rounded-[12px] ${
               checkedStates[emotion.id]
                 ? "situation-checked"
                 : "situation-unchecked"
@@ -137,9 +139,12 @@ const Emotional = () => {
             <p className="font-poppins text-4">{emotion.name}</p>
             <Checkbox
               checked={checkedStates[emotion.id]}
+              onChange={(e) => onChange(emotion.id, e.target.checked)}
               checkedIcon={
                 <SvgIcon
                   sx={{
+                    width: 20, // 👈 match unchecked size
+                    height: 20,
                     background: checkedStates[emotion.id]
                       ? "#5847C2"
                       : "yellow",
@@ -152,6 +157,7 @@ const Emotional = () => {
                 >
                   <CheckIcon
                     sx={{
+                      fontSize: 20, // size of the checkmark itself
                       color: checkedStates[emotion.id] ? "white" : "black",
                     }}
                   />
@@ -160,15 +166,18 @@ const Emotional = () => {
               icon={
                 <SvgIcon
                   sx={{
+                    width: 20, // 👈 match unchecked size
+                    height: 20,
                     background: "transparent",
                     borderRadius: "5px",
                     border: "1px solid rgba(255, 255, 255, 0.5)",
                   }}
                 >
-                  <CheckIcon sx={{ color: "transparent" }} />
+                  <CheckIcon sx={{ fontSize: 20, color: "transparent" }} />
                 </SvgIcon>
               }
               sx={{
+                padding: 0, // remove default extra padding
                 "& .MuiSvgIcon-root": {
                   transition: "color 0.3s ease, background 0.3s ease",
                 },

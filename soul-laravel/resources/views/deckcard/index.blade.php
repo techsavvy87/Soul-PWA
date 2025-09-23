@@ -4,7 +4,6 @@
 @section('page-css')
 <link href="{{ asset('src/plugins/src/table/datatable/datatables.css') }}" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" type="text/css" href="{{ asset('src/plugins/css/dark/table/datatable/dt-global_style.css') }}">
-<!-- <link href="{{ asset('src/assets/css/dark/apps/list.css') }}" rel="stylesheet" type="text/css" /> -->
 <style>
 .badge-light-danger svg {
     color: #e67980 !important;

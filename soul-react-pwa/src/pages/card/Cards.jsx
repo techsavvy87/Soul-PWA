@@ -1,9 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setIsLoading, setActiveCardId } from "../../redux/appsettingSlice";
+import {
+  setIsLoading,
+  setActiveCardId,
+  setExtraCards,
+} from "../../redux/appsettingSlice";
 import { post } from "../../utils/axios";
 import { siteBaseUrl } from "../../utils/constants";
 import "swiper/css";
@@ -15,7 +19,8 @@ const Cards = () => {
   const dispatch = useDispatch();
   const hasSubmitted = useRef(false);
   const [cards, setCards] = useState([]);
-
+  const prevPageName = useSelector((state) => state.appsetting.prevPageName);
+  const storedCards = useSelector((state) => state.appsetting.cards);
   useEffect(() => {
     let tier = sessionStorage.getItem("tier");
     let type = sessionStorage.getItem("type");
@@ -36,6 +41,7 @@ const Cards = () => {
           window.sessionStorage.setItem("cardId", response.data.result[0].id);
         }
         setCards(response.data.result);
+        dispatch(setExtraCards({ cards: response.data.result }));
       } catch (error) {
         console.log("Error:", error);
       } finally {
@@ -44,7 +50,15 @@ const Cards = () => {
     };
     if (!hasSubmitted.current) {
       hasSubmitted.current = true;
-      getCards();
+      if (prevPageName === "home") {
+        getCards();
+      } else {
+        if (storedCards && storedCards.length > 0) {
+          setCards(storedCards);
+        } else {
+          getCards();
+        }
+      }
     }
   }, []);
 

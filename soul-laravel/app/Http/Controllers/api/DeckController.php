@@ -5,7 +5,6 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\DeckCardCategory;
-use Illuminate\Support\Facades\Log;
 
 class DeckController extends Controller
 {
