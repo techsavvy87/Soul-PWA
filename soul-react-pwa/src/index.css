@@ -217,6 +217,12 @@
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+.card-detail::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+.card-detail > p {
+  font-family: "Century Gothic", Arial, sans-serif;
+}
 @media screen and (max-width: 768px) {
   .cardswiper {
     padding-top: 50px;

@@ -52,11 +52,11 @@ const CardDetail = () => {
       </div>
       <div className="px-5 py-4">
         <div
-          className="overflow-y-auto overscroll-contain mt-5"
+          className="overflow-y-auto overscroll-contain mt-5 card-detail"
           style={{ maxHeight: "calc(100vh - 485px)" }}
         >
           <p
-            className="font-poppins text-[14px] font-semibold text-[#302853]  pt-3 text-left whitespace-pre-wrap"
+            className="text-[16px] text-[#302853]  pt-3 text-left whitespace-pre-wrap"
             dangerouslySetInnerHTML={{ __html: cardDetail.description }}
           />
         </div>
