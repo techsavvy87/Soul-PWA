@@ -85,7 +85,6 @@
                         <th>Image</th>
                         <th>Category Name</th>
                         <th>Level</th>
-                        <th>Info Title</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -106,10 +105,6 @@
                             @else
                             <span class="badge badge-light-warning inv-status">{{ $category->level }}</span>
                             @endif
-                        </td>
-                        <td>
-                            <p class="align-self-center mb-0 user-name word-break"
-                                style="white-space:pre-wrap; word-wrap:break-word">{{ $category->info_title }}</p>
                         </td>
                         <td>
                             <a class="badge badge-light-primary text-start me-2 action-edit"
@@ -187,11 +182,6 @@
                                             <option value="Free">Free</option>
                                             <option value="Paid">Paid</option>
                                         </select>
-                                    </div>
-                                    <div class="contact-name">
-                                        <label style="margin-bottom: 4px; color: white">Info Title*</label>
-                                        <input type="text" id="info_title" class="form-control form-control-sm"
-                                            name="info_title">
                                     </div>
                                     <div class="contact-name mt-3">
                                         <label style="margin-bottom: 4px; color: white">Info Description*</label>
@@ -351,7 +341,6 @@ function openAddModal() {
     $('#category_form #category_id').val('')
     $('#category_form #category_name').val('')
     $('#category_form #category_level option:eq(0)').prop('selected', true)
-    $('#category_form #info_title').val('')
     $('#category_form #info_description').val('')
     $('.preview').css('background-image', 'none')
     $('input[type=file]').val('')
@@ -370,7 +359,6 @@ function openEditModal(category) {
     $('#category_form #category_id').val(category.id)
     $('#category_form #category_name').val(category.cname);
     $(`#category_form #category_level option[value='${category.level}']`).prop('selected', true)
-    $('#category_form #info_title').val(category.info_title)
     $('#category_form #info_description').val(category.info_description)
     $('input[type=file]').val('')
 
@@ -384,13 +372,11 @@ function openEditModal(category) {
 function submitCategory() {
     const categoryName = $('#category_name').val();
     const categoryLevel = $('#category_level').val();
-    const infoTitle = $('#info_title').val();
     const infoDescription = $('#info_description').val();
     const isInfoImg = $('input[name=info_img]')[0].files.length !== 0;
     const categoryId = $('#category_id').val();
 
-    if (!categoryName || !categoryLevel || !infoDescription || !infoTitle || (!categoryId && !
-            isInfoImg)) {
+    if (!categoryName || !categoryLevel || !infoDescription || (!categoryId && !isInfoImg)) {
         Swal.fire({
             icon: 'error',
             title: 'The required field should not be empty.',

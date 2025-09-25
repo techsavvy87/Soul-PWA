@@ -24,7 +24,6 @@ class DeckCardCategoryController extends Controller
             'category_name' => 'required|string',
             'category_level' => 'required|string',
             'info_img' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048|required',
-            'info_title' => 'required|string',
             'info_description' => 'required|string',
         ]);
 
@@ -32,7 +31,6 @@ class DeckCardCategoryController extends Controller
         $category = new DeckCardCategory;
         $category->cname = $request->category_name;
         $category->level = $request->category_level;
-        $category->info_title = $request->info_title;
         $category->info_description = $request->info_description;
         
         // Save the button image file
@@ -82,14 +80,14 @@ class DeckCardCategoryController extends Controller
             'category_id' => 'required',
             'category_level' => 'required|string',
             'info_img' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
-            'info_title' => 'required|string',
+            'category_name' => 'required|string',
             'info_description' => 'required|string',
         ]);
 
         $id = $request->category_id;
         $category = DeckCardCategory::find($id);
         $category->level = $request->category_level;
-        $category->info_title = $request->info_title;
+        $category->cname = $request->category_name;
         $category->info_description = $request->info_description;
 
         if (isset($request->info_img))
