@@ -31,7 +31,7 @@ body.dark .table>tbody>tr>td:first-child {
 
 @section('content')
 <div class="row ps-5 pe-5" id="cancel-row">
-    <h5 class="pt-2 pb-2 layout-top-spacing ">List of Deck Cards</h5>
+    <h5 class="pt-2 pb-2 layout-top-spacing ">Card</h5>
     <div class="d-flex align-items-center justify-content-between">
         <div class="d-flex align-items-center justify-between">
             <div class="d-flex justify-content-end align-items-center me-4">

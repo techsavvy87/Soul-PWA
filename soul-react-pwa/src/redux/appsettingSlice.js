@@ -6,6 +6,7 @@ const initialState = {
   readingId: null,
   cardId: null,
   cards: [],
+  readings: [],
   prevPageName: "",
 };
 
@@ -28,6 +29,9 @@ const appsettingSlice = createSlice({
     setExtraCards(state, action) {
       state.cards = action.payload.cards;
     },
+    setExtraReadings(state, action) {
+      state.readings = action.payload.readings;
+    },
     setPrevPageName(state, action) {
       state.prevPageName = action.payload.pageName;
     },
@@ -40,6 +44,7 @@ export const {
   setActiveReadingId,
   setActiveCardId,
   setExtraCards,
+  setExtraReadings,
   setPrevPageName,
 } = appsettingSlice.actions;
 

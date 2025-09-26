@@ -108,7 +108,7 @@ const LayoutCard = ({ children }) => {
       <div className="sticky top-0 mx-4">
         <div className="flex items-center justify-between pt-8">
           <ArrowBackIcon
-            sx={{ fontSize: 35, color: "#8690FD" }}
+            className="text-[#8690FD] !w-[35px] !h-[35px]"
             onClick={() => navigate(-1)}
           />
 
@@ -128,7 +128,11 @@ const LayoutCard = ({ children }) => {
                 <FavoriteBorderIcon size={24} />
               )}
             </button>
-            {!(path === "/cards" || path === "/cards/") && (
+            {!(
+              path === "/cards" ||
+              path === "/cards/" ||
+              path.startsWith("/card/detail")
+            ) && (
               <button
                 className="w-24 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
                 onClick={() => navigate("/card/detail/" + cardId)}

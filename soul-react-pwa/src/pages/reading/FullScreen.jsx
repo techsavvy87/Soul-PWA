@@ -1,7 +1,16 @@
+import React, { useEffect } from "react";
 import { siteBaseUrl } from "../../utils/constants";
+import { useDispatch } from "react-redux";
+import { setPrevPageName } from "../../redux/appsettingSlice";
 
 const ReadingFullScreen = () => {
   const reading = JSON.parse(window.sessionStorage.getItem("reading"));
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setPrevPageName({ pageName: "reading" }));
+  }, [dispatch]);
 
   return (
     <div className="relative w-screen" style={{ height: "calc(100vh - 80px)" }}>

@@ -76,7 +76,7 @@
 <div class="row ps-5 pe-5" id="cancel-row">
     <div class="col-xl-12 col-lg-12 col-sm-12 layout-top-spacing layout-spacing">
         @include('layouts.alerts')
-        <h5 class="pt-2 pb-2">Event List</h5>
+        <h5 class="pt-2 pb-2">Event</h5>
         <div class="widget-content widget-content-area br-8">
             <table id="deck-category-list" class="table dt-table-hover" style="width:100%">
                 <thead>
@@ -467,7 +467,7 @@ function openEditModal(event) {
     $('#category_form #category_name').val(event.name);
     $(`#category_form #category_level option[value='${event.level}']`).prop('selected', true);
     $('input[type=file]').val('');
-    
+
     // Select the radio button with that value
     const radioToSelect = document.querySelector(`input[name="scrol-sort"][value="${event.scroll_sort}"]`);
     if (radioToSelect) {

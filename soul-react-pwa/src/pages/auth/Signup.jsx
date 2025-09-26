@@ -145,10 +145,10 @@ const Signup = () => {
           onChangePassword={(e) => setConfirmPwd(e.target.value)}
           placeholder="Confirm Password"
         />
-        <p className="mt-4 text-center font-poppins text-[13px] font-light text-[#433971]">
+        <p className="mt-4 text-center font-poppins text-[14px] font-light text-[#433971]">
           <Link
             to="/login"
-            className="text-center font-poppins text-[13px] font-light text-[#433971] underline font-medium"
+            className="text-center font-poppins text-[14px] text-[#433971] underline font-medium"
           >
             Log in here
           </Link>

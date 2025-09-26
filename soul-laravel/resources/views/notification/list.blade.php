@@ -18,7 +18,7 @@
 <div class="row" id="cancel-row">
     <div class="col-xl-12 col-lg-12 col-sm-12 layout-top-spacing layout-spacing">
         @include('layouts.alerts')
-        <h5 class="pt-2 pb-2">List of Notifications</h5>
+        <h5 class="pt-2 pb-2">Notification</h5>
         <div class="widget-content widget-content-area br-8">
             <table id="notification-list" class="table dt-table-hover" style="width:100%">
                 <thead>

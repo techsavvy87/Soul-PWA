@@ -37,10 +37,10 @@ const Concept = () => {
 
   return (
     <div>
-      <p className="font-poppins font-semibold text-white text-2xl text-center pt-5 pb-5">
+      <p className="font-poppins font-semibold text-white text-2xl text-center pb-5">
         What is Blended Soul?
       </p>
-      <div className="px-4 mt-6 max-w-3xl mx-auto">
+      <div className="max-w-3xl mx-auto">
         <div className="flex justify-center">
           <div
             className="bg-white rounded-full p-3 border-4"
@@ -50,7 +50,10 @@ const Concept = () => {
           </div>
         </div>
 
-        <div className="mt-8 pr-1">
+        <div
+          className="mt-4 pr-1 overflow-y-auto overscroll-contain hide-scrollbar"
+          style={{ maxHeight: "calc(100vh - 300px)" }}
+        >
           <p
             className="text-white text-lg leading-relaxed font-ovo"
             style={{ whiteSpace: "pre-wrap" }}

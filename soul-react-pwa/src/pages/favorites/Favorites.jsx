@@ -76,18 +76,15 @@ const Favorites = () => {
   }, []);
 
   const showCardView = (id, title, description, imgUrl, type) => {
-    window.sessionStorage.setItem("cardId", id);
+    window.sessionStorage.setItem(type + "Id", id);
     if (type === "reading") {
       navigate(`/reading/detail/${id}`);
     } else {
-      navigate("/card-view", {
-        state: { title, description, imgUrl },
-      });
       navigate(`/card/detail/${id}`);
     }
   };
 
-  const onClickFavoriteIcon = (e, favoriteId) => {
+  const onClickCardFavoriteIcon = (e, favoriteId) => {
     e.stopPropagation();
 
     const updatedCardFavorites = cardFavorites.map((fav) => {
@@ -107,18 +104,19 @@ const Favorites = () => {
         console.error("Error updating favorite status:", error);
       });
   };
+
   return (
-    <div className="min-h-screen favorite px-5 py-10">
+    <div className="min-h-screen favorite px-5 pt-8 pb-5">
       <div className="flex justify-between">
         <button
-          className="mb-5 w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
+          className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
           onClick={() => navigate(-1)}
         >
           <ArrowBackIcon size={24} />
         </button>
         <NavigationDrawer />
       </div>
-      <p className="font-poppins font-semibold text-white text-2xl text-center pt-5 pb-5">
+      <p className="font-poppins font-semibold text-white text-2xl text-center pt-0 pb-1">
         Favorites
       </p>
 
@@ -139,82 +137,109 @@ const Favorites = () => {
               <Tab label="Cards" value="2" sx={tabCss} />
             </TabList>
           </Box>
-          <TabPanel style={{ padding: "24px 0px" }} value="2">
-            {cardFavorites.map((cfavorite, index) => (
-              <div
-                key={index}
-                className="rounded-[12px] flex justify-start items-stretch bg-white py-5 px-[9px] mb-[10px]"
-                onClick={() =>
-                  showCardView(
-                    cfavorite.id,
-                    cfavorite.title,
-                    cfavorite.description,
-                    cfavorite.card_img,
-                    cfavorite.type
-                  )
-                }
-              >
-                <img
-                  src={siteBaseUrl + "deckcards/" + cfavorite.card_img}
-                  alt={cfavorite.title}
-                  className="max-w-1/4 mr-3"
-                />
-                <div className="flex flex-col justify-between">
-                  <div className="flex items-center justify-between">
-                    <p className="font-poppins font-semibold text-4 text-[#3F356E]">
-                      {cfavorite.title}
-                    </p>
+          <TabPanel style={{ padding: "0px" }} value="2">
+            <div
+              className="overflow-y-auto overscroll-contain hide-scrollbar"
+              style={{ maxHeight: "calc(100vh - 182px)" }}
+            >
+              {cardFavorites.length === 0 ? (
+                <p className="font-poppins text-center text-2xl pt-10">
+                  There is no card to display.
+                </p>
+              ) : (
+                cardFavorites.map((cfavorite, index) => (
+                  <div
+                    key={index}
+                    className="rounded-[12px] flex justify-start items-stretch bg-white py-2.5 px-[9px] mt-[10px]"
+                    onClick={() =>
+                      showCardView(
+                        cfavorite.id,
+                        cfavorite.title,
+                        cfavorite.description,
+                        cfavorite.card_img,
+                        cfavorite.type
+                      )
+                    }
+                  >
+                    <img
+                      src={siteBaseUrl + "deckcards/" + cfavorite.card_img}
+                      alt={cfavorite.title}
+                      className="max-w-1/4 h-[100px] mr-3"
+                    />
+                    <div className="flex flex-col justify-between w-full">
+                      <div className="flex items-center justify-between">
+                        <p className="font-poppins font-semibold text-[16px] text-[#3F356E]">
+                          {cfavorite.title}
+                        </p>
 
-                    <button
-                      className="w-8 h-8 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
-                      onClick={(e) => onClickFavoriteIcon(e, cfavorite.id)}
-                    >
-                      {cfavorite.favorited ? (
-                        <FavoriteIcon sx={{ fontSize: 20 }} />
-                      ) : (
-                        <FavoriteBorderIcon sx={{ fontSize: 20 }} />
-                      )}
-                    </button>
+                        <button
+                          className="w-8 h-8 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
+                          onClick={(e) =>
+                            onClickCardFavoriteIcon(e, cfavorite.id)
+                          }
+                        >
+                          {cfavorite.favorited ? (
+                            <FavoriteIcon sx={{ fontSize: 20 }} />
+                          ) : (
+                            <FavoriteBorderIcon sx={{ fontSize: 20 }} />
+                          )}
+                        </button>
+                      </div>
+                      <p
+                        className="font-poppins text-[rgba(63,53,110,0.95)] text-[14px] font-light leading-[160%] text-base line-clamp-3 text-ellipsis"
+                        dangerouslySetInnerHTML={{
+                          __html: cfavorite.description,
+                        }}
+                      />
+                    </div>
                   </div>
-                  <p className="font-poppins text-[rgba(63,53,110,0.95)] text-[14px] font-light leading-[160%] text-base line-clamp-4">
-                    {cfavorite.description}
-                  </p>
-                </div>
-              </div>
-            ))}
+                ))
+              )}
+            </div>
           </TabPanel>
-          <TabPanel style={{ padding: "24px 0px" }} value="1">
-            {readFavorites.map((rfavorite, index) => (
-              <div
-                key={index}
-                className="rounded-[12px] flex justify-start items-stretch bg-white py-5 px-[9px] mb-[10px]"
-                onClick={() =>
-                  showCardView(
-                    rfavorite.id,
-                    rfavorite.title,
-                    rfavorite.description,
-                    rfavorite.img,
-                    rfavorite.type
-                  )
-                }
-              >
-                <img
-                  src={siteBaseUrl + "reading/" + rfavorite.img}
-                  alt={rfavorite.title}
-                  className="max-w-1/4 mr-3"
-                />
-                <div className="flex flex-col justify-between">
-                  <div className="flex items-center justify-between">
-                    <p className="font-poppins font-semibold text-4 text-[#3F356E]">
-                      {rfavorite.title}
-                    </p>
+          <TabPanel style={{ padding: "0px" }} value="1">
+            <div
+              className="overflow-y-auto overscroll-contain hide-scrollbar"
+              style={{ maxHeight: "calc(100vh - 182px)" }}
+            >
+              {readFavorites.length === 0 ? (
+                <p className="font-poppins text-center text-2xl pt-10">
+                  There is no reading to display.
+                </p>
+              ) : (
+                readFavorites.map((rfavorite, index) => (
+                  <div
+                    key={index}
+                    className="rounded-[12px] flex justify-start items-stretch bg-white py-2.5 px-[9px] mt-[10px]"
+                    onClick={() =>
+                      showCardView(
+                        rfavorite.id,
+                        rfavorite.title,
+                        rfavorite.description,
+                        rfavorite.img,
+                        rfavorite.type
+                      )
+                    }
+                  >
+                    <img
+                      src={siteBaseUrl + "reading/" + rfavorite.img}
+                      alt={rfavorite.title}
+                      className="max-w-1/4 h-[100px] mr-3"
+                    />
+                    <div className="flex flex-col justify-between">
+                      <div className="flex items-center justify-between">
+                        <p className="font-poppins font-semibold text-4 text-[#3F356E]">
+                          {rfavorite.title}
+                        </p>
+                      </div>
+                      <p className="font-poppins text-[rgba(63,53,110,0.95)] text-[14px] font-light leading-[160%] text-base line-clamp-3 text-ellipsis">
+                        {rfavorite.description}
+                      </p>
+                    </div>
                   </div>
-                  <p className="font-poppins text-[rgba(63,53,110,0.95)] text-[14px] font-light leading-[160%] text-base line-clamp-4">
-                    {rfavorite.description}
-                  </p>
-                </div>
-              </div>
-            ))}
+                ))
+              )}
+            </div>
           </TabPanel>
         </TabContext>
       </Box>

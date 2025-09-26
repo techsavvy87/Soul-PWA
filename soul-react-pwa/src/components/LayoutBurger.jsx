@@ -8,11 +8,11 @@ const LayoutBurger = ({ children }) => {
   const navigate = useNavigate();
   const { isLoading } = useSelector((state) => state.appsetting);
   return (
-    <div className="min-h-screen layout-burger px-5 py-10">
+    <div className="min-h-screen layout-burger px-5 pt-8 pb-5">
       {/* <div className="sticky top-0 mx-4"> */}
       <div className="flex items-center justify-between">
         <ArrowBackIcon
-          sx={{ fontSize: 35, color: "#8690FD" }}
+          className="text-[#8690FD] !w-[35px] !h-[35px]"
           onClick={() => navigate(-1)}
         />
         <NavigationDrawer />

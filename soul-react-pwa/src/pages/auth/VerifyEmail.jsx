@@ -42,16 +42,16 @@ const VerifyEmail = () => {
       <p className="mt-10 mb-3 text-center font-poppins text-2xl font-semibold text-[#3F356E]">
         Verify Your Email
       </p>
-      <p className="text-center font-poppins text-[13px] font-light text-[#433971]">
+      <p className="text-center font-poppins text-[14px] font-light text-[#433971]">
         Please enter the 6-digit code from your email
       </p>
 
       <div className="my-8">
         <CodeInput callback={onSubmitCode} />
       </div>
-      <p className="text-center font-poppins text-[13px] font-light text-[#433971]">
+      <p className="text-center font-poppins text-[14px] font-light text-[#433971]">
         Have an account?{" "}
-        <span className="text-center font-poppins text-[13px] font-light text-[#433971] underline font-medium">
+        <span className="text-center font-poppins text-[14px] text-[#433971] underline font-medium">
           Log in here
         </span>
       </p>

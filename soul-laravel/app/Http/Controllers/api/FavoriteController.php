@@ -14,7 +14,7 @@ class FavoriteController extends Controller
     public function toggleFavorite(Request $request)
     {
         $type = $request->type;
-        Log::info('Toggling favorite', ['type' => $type]);
+        
         // Card Favorite
         if ($type === 'card') {
             $userId = $request->userId;
@@ -25,7 +25,7 @@ class FavoriteController extends Controller
             $userId = $request->userId;
             $cardId = $request->readingId;
         }
-
+        
         // Find the favorite record
         $favorite = Favorite::where([
             'user_id' => $userId,

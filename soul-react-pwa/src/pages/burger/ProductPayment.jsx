@@ -88,7 +88,7 @@ const ProductPayment = () => {
   };
 
   return (
-    <div className="mt-6">
+    <div className="mt-2.5">
       {product && (
         <div className="rounded-[20px] shadow-[0_4px_4px_0_#00000033] ">
           {/* Product Image */}
@@ -99,8 +99,8 @@ const ProductPayment = () => {
           />
 
           {/* Product Details */}
-          <div className="p-5 rounded-b-[20px] border-[1.5px] border-[#ffffff80] border-t-0">
-            <div className="flex justify-between items-center pt-2">
+          <div className="p-5 rounded-b-[20px] border-[1.5px] border-[#ffffff80] border-t-0 pb-2.5">
+            <div className="flex justify-between items-center">
               <span className="first-letter:uppercase font-poppins font-semibold text-[14px] bg-blue-100 text-blue-800 text-xs me-2 px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300">
                 {type}
               </span>
@@ -118,11 +118,14 @@ const ProductPayment = () => {
             <h2 className="text-2xl text-white mt-4 font-ovo leading-snug">
               {product.title}
             </h2>
-
-            <p className="text-white text-lg mt-2 font-ovo leading-relaxed mb-10">
-              {product.description}
-            </p>
-
+            <div
+              className="overflow-y-auto overscroll-contain hide-scrollbar mb-2.5"
+              style={{ maxHeight: "calc(100vh - 436px)" }}
+            >
+              <p className="text-white text-lg mt-2 font-ovo leading-relaxed mb-2.5">
+                {product.description}
+              </p>
+            </div>
             {/* PayPal Button Container */}
             {!purchasedStatus && (
               <PayPalScriptProvider

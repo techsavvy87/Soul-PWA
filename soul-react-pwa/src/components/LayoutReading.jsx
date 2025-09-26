@@ -110,14 +110,16 @@ const LayoutReading = ({ children }) => {
       <div className="sticky top-0 mx-4">
         <div className="flex items-center justify-between pt-8">
           <ArrowBackIcon
-            sx={{ fontSize: 35, color: "#8690FD" }}
+            className="text-[#8690FD] !w-[35px] !h-[35px]"
             onClick={() => navigate(-1)}
           />
 
           <div className="flex">
-            <button className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition">
-              <IoIosSend size={24} onClick={() => setOpen(true)} />
-            </button>
+            {!path.startsWith("/reading/detail") && (
+              <button className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition">
+                <IoIosSend size={24} onClick={() => setOpen(true)} />
+              </button>
+            )}
             <button
               className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition mx-2"
               onClick={onClickFavoriteIcon}

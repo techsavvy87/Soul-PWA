@@ -140,7 +140,7 @@ const Home = () => {
       <p className="font-poppins text-white font-medium text-[22.5px]">
         Welcome Back, Paul&nbsp;&nbsp;✨
       </p>
-      <p className="font-poppins text-white font-light text-[17px] pt-3 pb-10">
+      <p className="font-poppins text-white font-light text-[17px] pt-3 pb-6">
         Choose a topic below to enjoy an oracle card reading and illuminate your
         life!
       </p>

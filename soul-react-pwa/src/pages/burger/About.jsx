@@ -34,34 +34,30 @@ const About = () => {
 
   return (
     <div>
-      <p className="font-poppins font-semibold text-white text-2xl text-center pt-5 pb-5">
-        About
-      </p>
-      <div className="bg-cover bg-center relative">
-        {about && (
-          <div className="px-2">
-            <div className="flex justify-between items-end mb-5">
-              <p className="font-poppins font-semibold text-yellow-400 text-2xl  pb-2">
-                {about.title}
-              </p>
-              {about.cover_img_url && (
-                <img
-                  src={about.cover_img_url}
-                  alt="Cover"
-                  className="w-28 h-28 object-cover rounded-lg ml-2"
-                />
-              )}
-            </div>
-
-            <p
-              className="pr-1 text-white text-lg leading-relaxed font-ovo mb-24"
-              style={{ whiteSpace: "pre-wrap" }}
-            >
+      {about && (
+        <div className="mt-2.5">
+          <div className="flex justify-between items-end mb-2.5">
+            <p className="font-poppins font-semibold text-yellow-400 text-2xl  pb-2">
+              {about.title}
+            </p>
+            {about.cover_img_url && (
+              <img
+                src={about.cover_img_url}
+                alt="Cover"
+                className="w-28 h-28 object-cover rounded-lg ml-2"
+              />
+            )}
+          </div>
+          <div
+            className="overflow-y-auto overscroll-contain hide-scrollbar"
+            style={{ maxHeight: "calc(100vh - 250px)" }}
+          >
+            <p className="pr-1 text-white text-[16px] leading-relaxed font-poppins whitespace-pre-wrap">
               {about.description}
             </p>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

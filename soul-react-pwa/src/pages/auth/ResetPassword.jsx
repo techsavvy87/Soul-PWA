@@ -103,7 +103,7 @@ const ResetPassword = () => {
     try {
       const result = await post(url, data);
       const resResult = result.data;
-      console.log("Response==", resResult);
+
       dispatch(setIsLoading({ isLoading: false }));
       if (resResult.status) {
         dispatch(
@@ -140,18 +140,18 @@ const ResetPassword = () => {
           <p className="mt-10 mb-3 text-center font-poppins text-2xl font-semibold text-[#3F356E]">
             Reset Password
           </p>
-          <p className="text-center font-poppins text-[13px] font-light text-[#433971]">
+          <p className="text-center font-poppins text-[14px] font-light text-[#433971]">
             Please enter the 6-digit code from your email
           </p>
 
           <div className="my-8">
             <CodeInput callback={onSubmitCode} />
           </div>
-          <p className="text-center font-poppins text-[13px] font-light text-[#433971]">
+          <p className="text-center font-poppins text-[14px] font-light text-[#433971]">
             Have an account?{" "}
             <Link
               to="/login"
-              className="text-center font-poppins text-[13px] font-light text-[#433971] underline font-medium"
+              className="text-center font-poppins text-[14px] text-[#433971] underline font-medium"
             >
               Log in here
             </Link>

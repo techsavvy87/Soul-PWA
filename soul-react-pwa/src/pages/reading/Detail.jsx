@@ -50,17 +50,15 @@ const ReadingDetail = () => {
           onLoad={handleImageLoad}
         />
       </div>
-      <div className="px-5 py-4">
+      <div className="py-4">
         <div
-          className="overflow-y-auto overscroll-contain mt-5"
+          className="overflow-y-auto overscroll-contain hide-scrollbar"
           style={{ maxHeight: "calc(100vh - 485px)" }}
         >
           <p
-            className="font-poppins text-[14px] font-semibold text-[#302853] leading-6 pt-3 text-left whitespace-pre-wrap"
-            style={{ whiteSpace: "pre-wrap" }}
-          >
-            {readingDetail.description}
-          </p>
+            className="font-poppins text-[18px] text-[#302853]  text-left whitespace-pre-wrap"
+            dangerouslySetInnerHTML={{ __html: readingDetail.description }}
+          />
         </div>
       </div>
     </div>

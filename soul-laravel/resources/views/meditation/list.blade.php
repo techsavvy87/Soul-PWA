@@ -23,7 +23,7 @@
 <div class="row" id="cancel-row">
     <div class="col-xl-12 col-lg-12 col-sm-12 layout-top-spacing layout-spacing">
         @include('layouts.alerts')
-        <h5 class="pt-2 pb-2">List of Meditations</h5>
+        <h5 class="pt-2 pb-2">Meditation</h5>
         <div class="widget-content widget-content-area br-8">
             <table id="meditation-list" class="table dt-table-hover" style="width:100%">
                 <thead>
@@ -55,8 +55,9 @@
                             <a href="{{ route('edit-meditation', ['id' => $meditation->id]) }}"><span
                                     class="inv-number word-break">{{ $meditation->title }}</span></a>
                         </td>
-                        <td class="mobile-hide">
-                            <p class="align-self-center mb-0 user-name word-break">
+                        <td class="mobile-hide" style="width: 50%;">
+                            <p class="align-self-center mb-0 user-name"
+                                style="white-space:normal; word-wrap:break-word;">
                                 {{ strlen(strip_tags($meditation->description)) > 240 ? substr(strip_tags($meditation->description), 0, 240)."..." : strip_tags($meditation->description) }}
                             </p>
                         </td>

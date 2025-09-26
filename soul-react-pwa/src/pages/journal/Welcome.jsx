@@ -5,12 +5,12 @@ import checkImg from "../../assets/imgs/check.png";
 const JournalWelcome = () => {
   const navigate = useNavigate();
   return (
-    <div className="min-h-screen layout-journal px-5 py-10 flex flex-col justify-center">
+    <div className="min-h-screen layout-journal px-5 py-8 flex flex-col justify-center">
       <img src={checkImg} alt="Logo" className="mx-auto w-21" />
       <p className="mt-5 mb-2 text-center font-poppins text-2xl font-semibold text-[#3F356E]">
         Journal Entry Deleted
       </p>
-      <p className="text-center font-poppins text-[13px] font-light text-[#433971] mb-13">
+      <p className="text-center font-poppins text-[14px] font-light text-[#433971] mb-13">
         You have successfully deleted your journal entry.
       </p>
       <button

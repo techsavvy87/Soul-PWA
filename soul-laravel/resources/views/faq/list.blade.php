@@ -11,7 +11,7 @@
 <div class="row" id="cancel-row">
     <div class="col-xl-12 col-lg-12 col-sm-12 layout-top-spacing layout-spacing">
         @include('layouts.alerts')
-        <h5 class="pt-2 pb-2">List of Faqs</h5>
+        <h5 class="pt-2 pb-2">FAQ</h5>
         <div class="widget-content widget-content-area br-8">
             <table id="deck-list" class="table dt-table-hover" style="width:100%">
                 <thead>
@@ -30,9 +30,9 @@
                             <a href="{{ route('edit-faq', ['id' => $faq->id]) }}"><span class="inv-number"
                                     style="white-space:pre-wrap; word-wrap:break-word">{{ $faq->question }}</span></a>
                         </td>
-                        <td>
+                        <td style="width: 60%;">
                             <p class="align-self-center mb-0 user-name"
-                                style="white-space:pre-wrap; word-wrap:break-word">
+                                style="white-space:normal; word-wrap:break-word;">
                                 {{ strlen(strip_tags($faq->answer)) > 240 ? substr(strip_tags($faq->answer), 0, 240)."..." : strip_tags($faq->answer) }}
                             </p>
                         </td>

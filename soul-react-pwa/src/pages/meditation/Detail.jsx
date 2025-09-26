@@ -54,9 +54,9 @@ const MeditationDetail = () => {
   };
 
   return (
-    <div className="min-h-screen meditation-list px-5 py-10">
+    <div className="min-h-screen meditation-list px-5 pt-8 pb-5">
       <JournalTop />
-      <p className="font-poppins font-semibold text-2xl text-center text-[#3F356E] pt-10 pb-8">
+      <p className="font-poppins font-semibold text-2xl text-center text-[#3F356E] pt-3 pb-2.5">
         Meditation Detail
       </p>
       <div>
@@ -73,8 +73,10 @@ const MeditationDetail = () => {
                 onClick={onPlayClick}
               />
               <div>
-                <p className="text-white font-poppins">Tap to Listen</p>
-                <p className="text-white font-poppins pt-0.5 text-sm">
+                <p className="text-white font-poppins text-[16px]">
+                  Tap to Listen
+                </p>
+                <p className="text-white font-poppins pt-0.5 text-[16px]">
                   {meditation?.duration}
                 </p>
               </div>
@@ -97,26 +99,26 @@ const MeditationDetail = () => {
             </div>
           )}
           <div
-            className="overflow-y-auto overscroll-contain mt-5"
+            className="overflow-y-auto overscroll-contain mt-5 hide-scrollbar"
             style={{
               maxHeight:
                 meditation?.type === "Text"
                   ? "calc(100vh - 428px)"
-                  : "calc(100vh - 500px)",
+                  : "calc(100vh - 475px)",
             }}
           >
-            <p className="text-[#ebd371] text-sm font-poppins font-semibold">
+            <p className="text-[#ebd371] text-[16px] font-poppins font-semibold">
               {new Date(meditation?.published_at).toLocaleDateString("en-US", {
                 year: "numeric",
                 month: "short",
                 day: "numeric",
               })}
             </p>
-            <p className="text-white font-poppins leading-6 pt-6 text-xl">
+            <p className="text-white font-poppins pt-3 text-xl">
               {meditation?.title}
             </p>
             <p
-              className="text-gray-100 font-poppins leading-6 pt-3"
+              className="text-gray-100 font-poppins pt-3 text-[17px]"
               style={{ whiteSpace: "pre-wrap" }}
             >
               {meditation?.description}

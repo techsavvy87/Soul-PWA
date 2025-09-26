@@ -45,44 +45,50 @@ const DeckCard = () => {
     <div className="min-h-screen favorite px-5 py-10">
       <div className="flex justify-between">
         <button
-          className="mb-5 w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
+          className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
           onClick={() => navigate(-1)}
         >
           <ArrowBackIcon size={24} />
         </button>
         <NavigationDrawer />
       </div>
-      <p className="font-poppins font-semibold text-white text-2xl text-center pt-5 pb-5">
+      <p className="font-poppins font-semibold text-white text-2xl text-center py-2.5">
         {deckTitle}'s Cards
       </p>
-      {cards.map((card, index) => (
-        <div
-          className="relative"
-          key={index}
-          onClick={() =>
-            showCardView(card.id, card.title, card.description, card.card_img)
-          }
-        >
+      <div
+        className="overflow-y-auto overscroll-contain hide-scrollbar"
+        style={{ maxHeight: "calc(100vh - 182px)" }}
+      >
+        {cards.map((card, index) => (
           <div
-            className={`rounded-[12px] flex justify-start items-stretch bg-white py-5 px-[9px] mb-[20px]`}
+            className="relative"
             key={index}
+            onClick={() =>
+              showCardView(card.id, card.title, card.description, card.card_img)
+            }
           >
-            <img
-              src={siteBaseUrl + "deckcards/" + card.card_img}
-              alt={card.title}
-              className="max-w-1/4 mr-3"
-            />
-            <div className="flex flex-col justify-between">
-              <p className="font-poppins font-semibold text-4 text-[#3F356E] mb-[10px]">
-                {card.title}
-              </p>
-              <p className="font-poppins text-[rgba(63,53,110,0.95)] text-[14px] font-light leading-[160%] text-base line-clamp-5">
-                {card.description}
-              </p>
+            <div
+              className={`rounded-[12px] flex justify-start items-stretch bg-white py-2.5 px-[9px] mb-[10px]`}
+              key={index}
+            >
+              <img
+                src={siteBaseUrl + "deckcards/" + card.card_img}
+                alt={card.title}
+                className="w-[50px] h-[100px] mr-3"
+              />
+              <div className="flex flex-col justify-between">
+                <p className="font-poppins font-semibold text-[16px] text-[#3F356E] mb-[10px]">
+                  {card.title}
+                </p>
+                <p
+                  className="font-poppins text-[rgba(63,53,110,0.95)] text-[14px] font-light leading-[160%] text-base line-clamp-3 text-ellipsis"
+                  dangerouslySetInnerHTML={{ __html: card.description }}
+                />
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
       <LoadingModal open={isLoading} />
     </div>
   );

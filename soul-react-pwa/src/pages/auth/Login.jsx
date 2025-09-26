@@ -107,7 +107,7 @@ const Login = () => {
       <form className="mt-4">
         <input
           type="email"
-          className="bg-[#FDFDFB] border-none mt-4 bg-primary-color border border-gray-300 text-gray-900 text-base rounded-md focus:outline-none focus:ring-0 block w-full p-2.5 "
+          className="bg-[#FDFDFB] border-none mt-4 bg-primary-color border border-gray-300 text-gray-900 text-base rounded-md focus:outline-none focus:ring-0 block w-full p-2.5"
           placeholder="Email address"
           required
           value={email}
@@ -118,9 +118,9 @@ const Login = () => {
           onChangePassword={(e) => setPassword(e.target.value)}
         />
 
-        <p className="text-center font-poppins text-[13px] font-light text-[#433971] mt-5">
+        <p className="text-center font-poppins text-[14px] font-light text-[#433971] mt-5">
           Forgot Password?
-          <span className="text-center font-poppins text-[13px] text-[#433971] underline font-medium">
+          <span className="text-center font-poppins text-[14px] text-[#433971] underline font-medium">
             <Link className="text-golden-color ml-2" to="/forgot-password">
               Reset Here
             </Link>
@@ -128,15 +128,15 @@ const Login = () => {
         </p>
         <button
           type="button"
-          className="tracking-wide font-poppins font-semibold text-white uppercase mt-5 bg-[#3F356E]   rounded-[38px] text-md w-full px-5 py-4 text-center"
+          className="tracking-wide font-poppins font-semibold text-white uppercase mt-5 bg-[#3F356E] rounded-[38px] text-md w-full px-5 py-4 text-center"
           onClick={onClickLoginBtn}
         >
           Log In
         </button>
-        <p className="mt-5 text-center font-poppins text-[13px] font-light text-[#433971]">
+        <p className="mt-5 text-center font-poppins text-[14px] font-light text-[#433971]">
           Don't have an account?{" "}
         </p>
-        <p className="text-center font-poppins text-[13px]  text-[#433971] underline font-medium">
+        <p className="text-center font-poppins text-[14px]  text-[#433971] underline font-medium">
           <Link to="/signup">Sign up Here</Link>
         </p>
       </form>

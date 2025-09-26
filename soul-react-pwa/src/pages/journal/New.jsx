@@ -71,38 +71,32 @@ const JournalNew = () => {
     }
   };
   return (
-    <div className="min-h-screen layout-journal px-5 py-10">
+    <div className="min-h-screen layout-journal px-5 py-8">
       <ThemeProvider theme={theme}>
         <JournalTop />
       </ThemeProvider>
-      <p className="font-poppins font-semibold text-[#3F356E] text-2xl text-center pt-5 pb-5">
+      <p className="font-poppins font-semibold text-[#3F356E] text-2xl text-center pb-5">
         My Journal
       </p>
       <form className="space-y-5">
         <div>
-          <label
-            htmlFor="journal-title"
-            className="font-poppins font-light text-[13px] text-[rgba(63,53,110,0.7)] block mb-[10px]"
-          >
+          <label className="font-poppins font-light text-[14px] text-[rgba(63,53,110,0.7)] block mb-[5px]">
             Title
           </label>
           <input
             type="text"
-            className="w-full border border-[rgba(161,142,255,0.5)] rounded-[12px] p-5 focus:border-[#3F356E]
-                      font-poppins font-normal text-[15.5px] text-[#3F356E] leading-[160%] bg-white"
+            className="focus:outline-none w-full border border-[rgba(161,142,255,0.5)] rounded-[12px] p-2.5 
+                      font-poppins font-normal text-[16px] text-[#3F356E] leading-[160%] bg-white"
             onChange={(e) => setJournal({ ...journal, title: e.target.value })}
           />
         </div>
         <div>
-          <label
-            htmlFor="journal-entry"
-            className="font-poppins font-light text-[13px] text-[rgba(63,53,110,0.7)] block mb-[10px]"
-          >
+          <label className="font-poppins font-light text-[14px] text-[rgba(63,53,110,0.7)] block mb-[5px]">
             Journal Entry
           </label>
           <textarea
-            className="w-full border border-[rgba(161,142,255,0.5)] rounded-[12px] p-5 focus:border-[#3F356E]
-                      font-poppins font-normal text-[15.5px] text-[#3F356E] leading-[160%] bg-white mb-[30px]"
+            className="w-full border border-[rgba(161,142,255,0.5)] rounded-[12px] p-5 
+                      font-poppins font-normal text-[16px] text-[#3F356E] leading-[160%] bg-white mb-[30px] focus:outline-none"
             rows="6"
             placeholder="Write your journal here..."
             onChange={(e) => setJournal({ ...journal, entry: e.target.value })}
@@ -117,7 +111,7 @@ const JournalNew = () => {
         </button>
         <button
           type="button"
-          className="w-full text-[#3F356E] font-poppins font-semibold text-[16px] py-4 rounded-[38px] border-[#3F356E] border-[1.8px]"
+          className="w-full text-[#3F356E] font-poppins font-semibold text-[16px] pt-[15px] pb-[15px] rounded-[38px] border-[#3F356E] border-[1px]"
           onClick={() => navigate("/journal")}
         >
           CANCEL

@@ -27,6 +27,9 @@ const CardAdj = () => {
   const prevPageName = useSelector((state) => state.appsetting.prevPageName);
   const storedCards = useSelector((state) => state.appsetting.cards);
 
+  const lastCardAdjId = Number(window.sessionStorage.getItem("lastCardAdjId"));
+  let initialSlideIndex = cards?.findIndex((r) => r.id === lastCardAdjId) ?? 0;
+
   useEffect(() => {
     const getCards = async () => {
       const url = "/get-adj-cards";
@@ -48,11 +51,13 @@ const CardAdj = () => {
     if (!hasSubmitted.current) {
       hasSubmitted.current = true;
       if (prevPageName === "Adjective") {
+        initialSlideIndex = 1;
         getCards();
       } else {
         if (storedCards && storedCards.length > 0) {
           setCards(storedCards);
         } else {
+          initialSlideIndex = 1;
           getCards();
         }
       }
@@ -88,7 +93,7 @@ const CardAdj = () => {
           spaceBetween={0}
           centeredSlides={true}
           slidesPerView={"auto"}
-          initialSlide={1}
+          initialSlide={initialSlideIndex}
           style={{ padding: "0 60px" }}
           onRealIndexChange={(swiper) => {
             // Get the real index in loop mode
@@ -100,6 +105,8 @@ const CardAdj = () => {
             }
             dispatch(setActiveCardId({ cardId: currentCard.id }));
             window.sessionStorage.setItem("cardId", currentCard.id);
+            // Save to sessionStorage so it persists across pages
+            window.sessionStorage.setItem("lastCardAdjId", currentCard.id);
           }}
         >
           {cards.map((card, index) => (

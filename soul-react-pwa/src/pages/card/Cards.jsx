@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setIsLoading,
@@ -21,6 +21,11 @@ const Cards = () => {
   const [cards, setCards] = useState([]);
   const prevPageName = useSelector((state) => state.appsetting.prevPageName);
   const storedCards = useSelector((state) => state.appsetting.cards);
+  const { isLoading } = useSelector((state) => state.appsetting);
+
+  const lastCardId = Number(window.sessionStorage.getItem("lastCardId"));
+  let initialSlideIndex = cards?.findIndex((r) => r.id === lastCardId) ?? 0;
+
   useEffect(() => {
     let tier = sessionStorage.getItem("tier");
     let type = sessionStorage.getItem("type");
@@ -51,16 +56,23 @@ const Cards = () => {
     if (!hasSubmitted.current) {
       hasSubmitted.current = true;
       if (prevPageName === "home") {
+        initialSlideIndex = 1; // Always start from the second slide when coming from burger menu
         getCards();
       } else {
         if (storedCards && storedCards.length > 0) {
           setCards(storedCards);
         } else {
+          initialSlideIndex = 1; // Always start from the second slide when coming from burger menu
           getCards();
         }
       }
     }
   }, []);
+
+  // Don't render until API finishes
+  if (isLoading) {
+    return null; // or return <Spinner /> if you want a loader
+  }
 
   return (
     <div className="cardswiper">
@@ -85,12 +97,12 @@ const Cards = () => {
           className="absolute left-1/2"
           modules={[Pagination, Autoplay]}
           pagination={{ clickable: true }}
-          autoplay={{ delay: 50000 }}
+          autoplay={{ delay: 5000 }}
           spaceBetween={0}
           slidesPerView="auto"
           centeredSlides={true}
           loop={true}
-          initialSlide={1}
+          initialSlide={initialSlideIndex}
           style={{ padding: "0 60px" }}
           onRealIndexChange={(swiper) => {
             // Get the real index in loop mode
@@ -102,6 +114,8 @@ const Cards = () => {
             }
             dispatch(setActiveCardId({ cardId: currentCard.id }));
             window.sessionStorage.setItem("cardId", currentCard.id);
+            // Save to sessionStorage so it persists across pages
+            window.sessionStorage.setItem("lastCardId", currentCard.id);
           }}
         >
           {cards.map((card, index) => (

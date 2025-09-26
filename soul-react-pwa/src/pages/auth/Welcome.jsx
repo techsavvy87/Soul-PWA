@@ -99,7 +99,7 @@ const Welcome = () => {
           <p className="mt-5 mb-2 text-center font-poppins text-2xl font-semibold text-[#3F356E]">
             Great News
           </p>
-          <p className="text-center font-poppins text-[13px] font-light text-[#433971]">
+          <p className="text-center font-poppins text-[14px] font-light text-[#433971]">
             Your account has been created
           </p>
           <button

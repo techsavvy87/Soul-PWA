@@ -15,7 +15,6 @@ class ReadingController extends Controller
         $minCount = 4;
         $total = Reading::count();
         $takeCount = rand($minCount, max($minCount, $total));
-        $randomCount = rand($minCount, $total); // random number of readings
         $readings = Reading::inRandomOrder()->limit($takeCount)->get();
 
         return response()->json([

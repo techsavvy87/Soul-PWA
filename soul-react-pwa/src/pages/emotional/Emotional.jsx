@@ -87,24 +87,34 @@ const Emotional = () => {
     navigate("/cards-adjective", { state: { adjSort, adjIds } });
   };
 
+  const handleCheckboxChange = (id, isChecked) => {
+    setCheckedStates((prev) => ({
+      ...prev,
+      [id]: isChecked,
+    }));
+  };
+
   return (
-    <div className="min-h-screen emotional px-5 py-10">
+    <div className="min-h-screen emotional px-5 pt-8 pb-5">
       <div className="flex justify-between">
         <button
-          className="mb-5 w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
+          className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
           onClick={() => navigate(-1)}
         >
           <ArrowBackIcon size={24} />
         </button>
         <NavigationDrawer />
       </div>
-      <p className="font-poppins font-semibold text-white text-2xl text-center pt-8">
+      <p className="font-poppins font-semibold text-white text-2xl text-center">
         {name}
       </p>
-      <p className="font-poppins text-white font-light text-[13px] pt-5 pb-10 text-center">
+      <p className="font-poppins text-white font-light text-[14px] py-2.5 text-center">
         Select up to three situations you’re currently facing <br />
       </p>
-      <div className="max-h-[55vh] overflow-y-auto hide-scrollbar">
+      <div
+        className="overflow-y-auto hide-scrollbar"
+        style={{ maxHeight: "calc(100vh - 290px)" }}
+      >
         {emotions.map((emotion) => (
           <div
             className={`flex justify-between items-center px-[35px] py-[5px] mb-[10px] rounded-[12px] ${
@@ -139,7 +149,9 @@ const Emotional = () => {
             <p className="font-poppins text-4">{emotion.name}</p>
             <Checkbox
               checked={checkedStates[emotion.id]}
-              onChange={(e) => onChange(emotion.id, e.target.checked)}
+              onChange={(e) =>
+                handleCheckboxChange(emotion.id, e.target.checked)
+              }
               checkedIcon={
                 <SvgIcon
                   sx={{
@@ -188,7 +200,7 @@ const Emotional = () => {
       </div>
       <button
         type="button"
-        className="shadow-[inset_0_0_10px_rgba(255,255,255,0.4)] tracking-wide font-poppins font-semibold text-white uppercase mt-8 bg-[#8690FD] rounded-[38px] text-md w-full px-5 py-4 text-center"
+        className="shadow-[inset_0_0_10px_rgba(255,255,255,0.4)] tracking-wide font-poppins font-semibold text-white uppercase mt-5 bg-[#8690FD] rounded-[38px] text-md w-full px-5 py-4 text-center"
         onClick={() => onClickOKBtn()}
       >
         OK

@@ -7,7 +7,7 @@ const JournalTop = () => {
   return (
     <div className="flex justify-between items-center">
       <ArrowBackIcon
-        sx={{ fontSize: 35, color: "#3F356E" }}
+        className="text-[#3F356E] !w-[35px] !h-[35px]"
         onClick={() => navigate(-1)}
       />
       <NavigationDrawer />

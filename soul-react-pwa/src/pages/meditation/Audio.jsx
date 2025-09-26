@@ -99,10 +99,10 @@ const MeditationAudio = () => {
     <div className="min-h-screen meditation-media px-5 py-10">
       <JournalTop />
       <div className="text-center pt-[45%]">
-        <p className="font-poppins font-semibold text-[#3f356e] text-3xl w-19/20">
+        <p className="font-poppins font-semibold text-[#3f356e] text-3xl">
           {meditation?.title}
         </p>
-        <p className="font-poppins font-light text-[14px] text-[#695AAF] uppercase mt-5">
+        <p className="font-poppins font-light text-[16px] text-[#695AAF] uppercase mt-5">
           {new Date(meditation?.published_at).toLocaleDateString("en-US", {
             year: "numeric",
             month: "short",
@@ -112,7 +112,7 @@ const MeditationAudio = () => {
         <div className="flex justify-between items-center mt-20 w-7/8 mx-auto">
           <img
             src={AudioBackward}
-            className="w-8 h-auto"
+            className="h-auto w-[50px]"
             alt="audio backward"
             onClick={() => onForwardBackward("backward")}
           />
@@ -131,7 +131,7 @@ const MeditationAudio = () => {
           )}
           <img
             src={AudioForward}
-            className="w-8 h-auto"
+            className="h-auto w-[50px]"
             alt="audio forward"
             onClick={() => onForwardBackward("forward")}
           />

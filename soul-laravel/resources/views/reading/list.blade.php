@@ -84,7 +84,7 @@
 <div class="row ps-5 pe-5" id="cancel-row">
     <div class="col-xl-12 col-lg-12 col-sm-12 layout-top-spacing layout-spacing">
         @include('layouts.alerts')
-        <h5 class="pt-2 pb-2">Deck List</h5>
+        <h5 class="pt-2 pb-2">Reading</h5>
         <div class="widget-content widget-content-area br-8">
             <table id="deck-category-list" class="table dt-table-hover" style="width:100%">
                 <thead>
@@ -102,14 +102,16 @@
                         <td class="checkbox-column">{{ $loop->index + 1 }}</td>
                         <td>
                             <img src="{{ asset('storage/reading/'. $reading->img) }}" class="rounded"
-                                alt="deck category picture" style="object-fit: contain; width: 80px; height: 60px">
+                                alt="deck category picture" style="object-fit: contain; width: 50px; height: 80px">
                         </td>
                         <td>
                             <span class="inv-number">{{ $reading->title }}</span>
                         </td>
                         <td>
-                            <p class="align-self-center mb-0 user-name word-break two-lines"
-                                style="white-space:pre-wrap; word-wrap:break-word">{{ $reading->description }}</p>
+                            <p class="align-self-center mb-0 user-name"
+                                style="white-space:normal; word-wrap:break-word; width: 300px;">
+                                {{ strlen(html_entity_decode(strip_tags($reading->description), ENT_QUOTES | ENT_HTML5, 'UTF-8')) > 140 ? substr(html_entity_decode(strip_tags($reading->description), ENT_QUOTES | ENT_HTML5, 'UTF-8'), 0, 140)."..." : html_entity_decode(strip_tags($reading->description), ENT_QUOTES | ENT_HTML5, 'UTF-8') }}
+                            </p>
                         </td>
                         <td>
                             <a class="badge badge-light-primary text-start me-2 action-edit"
@@ -205,8 +207,44 @@
 @section('page-js')
 <script src="{{ asset('src/plugins/src/table/datatable/datatables.js') }}"></script>
 <script src="{{ asset('src/plugins/src/table/datatable/button-ext/dataTables.buttons.min.js') }}"></script>
+<script src="https://cdn.tiny.cloud/1/1okcindws6nfj21mgjbkioz8h4pk8dywvqhvquwztzmoy1ci/tinymce/8/tinymce.min.js"
+    referrerpolicy="origin" crossorigin="anonymous"></script>
+
 <script>
 $(document).ready(function() {
+    // Initialize TinyMCE editor
+    tinymce.init({
+        selector: 'textarea',
+        plugins: [
+            // Core editing features
+            'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'link', 'lists', 'media',
+            'searchreplace', 'table', 'visualblocks', 'wordcount',
+            // Your account includes a free trial of TinyMCE premium features
+            // Try the most popular premium features until Oct 6, 2025:
+            'checklist', 'mediaembed', 'casechange', 'formatpainter', 'pageembed', 'a11ychecker',
+            'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode',
+            'advtemplate', 'ai',
+            'uploadcare', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags',
+            'autocorrect', 'typography', 'inlinecss', 'markdown', 'importword', 'exportword',
+            'exportpdf'
+        ],
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography uploadcare | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+        tinycomments_mode: 'embedded',
+        tinycomments_author: 'Author name',
+        mergetags_list: [{
+                value: 'First.Name',
+                title: 'First Name'
+            },
+            {
+                value: 'Email',
+                title: 'Email'
+            },
+        ],
+        ai_request: (request, respondWith) => respondWith.string(() => Promise.reject(
+            'See docs to implement AI Assistant')),
+        uploadcare_public_key: '1114b17e8b338420f727',
+    });
+
     $('.uploadFile').change(function() {
         var maxSizeInBytes = 1024 * 1024 * 2; //2M
 
@@ -344,6 +382,7 @@ function openAddModal() {
 }
 
 function openEditModal(reading) {
+    console.log('AAA=', reading.description);
     $('#category_modal #add_category_title').hide();
     $('#category_modal #edit_category_title').show();
 
@@ -353,7 +392,7 @@ function openEditModal(reading) {
     $('#category_form').attr('action', "{{ route('update-reading') }}")
     $('#category_form #category_id').val(reading.id)
     $('#category_form #info_title').val(reading.title)
-    $('#category_form #info_description').val(reading.description)
+    tinymce.get('info_description').setContent(reading.description);
     $('input[type=file]').val('')
 
     if (reading.img)
@@ -364,7 +403,7 @@ function openEditModal(reading) {
 
 function submitCategory() {
     const infoTitle = $('#info_title').val();
-    const infoDescription = $('#info_description').val();
+    const infoDescription = tinymce.get('info_description').getContent();
     const isInfoImg = $('input[name=info_img]')[0].files.length !== 0;
     const categoryId = $('#category_id').val();
 

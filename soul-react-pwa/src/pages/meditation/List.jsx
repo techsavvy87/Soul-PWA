@@ -13,11 +13,12 @@ import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import VideoCameraFrontIcon from "@mui/icons-material/VideoCameraFront";
 
 const MeditationList = () => {
-  const [meditations, setMeditations] = useState(null);
+  const [meditations, setMeditations] = useState([]);
   const renderStatus = useRef(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isLoading } = useSelector((state) => state.appsetting);
+
   useEffect(() => {
     if (!renderStatus.current) {
       getMeditations();
@@ -43,63 +44,74 @@ const MeditationList = () => {
     }
   };
 
+  // Don't render until API finishes
+  if (isLoading) {
+    return <LoadingModal open={isLoading} />; // or return <Spinner /> if you want a loader
+  }
+
   return (
-    <div className="min-h-screen meditation-list px-5 py-10">
+    <div className="min-h-screen meditation-list px-5 pt-8 pb-5">
       <JournalTop />
-      <p className="font-poppins font-semibold text-2xl text-center text-[#3F356E] pt-10 pb-8">
+      <p className="font-poppins font-semibold text-2xl text-center text-[#3F356E] pt-3 pb-2.5">
         Guided Meditations
       </p>
-      {meditations && meditations.length > 0 ? (
-        meditations.map((meditation) => (
-          <div
-            key={meditation.id}
-            className="rounded-[12px]  p-5 space-y-3 mb-5 bg-gradient-to-b from-[#9AA2FE] to-[#5E4DF9] text-white"
-            onClick={() => navigate(`/meditation/detail/${meditation.id}`)}
-          >
-            <div className="flex justify-between items-center">
-              <div>
-                <AccessTimeIcon sx={{ fontSize: "20px", marginRight: "5px" }} />
-                <span className="font-poppins font-medium text-[13px]">
-                  {meditation.duration}
-                </span>
+      <div
+        className="overflow-y-auto overscroll-contain card-detail"
+        style={{ maxHeight: "calc(100vh - 154px)" }}
+      >
+        {meditations.length === 0 ? (
+          <p className="font-poppins text-center text-2xl pt-10">
+            There are no meditations available.
+          </p>
+        ) : (
+          meditations.map((meditation) => (
+            <div
+              key={meditation.id}
+              className="rounded-[12px]  px-[9px] py-2.5 space-y-3 mb-2.5 bg-gradient-to-b from-[#9AA2FE] to-[#5E4DF9] text-white"
+              onClick={() => navigate(`/meditation/detail/${meditation.id}`)}
+            >
+              <div className="flex justify-between items-center">
+                <div>
+                  <AccessTimeIcon
+                    sx={{ fontSize: "20px", marginRight: "5px" }}
+                  />
+                  <span className="font-poppins font-medium text-[14px]">
+                    {meditation.duration}
+                  </span>
+                </div>
+                <div>
+                  <span className="font-poppins font-medium text-[14px]">
+                    {meditation.type === "Text" ? (
+                      <AutoStoriesIcon className="text-white text-xl mr-1.5" />
+                    ) : meditation.type === "Audio" ? (
+                      <VolumeUpIcon className="text-white text-xl mr-1.5" />
+                    ) : (
+                      <VideoCameraFrontIcon
+                        className="text-white text-xl mr-1.5"
+                        style={{ fontSize: 19 }}
+                      />
+                    )}
+                    {new Date(meditation.published_at).toLocaleDateString(
+                      "en-US",
+                      {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      }
+                    )}
+                  </span>
+                </div>
               </div>
-              <div>
-                <span className="font-poppins font-medium text-[13px]">
-                  {meditation.type === "Text" ? (
-                    <AutoStoriesIcon className="text-white text-xl mr-1.5" />
-                  ) : meditation.type === "Audio" ? (
-                    <VolumeUpIcon className="text-white text-xl mr-1.5" />
-                  ) : (
-                    <VideoCameraFrontIcon
-                      className="text-white text-xl mr-1.5"
-                      style={{ fontSize: 19 }}
-                    />
-                  )}
-                  {new Date(meditation.published_at).toLocaleDateString(
-                    "en-US",
-                    {
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
-                    }
-                  )}
-                </span>
-              </div>
+              <p className="font-poppins font-semibold text-[16px] mb-0">
+                {meditation.title}
+              </p>
+              <p className="font-poppins font-light text-[14px] line-clamp-2 text-ellipsis">
+                {meditation.description}
+              </p>
             </div>
-            <p className="font-poppins font-semibold text-[16px]">
-              {meditation.title}
-            </p>
-            <p className="font-poppins font-light text-[14px] line-clamp-4">
-              {meditation.description}
-            </p>
-          </div>
-        ))
-      ) : (
-        <p className="font-poppins font-medium text-center text-white">
-          No guided meditations available.
-        </p>
-      )}
-      <LoadingModal open={isLoading} />
+          ))
+        )}
+      </div>
     </div>
   );
 };

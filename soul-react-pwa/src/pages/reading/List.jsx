@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect, useRef } from "react";
 import { get } from "../../utils/axios";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -7,7 +7,11 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { siteBaseUrl } from "../../utils/constants";
-import { setActiveReadingId, setIsLoading } from "../../redux/appsettingSlice";
+import {
+  setActiveReadingId,
+  setIsLoading,
+  setExtraReadings,
+} from "../../redux/appsettingSlice";
 import { useNavigate } from "react-router-dom";
 
 const ReadingList = () => {
@@ -16,6 +20,13 @@ const ReadingList = () => {
   const renderStatus = useRef(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const prevPageName = useSelector((state) => state.appsetting.prevPageName);
+  const storedReadings = useSelector((state) => state.appsetting.readings);
+  const { isLoading } = useSelector((state) => state.appsetting);
+
+  const lastReadingId = Number(window.sessionStorage.getItem("lastReadingId"));
+  let initialSlideIndex =
+    readingList?.findIndex((r) => r.id === lastReadingId) ?? 0;
 
   useEffect(() => {
     // Fetch reading list data
@@ -24,6 +35,7 @@ const ReadingList = () => {
       try {
         const response = await get("/reading/all");
         setReadingList(response.data.data);
+        dispatch(setExtraReadings({ readings: response.data.data }));
       } catch (error) {
         console.error("Error fetching reading list:", error);
       } finally {
@@ -33,53 +45,92 @@ const ReadingList = () => {
 
     if (!renderStatus.current) {
       renderStatus.current = true;
-      fetchReadingList();
+
+      if (prevPageName === "burger") {
+        initialSlideIndex = 1; // Always start from the second slide when coming from burger menu
+        fetchReadingList();
+      } else {
+        if (storedReadings && storedReadings.length > 0) {
+          setReadingList(storedReadings);
+        } else {
+          initialSlideIndex = 1; // Always start from the second slide when coming from burger menu
+          fetchReadingList();
+        }
+      }
     }
   }, []);
 
+  // Don't render until API finishes
+  if (isLoading) {
+    return null; // or return <Spinner /> if you want a loader
+  }
   return (
-    <div className="h-[calc(100vh-80px)] flex items-center justify-center">
-      <Swiper
-        modules={[Pagination, Autoplay]}
-        pagination={{ clickable: true }}
-        autoplay={{ delay: 300000 }}
-        spaceBetween={0}
-        slidesPerView="auto"
-        centeredSlides={true}
-        loop={true}
-        initialSlide={1}
-        style={{ padding: "0 60px" }}
-        onRealIndexChange={(swiper) => {
-          // Get the real index in loop mode
-          const realIndex = swiper.realIndex;
-          const currentReading = readingList?.[realIndex];
-          if (!currentReading) {
-            console.warn("Reading not found for index:", realIndex);
-            return;
-          }
+    <div className="cardswiper">
+      {readingList.length === 0 ? (
+        <p className="font-poppins text-center text-2xl">
+          There is no reading to display.
+        </p>
+      ) : readingList.length === 1 ? (
+        <div className="max-w-[80%] m-auto bg-white p-[10px]">
+          <img
+            src={siteBaseUrl + "reading/" + readingList[0].img}
+            alt={`slide-0`}
+            className="w-full m-auto rounded-[15px]"
+            onClick={() => {
+              window.sessionStorage.setItem(
+                "reading",
+                JSON.stringify(readingList[0])
+              );
+              navigate("/reading/fullscreen");
+            }}
+          />
+        </div>
+      ) : (
+        <Swiper
+          className="absolute left-1/2"
+          modules={[Pagination, Autoplay]}
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 5000 }}
+          spaceBetween={0}
+          slidesPerView="auto"
+          centeredSlides={true}
+          loop={true}
+          initialSlide={initialSlideIndex}
+          style={{ padding: "0 60px" }}
+          onRealIndexChange={(swiper) => {
+            // Get the real index in loop mode
+            const realIndex = swiper.realIndex;
+            const currentReading = readingList?.[realIndex];
+            if (!currentReading) {
+              console.warn("Reading not found for index:", realIndex);
+              return;
+            }
 
-          setReadingId(currentReading.id);
-          dispatch(setActiveReadingId({ readingId: currentReading.id }));
-          window.sessionStorage.setItem("readingId", currentReading.id);
-        }}
-      >
-        {readingList.map((reading, index) => (
-          <SwiperSlide key={index} style={{ width: "100%" }}>
-            <img
-              src={siteBaseUrl + "reading/" + reading.img}
-              alt={`slide-${index}`}
-              className="w-full m-auto rounded-[15px] object-cover"
-              onClick={() => {
-                window.sessionStorage.setItem(
-                  "reading",
-                  JSON.stringify(reading)
-                );
-                navigate("/reading/fullscreen");
-              }}
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+            setReadingId(currentReading.id);
+            dispatch(setActiveReadingId({ readingId: currentReading.id }));
+            window.sessionStorage.setItem("readingId", currentReading.id);
+            // Save to sessionStorage so it persists across pages
+            window.sessionStorage.setItem("lastReadingId", currentReading.id);
+          }}
+        >
+          {readingList.map((reading, index) => (
+            <SwiperSlide key={index} style={{ width: "100%" }}>
+              <img
+                src={siteBaseUrl + "reading/" + reading.img}
+                alt={`slide-${index}`}
+                className="w-full m-auto rounded-[15px] object-cover"
+                onClick={() => {
+                  window.sessionStorage.setItem(
+                    "reading",
+                    JSON.stringify(reading)
+                  );
+                  navigate("/reading/fullscreen");
+                }}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
     </div>
   );
 };
