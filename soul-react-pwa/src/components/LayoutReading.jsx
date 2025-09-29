@@ -20,10 +20,11 @@ import FlipImg from "../assets/imgs/flip.png";
 const LayoutReading = ({ children }) => {
   const [isFavorited, setIsFavorited] = useState(false);
   const [email, setEmail] = useState("");
+  const [open, setOpen] = useState(false);
   const { isLoading } = useSelector((state) => state.appsetting);
   const userId = useSelector((state) => state.auth.user.id);
+  const elementEmpty = useSelector((state) => state.appsetting.elementEmpty);
   const readingId = window.sessionStorage.getItem("readingId");
-  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -107,47 +108,56 @@ const LayoutReading = ({ children }) => {
 
   return (
     <div className="min-h-screen layout-card">
-      <div className="sticky top-0 mx-4">
-        <div className="flex items-center justify-between pt-8">
+      {!elementEmpty ? (
+        <div className="sticky top-0 mx-4">
+          <div className="flex items-center justify-between pt-8">
+            <ArrowBackIcon
+              className="text-[#8690FD] !w-[35px] !h-[35px]"
+              onClick={() => navigate(-1)}
+            />
+
+            <div className="flex">
+              {!path.startsWith("/reading/detail") && (
+                <button className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition">
+                  <IoIosSend size={24} onClick={() => setOpen(true)} />
+                </button>
+              )}
+              <button
+                className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition mx-2"
+                onClick={onClickFavoriteIcon}
+              >
+                {isFavorited ? (
+                  <FavoriteIcon size={24} />
+                ) : (
+                  <FavoriteBorderIcon size={24} />
+                )}
+              </button>
+              {!(
+                path === "/reading" ||
+                path === "/reading/" ||
+                path.startsWith("/reading/detail")
+              ) && (
+                <button
+                  className="w-24 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
+                  onClick={() => navigate("/reading/detail/" + readingId)}
+                >
+                  <img src={FlipImg} alt="" />
+                  <span className="ml-2 font-poppins font-semibold text-[16px]">
+                    FLIP
+                  </span>
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="flex items-center justify-between pt-8 mx-4">
           <ArrowBackIcon
             className="text-[#8690FD] !w-[35px] !h-[35px]"
             onClick={() => navigate(-1)}
           />
-
-          <div className="flex">
-            {!path.startsWith("/reading/detail") && (
-              <button className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition">
-                <IoIosSend size={24} onClick={() => setOpen(true)} />
-              </button>
-            )}
-            <button
-              className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition mx-2"
-              onClick={onClickFavoriteIcon}
-            >
-              {isFavorited ? (
-                <FavoriteIcon size={24} />
-              ) : (
-                <FavoriteBorderIcon size={24} />
-              )}
-            </button>
-            {!(
-              path === "/reading" ||
-              path === "/reading/" ||
-              path.startsWith("/reading/detail")
-            ) && (
-              <button
-                className="w-24 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
-                onClick={() => navigate("/reading/detail/" + readingId)}
-              >
-                <img src={FlipImg} alt="" />
-                <span className="ml-2 font-poppins font-semibold text-[16px]">
-                  FLIP
-                </span>
-              </button>
-            )}
-          </div>
         </div>
-      </div>
+      )}
       {children}
       <LoadingModal open={isLoading} />
       {/* Email Modal */}

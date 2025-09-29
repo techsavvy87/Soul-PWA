@@ -11,6 +11,7 @@ import {
   setActiveReadingId,
   setIsLoading,
   setExtraReadings,
+  setElementEmpty,
 } from "../../redux/appsettingSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -36,6 +37,14 @@ const ReadingList = () => {
         const response = await get("/reading/all");
         setReadingList(response.data.data);
         dispatch(setExtraReadings({ readings: response.data.data }));
+
+        // When there is at least one reading, display icon like send, favorite, flip
+        if (response.data.data.length == 0) {
+          // Handle empty reading list case
+          dispatch(setElementEmpty({ elementEmpty: true }));
+        } else {
+          dispatch(setElementEmpty({ elementEmpty: false }));
+        }
       } catch (error) {
         console.error("Error fetching reading list:", error);
       } finally {
@@ -67,7 +76,7 @@ const ReadingList = () => {
   return (
     <div className="cardswiper">
       {readingList.length === 0 ? (
-        <p className="font-poppins text-center text-2xl">
+        <p className="font-poppins text-center text-2xl pt-[50%] px-[10px]">
           There is no reading to display.
         </p>
       ) : readingList.length === 1 ? (

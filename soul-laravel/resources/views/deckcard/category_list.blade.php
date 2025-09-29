@@ -94,7 +94,7 @@
                         <td class="checkbox-column">{{ $loop->index + 1 }}</td>
                         <td>
                             <img src="{{ asset('storage/decks/'. $category->info_img) }}" class="rounded"
-                                alt="deck category picture" style="object-fit: contain; width: 80px; height: 60px">
+                                alt="deck category picture" style="object-fit: contain; width: 50px; height: 80px">
                         </td>
                         <td>
                             <span class="inv-number">{{ $category->cname }}</span>

@@ -143,7 +143,7 @@ const Favorites = () => {
               style={{ maxHeight: "calc(100vh - 182px)" }}
             >
               {cardFavorites.length === 0 ? (
-                <p className="font-poppins text-center text-2xl pt-10">
+                <p className="font-poppins text-center text-2xl  pt-[50%]">
                   There is no card to display.
                 </p>
               ) : (
@@ -203,7 +203,7 @@ const Favorites = () => {
               style={{ maxHeight: "calc(100vh - 182px)" }}
             >
               {readFavorites.length === 0 ? (
-                <p className="font-poppins text-center text-2xl pt-10">
+                <p className="font-poppins text-center text-2xl pt-[50%]">
                   There is no reading to display.
                 </p>
               ) : (

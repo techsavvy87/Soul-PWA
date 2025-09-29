@@ -48,7 +48,7 @@
                                 style="object-fit: cover; width: 80px; height: 60px">
                             @else
                             <img src="{{ asset('storage/meditations/'. $meditation->cover_img) }}" class="rounded"
-                                alt="meditation picture" style="object-fit: cover; width: 80px; height: 60px">
+                                alt="meditation picture" style="object-fit: cover; width: 50px; height: 80px">
                             @endif
                         </td>
                         <td>

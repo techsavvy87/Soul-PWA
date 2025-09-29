@@ -7,6 +7,7 @@ import {
   setIsLoading,
   setActiveCardId,
   setExtraCards,
+  setElementEmpty,
 } from "../../redux/appsettingSlice";
 import { post } from "../../utils/axios";
 import { siteBaseUrl } from "../../utils/constants";
@@ -47,6 +48,12 @@ const Cards = () => {
         }
         setCards(response.data.result);
         dispatch(setExtraCards({ cards: response.data.result }));
+        if (response.data.result.length === 0) {
+          // Handle empty card list case
+          dispatch(setElementEmpty({ elementEmpty: true }));
+        } else {
+          dispatch(setElementEmpty({ elementEmpty: false }));
+        }
       } catch (error) {
         console.log("Error:", error);
       } finally {
@@ -77,7 +84,7 @@ const Cards = () => {
   return (
     <div className="cardswiper">
       {cards.length === 0 ? (
-        <p className="font-poppins text-center text-2xl">
+        <p className="font-poppins text-center text-2xl pt-[50%]">
           There is no card to display.
         </p>
       ) : cards.length === 1 ? (

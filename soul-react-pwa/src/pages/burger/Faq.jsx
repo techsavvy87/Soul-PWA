@@ -72,7 +72,7 @@ const Faq = () => {
         style={{ maxHeight: "calc(100vh - 128px)" }}
       >
         {faqs.length === 0 ? (
-          <p className="font-poppins text-center text-2xl pt-10">
+          <p className="font-poppins text-center text-2xl pt-[50%]">
             There are no FAQs to display.
           </p>
         ) : (

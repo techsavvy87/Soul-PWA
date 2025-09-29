@@ -137,7 +137,7 @@ const Home = () => {
         </div>
         <NavigationDrawer />
       </div>
-      <p className="font-poppins text-white font-medium text-[22.5px]">
+      <p className="font-poppins text-white font-medium text-[22px] pt-[10%]">
         Welcome Back, Paul&nbsp;&nbsp;✨
       </p>
       <p className="font-poppins text-white font-light text-[17px] pt-3 pb-6">
@@ -174,7 +174,7 @@ const Home = () => {
               <img
                 src={siteBaseUrl + "events/" + event.img_url}
                 alt={`event-${index}`}
-                className="rounded-[16px] min-w-full h-[150px] object-cover"
+                className="rounded-[16px] w-full h-auto"
               />
               <p className="w-full font-poppins text-[17.5px] text-white text-center absolute top-[80%] left-1/2 -translate-x-1/2 -translate-y-1/2">
                 {(userTier === "Free" && event.level === "Free") ||

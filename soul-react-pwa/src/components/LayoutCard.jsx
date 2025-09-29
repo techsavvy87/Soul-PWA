@@ -27,6 +27,7 @@ const LayoutCard = ({ children }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const path = location.pathname;
+  const elementEmpty = useSelector((state) => state.appsetting.elementEmpty);
   const type = "card";
 
   const onClickFavoriteIcon = () => {
@@ -111,39 +112,40 @@ const LayoutCard = ({ children }) => {
             className="text-[#8690FD] !w-[35px] !h-[35px]"
             onClick={() => navigate(-1)}
           />
-
-          <div className="flex">
-            {!path.startsWith("/card/detail") && (
-              <button className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition">
-                <IoIosSend size={24} onClick={() => setOpen(true)} />
-              </button>
-            )}
-            <button
-              className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition mx-2"
-              onClick={onClickFavoriteIcon}
-            >
-              {isFavorited ? (
-                <FavoriteIcon size={24} />
-              ) : (
-                <FavoriteBorderIcon size={24} />
+          {!elementEmpty && (
+            <div className="flex">
+              {!path.startsWith("/card/detail") && (
+                <button className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition">
+                  <IoIosSend size={24} onClick={() => setOpen(true)} />
+                </button>
               )}
-            </button>
-            {!(
-              path === "/cards" ||
-              path === "/cards/" ||
-              path.startsWith("/card/detail")
-            ) && (
               <button
-                className="w-24 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
-                onClick={() => navigate("/card/detail/" + cardId)}
+                className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition mx-2"
+                onClick={onClickFavoriteIcon}
               >
-                <img src={FlipImg} alt="" />
-                <span className="ml-2 font-poppins font-semibold text-[16px]">
-                  FLIP
-                </span>
+                {isFavorited ? (
+                  <FavoriteIcon size={24} />
+                ) : (
+                  <FavoriteBorderIcon size={24} />
+                )}
               </button>
-            )}
-          </div>
+              {!(
+                path === "/cards" ||
+                path === "/cards/" ||
+                path.startsWith("/card/detail")
+              ) && (
+                <button
+                  className="w-24 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
+                  onClick={() => navigate("/card/detail/" + cardId)}
+                >
+                  <img src={FlipImg} alt="" />
+                  <span className="ml-2 font-poppins font-semibold text-[16px]">
+                    FLIP
+                  </span>
+                </button>
+              )}
+            </div>
+          )}
         </div>
       </div>
       {children}

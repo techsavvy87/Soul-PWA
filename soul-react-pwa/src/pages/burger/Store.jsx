@@ -53,7 +53,7 @@ const Store = () => {
         style={{ maxHeight: "calc(100vh - 150px)" }}
       >
         {storeItem.length === 0 ? (
-          <p className="font-poppins text-center text-2xl pt-10">
+          <p className="font-poppins text-center text-2xl pt-[50%]">
             There are no items in the store.
           </p>
         ) : (

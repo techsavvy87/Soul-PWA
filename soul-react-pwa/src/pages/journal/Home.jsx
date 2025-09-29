@@ -73,7 +73,7 @@ const JournalHome = () => {
         style={{ maxHeight: "calc(100vh - 210px)" }}
       >
         {journals.length === 0 ? (
-          <p className="font-poppins text-center text-2xl pt-10">
+          <p className="font-poppins text-center text-2xl pt-[50%]">
             There is no journal to display.
           </p>
         ) : (

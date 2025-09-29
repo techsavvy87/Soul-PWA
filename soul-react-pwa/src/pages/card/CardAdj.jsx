@@ -7,6 +7,7 @@ import {
   setIsLoading,
   setActiveCardId,
   setExtraCards,
+  setElementEmpty,
 } from "../../redux/appsettingSlice";
 import { post } from "../../utils/axios";
 import { siteBaseUrl } from "../../utils/constants";
@@ -42,6 +43,14 @@ const CardAdj = () => {
         const response = await post(url, data);
         setCards(response.data.result);
         dispatch(setExtraCards({ cards: response.data.result }));
+
+        // When there is at least one card, display icon like send, favorite, flip
+        if (response.data.result.length === 0) {
+          // Handle empty card list case
+          dispatch(setElementEmpty({ elementEmpty: true }));
+        } else {
+          dispatch(setElementEmpty({ elementEmpty: false }));
+        }
       } catch (error) {
         console.log("Error:", error);
       } finally {
@@ -66,7 +75,7 @@ const CardAdj = () => {
   return (
     <div className="cardswiper">
       {cards.length === 0 ? (
-        <p className="font-poppins text-center text-2xl">
+        <p className="font-poppins text-center text-2xl pt-[50%]">
           There is no card to display.
         </p>
       ) : cards.length === 1 ? (
@@ -80,9 +89,6 @@ const CardAdj = () => {
               navigate("/card/fullscreen");
             }}
           />
-          <p className="font-poppins font-semibold text-2xl text-center text-[#3F356E]">
-            {cards[0].title}
-          </p>
         </div>
       ) : (
         <Swiper
@@ -120,12 +126,6 @@ const CardAdj = () => {
                   navigate("/card/fullscreen");
                 }}
               />
-              <p className="font-poppins font-bold text-black inline-block  absolute bottom-[5%] left-1/2 -translate-x-1/2 py-1 px-6 text-[13px] bg-white text-center">
-                {card.title}
-              </p>
-              <p className="font-bold text-black absolute bottom-[4%] w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                {card.number}
-              </p>
             </SwiperSlide>
           ))}
         </Swiper>
