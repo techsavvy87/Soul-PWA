@@ -107,11 +107,6 @@ const LayoutCard = ({ children }) => {
     }
   };
 
-  // const goPreviousPage = () => {
-  //   console.log("goPreviousPage", -1);
-  //   navigate(-1);
-  // };
-
   return (
     <div className="min-h-screen layout-card">
       <div className="px-5 pt-8 pb-5">
@@ -145,6 +140,7 @@ const LayoutCard = ({ children }) => {
               {!(
                 path === "/cards" ||
                 path === "/cards/" ||
+                path === "/cards-adjective" ||
                 path.startsWith("/card/detail")
               ) && (
                 <button
