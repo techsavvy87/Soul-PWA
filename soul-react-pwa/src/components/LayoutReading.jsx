@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import LoopIcon from "@mui/icons-material/Loop";
 import { useSelector, useDispatch } from "react-redux";
 import LoadingModal from "./LoadingModal";
 import { post } from "../utils/axios";
 import { useNavigate, useLocation } from "react-router-dom";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { IoIosSend } from "react-icons/io";
 import { Modal } from "react-responsive-modal";
 import CloseIcon from "@mui/icons-material/Close";
@@ -16,6 +14,9 @@ import ToastLayout from "./ToastLayout";
 import { setIsLoading } from "../redux/appsettingSlice";
 import { hostingDomain } from "../utils/constants";
 import FlipImg from "../assets/imgs/flip.png";
+import AppHeader from "./AppHeader";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const LayoutReading = ({ children }) => {
   const [isFavorited, setIsFavorited] = useState(false);
@@ -30,6 +31,7 @@ const LayoutReading = ({ children }) => {
   const location = useLocation();
   const path = location.pathname;
   const type = "reading";
+  const theme = createTheme();
 
   const onClickFavoriteIcon = () => {
     try {
@@ -108,14 +110,18 @@ const LayoutReading = ({ children }) => {
 
   return (
     <div className="min-h-screen layout-card">
-      {!elementEmpty ? (
-        <div className="sticky top-0 mx-4">
-          <div className="flex items-center justify-between pt-8">
-            <ArrowBackIcon
-              className="text-[#8690FD] !w-[35px] !h-[35px]"
-              onClick={() => navigate(-1)}
-            />
-
+      <div className="px-5 pt-8 pb-5">
+        <AppHeader />
+      </div>
+      <div className="mx-5 flex items-center justify-center">
+        <ThemeProvider theme={theme}>
+          <ArrowBackIcon
+            className="!w-[35px] !h-[35px] text-[#8690FD] absolute left-[7%]"
+            onClick={() => navigate(-1)}
+          />
+        </ThemeProvider>
+        <div className="flex">
+          {!elementEmpty ? (
             <div className="flex">
               {!path.startsWith("/reading/detail") && (
                 <button className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition">
@@ -148,16 +154,16 @@ const LayoutReading = ({ children }) => {
                 </button>
               )}
             </div>
-          </div>
+          ) : (
+            <div className="flex items-center justify-between mx-4">
+              <ArrowBackIcon
+                className="text-[#8690FD] !w-[35px] !h-[35px]"
+                onClick={() => navigate(-1)}
+              />
+            </div>
+          )}
         </div>
-      ) : (
-        <div className="flex items-center justify-between pt-8 mx-4">
-          <ArrowBackIcon
-            className="text-[#8690FD] !w-[35px] !h-[35px]"
-            onClick={() => navigate(-1)}
-          />
-        </div>
-      )}
+      </div>
       {children}
       <LoadingModal open={isLoading} />
       {/* Email Modal */}

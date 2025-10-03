@@ -15,6 +15,8 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
+import AppHeader from "../../components/AppHeader";
+import SubHeader from "../../components/SubHeader";
 
 const Favorites = () => {
   const hasSubmitted = useRef(false);
@@ -107,18 +109,8 @@ const Favorites = () => {
 
   return (
     <div className="min-h-screen favorite px-5 pt-8 pb-5">
-      <div className="flex justify-between">
-        <button
-          className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
-          onClick={() => navigate(-1)}
-        >
-          <ArrowBackIcon size={24} />
-        </button>
-        <NavigationDrawer />
-      </div>
-      <p className="font-poppins font-semibold text-white text-2xl text-center pt-0 pb-1">
-        Favorites
-      </p>
+      <AppHeader />
+      <SubHeader pageName="Favorites" textColor="white" />
 
       <Box sx={{ width: "100%", typography: "body1" }}>
         <TabContext value={value}>
@@ -140,7 +132,7 @@ const Favorites = () => {
           <TabPanel style={{ padding: "0px" }} value="2">
             <div
               className="overflow-y-auto overscroll-contain hide-scrollbar"
-              style={{ maxHeight: "calc(100vh - 182px)" }}
+              style={{ maxHeight: "calc(100vh - 208px)" }}
             >
               {cardFavorites.length === 0 ? (
                 <p className="font-poppins text-center text-2xl  pt-[50%]">
@@ -200,7 +192,7 @@ const Favorites = () => {
           <TabPanel style={{ padding: "0px" }} value="1">
             <div
               className="overflow-y-auto overscroll-contain hide-scrollbar"
-              style={{ maxHeight: "calc(100vh - 182px)" }}
+              style={{ maxHeight: "calc(100vh - 208px)" }}
             >
               {readFavorites.length === 0 ? (
                 <p className="font-poppins text-center text-2xl pt-[50%]">

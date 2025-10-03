@@ -13,6 +13,7 @@ import ToastLayout from "../../components/ToastLayout";
 import { login } from "../../redux/authSlice";
 import { useNavigate } from "react-router-dom";
 import ConfirmDialog from "../../components/ConfirmDialog";
+import SubHeader from "../../components/SubHeader";
 
 const Subscription = () => {
   const [plans, setPlans] = useState([]);
@@ -219,11 +220,9 @@ const Subscription = () => {
         "disable-funding": "card,credit,paylater",
       }}
     >
-      <div className="min-h-[calc(100vh-180px)] flex items-center">
+      <div className="flex items-center">
         <div>
-          <p className="font-poppins font-semibold text-white text-2xl text-center pt-5 pb-5">
-            Choose Your Plan
-          </p>
+          <SubHeader pageName="Choose Your Plan" textColor="white" />
           <p className="text-center text-[18px] font-ovo text-gray-300 mt-7 mx-8 leading-6">
             Enjoy these perks when you subscribe to the Blended Soul app
           </p>

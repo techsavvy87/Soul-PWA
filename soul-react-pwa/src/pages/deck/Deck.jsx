@@ -1,14 +1,13 @@
 import { useEffect, useState, useRef } from "react";
-import NavigationDrawer from "../../components/NavigationDrawer";
 import { get } from "../../utils/axios";
 import { siteBaseUrl } from "../../utils/constants";
 import { setIsLoading } from "../../redux/appsettingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingModal from "../../components/LoadingModal";
 import lock from "../../assets/imgs/lock.png";
-import Tooltip from "@mui/material/Tooltip";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
+import AppHeader from "../../components/AppHeader";
+import SubHeader from "../../components/SubHeader";
 
 const Deck = () => {
   const [decks, setDecks] = useState([]);
@@ -39,21 +38,11 @@ const Deck = () => {
 
   return (
     <div className="min-h-screen favorite px-5 py-10">
-      <div className="flex justify-between">
-        <button
-          className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
-          onClick={() => navigate(-1)}
-        >
-          <ArrowBackIcon size={24} />
-        </button>
-        <NavigationDrawer />
-      </div>
-      <p className="font-poppins font-semibold text-white text-2xl text-center pt-0 pb-2.5">
-        Decks
-      </p>
+      <AppHeader />
+      <SubHeader pageName="Decks" textColor="white" />
       <div
         className="overflow-y-auto overscroll-contain hide-scrollbar"
-        style={{ maxHeight: "calc(100vh - 150px)" }}
+        style={{ maxHeight: "calc(100vh - 186px)" }}
       >
         {decks.map((deck, index) => (
           <div className="relative" key={index}>

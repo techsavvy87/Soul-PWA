@@ -6,8 +6,8 @@ import { get } from "../../utils/axios";
 import LoadingModal from "../../components/LoadingModal";
 import { setIsLoading } from "../../redux/appsettingSlice";
 import { siteBaseUrl } from "../../utils/constants";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import NavigationDrawer from "../../components/NavigationDrawer";
+import AppHeader from "../../components/AppHeader";
+import SubHeader from "../../components/SubHeader";
 
 const DeckCard = () => {
   const { id } = useParams();
@@ -43,21 +43,11 @@ const DeckCard = () => {
 
   return (
     <div className="min-h-screen favorite px-5 py-10">
-      <div className="flex justify-between">
-        <button
-          className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
-          onClick={() => navigate(-1)}
-        >
-          <ArrowBackIcon size={24} />
-        </button>
-        <NavigationDrawer />
-      </div>
-      <p className="font-poppins font-semibold text-white text-2xl text-center py-2.5">
-        {deckTitle}'s Cards
-      </p>
+      <AppHeader />
+      <SubHeader pageName="Cards" textColor="white" />
       <div
         className="overflow-y-auto overscroll-contain hide-scrollbar"
-        style={{ maxHeight: "calc(100vh - 182px)" }}
+        style={{ maxHeight: "calc(100vh - 202px)" }}
       >
         {cards.map((card, index) => (
           <div

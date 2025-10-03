@@ -13,18 +13,15 @@ const ReadingFullScreen = () => {
   }, [dispatch]);
 
   return (
-    <div className="relative w-screen" style={{ height: "calc(100vh - 80px)" }}>
-      <div
-        className="absolute left-1/2"
-        style={{
-          top: "40%",
-          transform: "translate(-50%, -50%)",
-        }}
-      >
+    <div
+      className="relative w-screen"
+      style={{ height: "calc(100vh - 150px)" }}
+    >
+      <div className="flex justify-center">
         {reading?.img && (
           <img
             src={siteBaseUrl + "reading/" + reading.img}
-            className="w-auto max-w-[90vw] object-contain"
+            className="w-auto max-w-[70vw] h-auto mt-5 object-contain"
             style={{
               maxHeight: "calc(100% - 0px)",
             }}

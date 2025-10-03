@@ -41,7 +41,7 @@ const CardDetail = () => {
   };
 
   return (
-    <div className="text-center mt-8 mx-4">
+    <div className="text-center mt-4 mx-4">
       <div className="bg-white p-[15px]  inline-block">
         <img
           src={siteBaseUrl + "deckcards/" + cardDetail.card_img}
@@ -53,7 +53,7 @@ const CardDetail = () => {
       <div className="py-4">
         <div
           className="overflow-y-auto overscroll-contain card-detail"
-          style={{ maxHeight: "calc(100vh - 485px)" }}
+          style={{ maxHeight: "calc(100vh - 535px)" }}
         >
           <p
             className="text-[18px] text-[#302853]  text-left whitespace-pre-wrap"

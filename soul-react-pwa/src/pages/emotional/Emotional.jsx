@@ -12,6 +12,7 @@ import toast from "react-simple-toasts";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { setPrevPageName } from "../../redux/appsettingSlice";
+import AppHeader from "../../components/AppHeader";
 
 const Emotional = () => {
   let tier = sessionStorage.getItem("tier");
@@ -96,28 +97,20 @@ const Emotional = () => {
 
   return (
     <div className="min-h-screen emotional px-5 pt-8 pb-5">
-      <div className="flex justify-between">
-        <button
-          className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
-          onClick={() => navigate(-1)}
-        >
-          <ArrowBackIcon size={24} />
-        </button>
-        <NavigationDrawer />
-      </div>
-      <p className="font-poppins font-semibold text-white text-2xl text-center">
+      <AppHeader />
+      <p className="font-poppins font-semibold text-white text-2xl text-center pt-5">
         {name}
       </p>
-      <p className="font-poppins text-white font-light text-[14px] py-2.5 text-center">
-        Select up to three situations you’re currently facing <br />
+      <p className="font-poppins text-white font-light text-[14px] pt-2.5 pb-[30px] text-center">
+        Select up to three situations you’re <br /> currently aware of
       </p>
       <div
-        className="overflow-y-auto hide-scrollbar"
-        style={{ maxHeight: "calc(100vh - 290px)" }}
+        className="overflow-y-auto hide-scrollbar grid grid-cols-2"
+        style={{ maxHeight: "calc(100vh - 312px)" }}
       >
         {emotions.map((emotion) => (
           <div
-            className={`flex justify-between items-center px-[35px] py-[5px] mb-[10px] rounded-[12px] ${
+            className={`flex items-center mb-[10px] rounded-[12px] ${
               checkedStates[emotion.id]
                 ? "situation-checked"
                 : "situation-unchecked"
@@ -146,7 +139,6 @@ const Emotional = () => {
               }));
             }}
           >
-            <p className="font-poppins text-4">{emotion.name}</p>
             <Checkbox
               checked={checkedStates[emotion.id]}
               onChange={(e) =>
@@ -195,6 +187,9 @@ const Emotional = () => {
                 },
               }}
             />
+            <p className="font-poppins text-4 first-letter:uppercase ml-[10px]">
+              {emotion.name}
+            </p>
           </div>
         ))}
       </div>

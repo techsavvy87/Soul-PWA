@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import VideoCameraFrontIcon from "@mui/icons-material/VideoCameraFront";
+import AppHeader from "../../components/AppHeader";
+import SubHeader from "../../components/SubHeader";
 
 const MeditationList = () => {
   const [meditations, setMeditations] = useState([]);
@@ -51,13 +53,11 @@ const MeditationList = () => {
 
   return (
     <div className="min-h-screen meditation-list px-5 pt-8 pb-5">
-      <JournalTop />
-      <p className="font-poppins font-semibold text-2xl text-center text-[#3F356E] pt-3 pb-2.5">
-        Guided Meditations
-      </p>
+      <AppHeader />
+      <SubHeader pageName="Guided Meditations" textColor="#3F356E" />
       <div
         className="overflow-y-auto overscroll-contain card-detail"
-        style={{ maxHeight: "calc(100vh - 154px)" }}
+        style={{ maxHeight: "calc(100vh - 174px)" }}
       >
         {meditations.length === 0 ? (
           <p className="font-poppins text-center text-2xl pt-[50%]">

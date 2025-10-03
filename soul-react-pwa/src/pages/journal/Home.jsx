@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import JournalTop from "../../components/JournalTop";
 import { useNavigate, useLocation } from "react-router-dom";
 import toast from "react-simple-toasts";
 import ToastLayout from "../../components/ToastLayout";
@@ -7,6 +6,8 @@ import { useSelector, useDispatch } from "react-redux";
 import LoadingModal from "../../components/LoadingModal";
 import { setIsLoading } from "../../redux/appsettingSlice";
 import { getWithParams } from "../../utils/axios";
+import AppHeader from "../../components/AppHeader";
+import SubHeader from "../../components/SubHeader";
 
 const JournalHome = () => {
   const navigate = useNavigate();
@@ -56,11 +57,9 @@ const JournalHome = () => {
     }
   }, []);
   return (
-    <div className="min-h-screen journal-home px-5 py-8">
-      <JournalTop />
-      <p className="font-poppins font-semibold text-[#3F356E] text-2xl text-center pb-5">
-        My Journal
-      </p>
+    <div className="min-h-screen journal-home px-5 pt-8 pb-5">
+      <AppHeader />
+      <SubHeader pageName="My Journal" textColor="#3F356E" />
       <button
         className="w-full text-[#3F356E] font-poppins font-semibold text-[17px] py-2.5 rounded-[12px] 
                         border border-[rgba(161,142,255,0.5)] border-dashed bg-[rgba(161,142,255,0.5)]"
@@ -70,7 +69,7 @@ const JournalHome = () => {
       </button>
       <div
         className="overflow-y-auto overscroll-contain hide-scrollbar"
-        style={{ maxHeight: "calc(100vh - 210px)" }}
+        style={{ maxHeight: "calc(100vh - 206px)" }}
       >
         {journals.length === 0 ? (
           <p className="font-poppins text-center text-2xl pt-[50%]">

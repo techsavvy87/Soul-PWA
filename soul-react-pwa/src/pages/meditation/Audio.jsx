@@ -6,12 +6,13 @@ import LoadingModal from "../../components/LoadingModal";
 import { setIsLoading } from "../../redux/appsettingSlice";
 import toast from "react-simple-toasts";
 import ToastLayout from "../../components/ToastLayout";
-import JournalTop from "../../components/JournalTop";
 import AudioBackward from "../../assets/imgs/audio_backward_icon.png";
 import AudioForward from "../../assets/imgs/audio_forward_icon.png";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 import { formatTime } from "../../utils/constants";
+import AppHeader from "../../components/AppHeader";
+import SubHeader from "../../components/SubHeader";
 
 const MeditationAudio = () => {
   const { id } = useParams();
@@ -97,9 +98,10 @@ const MeditationAudio = () => {
 
   return (
     <div className="min-h-screen meditation-media px-5 py-10">
-      <JournalTop />
-      <div className="text-center pt-[45%]">
-        <p className="font-poppins font-semibold text-[#3f356e] text-3xl">
+      <AppHeader />
+      <SubHeader pageName="Audio" textColor="#3F356E" />
+      <div className="text-center pt-[20%]">
+        <p className="font-poppins font-semibold text-[#3f356e] text-2xl">
           {meditation?.title}
         </p>
         <p className="font-poppins font-light text-[16px] text-[#695AAF] uppercase mt-5">

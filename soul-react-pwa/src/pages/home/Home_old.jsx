@@ -6,13 +6,13 @@ import { siteBaseUrl } from "../../utils/constants";
 import { setIsLoading, setPrevPageName } from "../../redux/appsettingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingModal from "../../components/LoadingModal";
-import lockImg from "../../assets/imgs/lock.png";
+import lock from "../../assets/imgs/lock.png";
 import Tooltip from "@mui/material/Tooltip";
 import { NEW_PUSH_NOTI_PUBLIC_KEY } from "../../utils/constants";
 import { post } from "../../utils/axios";
 import toast from "react-simple-toasts";
 import ToastLayout from "../../components/ToastLayout";
-import ArrowImg from "../../assets/imgs/arrow.png";
+import LogoImg from "../../assets/imgs/logo.png";
 
 const Home = () => {
   const [events, setEvents] = useState([]);
@@ -128,21 +128,13 @@ const Home = () => {
 
   return (
     <div>
-      <p className="font-poppins text-[#FFFFFFFA] font-light text-[12px] py-[25px]">
+      <p className="font-poppins text-[#FFFFFFFA] font-light text-[12px] py-5">
         To awaken and heal, choose the reading that resonates.
       </p>
-      <div>
+      <div className="grid grid-cols-2 gap-4">
         {events.map((event, index) => (
           <div
-            className={`flex justify-between items-center border border-[#FFFFFF80] rounded-[12px] pl-3 pr-[14px] py-2 mb-3 
-                        ${
-                          userTier === "Free" && event.level === "Paid"
-                            ? "bg-[#4333B2]/30"
-                            : ""
-                        }`}
-            style={{
-              boxShadow: "inset 0px 4px 24px 0px rgba(252, 230, 255, 0.2)",
-            }}
+            className="relative w-full"
             key={index}
             onClick={() =>
               onClickFreeImg(
@@ -153,35 +145,44 @@ const Home = () => {
               )
             }
           >
+            {/* {userTier === "Free" && event.level === "Paid" ? (
+              <Tooltip title="Upgrade to Paid" className="cursor-not-allowed">
+                <span className="absolute inset-0 z-10 cursor-not-allowed py-4 px-5" />
+              </Tooltip>
+            ) : null} */}
             <div
-              className={`flex items-center ${
-                userTier === "Free" && event.level === "Paid" ? "z-[-1]" : ""
+              key={index}
+              className={`relative ${
+                userTier === "Free" && event.level === "Paid"
+                  ? "blur-[3px]"
+                  : ""
               }`}
             >
               <img
                 src={siteBaseUrl + "events/" + event.img_url}
                 alt={`event-${index}`}
+                className="rounded-[16px] w-full h-auto"
               />
-              <p className="font-poppins text-[18px] text-white text-center font-normal leading-[130%] ml-5">
-                {event.name}
+              <p className="w-full font-poppins text-[17.5px] text-white text-center absolute top-[80%] left-1/2 -translate-x-1/2 -translate-y-1/2">
+                {(userTier === "Free" && event.level === "Free") ||
+                userTier === "Paid"
+                  ? event.name
+                  : null}
               </p>
             </div>
-            <div className="flex items-center">
-              {userTier === "Free" && event.level === "Paid" && (
+
+            {userTier === "Free" && event.level === "Paid" && (
+              <>
                 <img
-                  className="w-[21px] h-[26px] mr-5"
-                  src={lockImg}
-                  alt="lock"
+                  src={lock}
+                  alt="locked"
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
                 />
-              )}
-              <img
-                className={`w-[7px] h-[14px] ${
-                  userTier === "Free" && event.level === "Paid" ? "z-[-1]" : ""
-                }`}
-                src={ArrowImg}
-                alt="arrow"
-              />
-            </div>
+                <p className="w-full font-poppins text-[17.5px] text-white text-center absolute top-[80%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+                  {event.name}
+                </p>
+              </>
+            )}
           </div>
         ))}
       </div>

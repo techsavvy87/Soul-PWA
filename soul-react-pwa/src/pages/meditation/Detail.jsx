@@ -4,11 +4,12 @@ import toast from "react-simple-toasts";
 import { setIsLoading } from "../../redux/appsettingSlice";
 import { get } from "../../utils/axios";
 import ToastLayout from "../../components/ToastLayout";
-import JournalTop from "../../components/JournalTop";
 import LoadingModal from "../../components/LoadingModal";
 import { useParams, useNavigate } from "react-router-dom";
 import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
 import ReactPlayer from "react-player";
+import AppHeader from "../../components/AppHeader";
+import SubHeader from "../../components/SubHeader";
 
 const MeditationDetail = () => {
   const audioRef = useRef(null);
@@ -55,10 +56,8 @@ const MeditationDetail = () => {
 
   return (
     <div className="min-h-screen meditation-list px-5 pt-8 pb-5">
-      <JournalTop />
-      <p className="font-poppins font-semibold text-2xl text-center text-[#3F356E] pt-3 pb-2.5">
-        Meditation Detail
-      </p>
+      <AppHeader />
+      <SubHeader pageName="Detail" textColor="#3F356E" />
       <div>
         <img
           src={meditation?.cover_img_url}
@@ -104,7 +103,7 @@ const MeditationDetail = () => {
               maxHeight:
                 meditation?.type === "Text"
                   ? "calc(100vh - 428px)"
-                  : "calc(100vh - 475px)",
+                  : "calc(100vh - 493px)",
             }}
           >
             <p className="text-[#ebd371] text-[16px] font-poppins font-semibold">

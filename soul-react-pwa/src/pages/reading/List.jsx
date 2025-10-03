@@ -99,7 +99,7 @@ const ReadingList = () => {
           className="absolute left-1/2"
           modules={[Pagination, Autoplay]}
           pagination={{ clickable: true }}
-          autoplay={{ delay: 5000 }}
+          autoplay={{ delay: 50000 }}
           spaceBetween={0}
           slidesPerView="auto"
           centeredSlides={true}

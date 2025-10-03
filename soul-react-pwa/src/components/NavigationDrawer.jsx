@@ -49,7 +49,7 @@ const NavigationDrawer = () => {
     <div>
       <button
         onClick={toggleDrawer(true)}
-        className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
+        className="w-12.5 h-12.5 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
       >
         <MenuIcon size={24} />
       </button>

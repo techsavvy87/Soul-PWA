@@ -4,6 +4,7 @@ import toast from "react-simple-toasts";
 import { setIsLoading } from "../../redux/appsettingSlice";
 import { get } from "../../utils/axios";
 import ToastLayout from "../../components/ToastLayout";
+import SubHeader from "../../components/SubHeader";
 
 const About = () => {
   const [about, setAbout] = useState(null);
@@ -36,6 +37,7 @@ const About = () => {
     <div>
       {about && (
         <div className="mt-2.5">
+          <SubHeader pageName="" textColor="white" />
           <div className="flex justify-between items-end mb-2.5">
             <p className="font-poppins font-semibold text-yellow-400 text-2xl  pb-2">
               {about.title}
@@ -50,7 +52,7 @@ const About = () => {
           </div>
           <div
             className="overflow-y-auto overscroll-contain hide-scrollbar"
-            style={{ maxHeight: "calc(100vh - 250px)" }}
+            style={{ maxHeight: "calc(100vh - 258px)" }}
           >
             <p className="pr-1 text-white text-[16px] leading-relaxed font-poppins whitespace-pre-wrap">
               {about.description}

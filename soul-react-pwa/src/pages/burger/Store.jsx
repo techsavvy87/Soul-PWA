@@ -6,6 +6,7 @@ import { setIsLoading } from "../../redux/appsettingSlice";
 import { get } from "../../utils/axios";
 import ToastLayout from "../../components/ToastLayout";
 import { siteBaseUrl } from "../../utils/constants";
+import SubHeader from "../../components/SubHeader";
 
 const Store = () => {
   const [storeItem, setStoreItem] = useState([]);
@@ -45,12 +46,10 @@ const Store = () => {
   }
   return (
     <div>
-      <p className="font-poppins font-semibold text-white text-2xl text-center">
-        Store
-      </p>
+      <SubHeader pageName="Store" textColor="white" />
       <div
         className="flex justify-between flex-wrap mt-2.5 overflow-y-auto overscroll-contain hide-scrollbar"
-        style={{ maxHeight: "calc(100vh - 150px)" }}
+        style={{ maxHeight: "calc(100vh - 168px)" }}
       >
         {storeItem.length === 0 ? (
           <p className="font-poppins text-center text-2xl pt-[50%]">
@@ -61,11 +60,10 @@ const Store = () => {
             <div
               key={index}
               className="mb-[10px] bg-white rounded-[16px] overflow-hidden w-[48%] shadow-[0_4px_20px_rgba(0,0,0,0.1)]"
-              onClick={() =>
-                navigate(`/product-payment/${item.id}`, {
-                  state: { type: item.type },
-                })
-              }
+              onClick={() => {
+                window.sessionStorage.setItem("storeType", item.type);
+                navigate(`/product-payment/${item.id}`);
+              }}
             >
               <img
                 src={`${siteBaseUrl}store/${item.img}`}

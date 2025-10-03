@@ -5,6 +5,7 @@ import { setIsLoading } from "../../redux/appsettingSlice";
 import Logo from "../../assets/imgs/logo.png";
 import { get } from "../../utils/axios";
 import ToastLayout from "../../components/ToastLayout";
+import SubHeader from "../../components/SubHeader";
 
 const Concept = () => {
   const [description, setDescription] = useState("");
@@ -37,9 +38,11 @@ const Concept = () => {
 
   return (
     <div>
-      <p className="font-poppins font-semibold text-white text-2xl text-center pb-5">
-        What is Blended Soul?
-      </p>
+      <SubHeader
+        pageName="What is Blended Soul?"
+        textColor="white"
+        pageCss={{ paddingLeft: "40px" }}
+      />
       <div className="max-w-3xl mx-auto">
         <div className="flex justify-center">
           <div

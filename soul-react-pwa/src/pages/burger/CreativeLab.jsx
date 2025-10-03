@@ -5,6 +5,7 @@ import { setIsLoading } from "../../redux/appsettingSlice";
 import Logo from "../../assets/imgs/logo.png";
 import { get } from "../../utils/axios";
 import ToastLayout from "../../components/ToastLayout";
+import SubHeader from "../../components/SubHeader";
 
 const CreativeLab = () => {
   const [description, setDescription] = useState("");
@@ -37,9 +38,7 @@ const CreativeLab = () => {
 
   return (
     <div>
-      <p className="font-poppins font-semibold text-white text-2xl text-center pb-2.5">
-        Creative Lab
-      </p>
+      <SubHeader pageName="Creative Lab" textColor="white" />
       <div className="max-w-3xl mx-auto">
         <div className="flex justify-center">
           <div
@@ -52,7 +51,7 @@ const CreativeLab = () => {
 
         <div
           className="overflow-y-auto overscroll-contain hide-scrollbar mt-3 pr-1"
-          style={{ maxHeight: "calc(100vh - 275px)" }}
+          style={{ maxHeight: "calc(100vh - 290px)" }}
         >
           <p
             className="text-white text-lg leading-relaxed font-ovo"

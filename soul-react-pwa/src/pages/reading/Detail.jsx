@@ -53,7 +53,7 @@ const ReadingDetail = () => {
       <div className="py-4">
         <div
           className="overflow-y-auto overscroll-contain hide-scrollbar"
-          style={{ maxHeight: "calc(100vh - 485px)" }}
+          style={{ maxHeight: "calc(100vh - 535px)" }}
         >
           <p
             className="font-poppins text-[18px] text-[#302853]  text-left whitespace-pre-wrap"

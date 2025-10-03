@@ -6,6 +6,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { setIsLoading } from "../../redux/appsettingSlice";
 import ToastLayout from "../../components/ToastLayout";
 import toast from "react-simple-toasts";
+import SubHeader from "../../components/SubHeader";
 
 const Faq = () => {
   const [faqs, setFaqs] = useState([]);
@@ -64,12 +65,10 @@ const Faq = () => {
 
   return (
     <div>
-      <p className="font-poppins font-semibold text-white text-2xl text-center">
-        FAQ
-      </p>
+      <SubHeader pageName="FAQ" textColor="white" />
       <div
         className="max-w-2xl mx-auto overflow-y-auto overscroll-contain hide-scrollbar"
-        style={{ maxHeight: "calc(100vh - 128px)" }}
+        style={{ maxHeight: "calc(100vh - 158px)" }}
       >
         {faqs.length === 0 ? (
           <p className="font-poppins text-center text-2xl pt-[50%]">

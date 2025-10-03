@@ -93,23 +93,9 @@
   pointer-events: none;
   cursor: none;
 }
-.situation-unchecked {
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: inset 0 4px 24px rgba(252, 230, 255, 0.2);
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0) 100%
-  );
-}
 .situation-unchecked p {
   color: #e9e4f2;
   font-weight: 400;
-}
-.situation-checked {
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: inset 0 -5px 12px rgb(255, 218, 185, 0.2);
-  background-color: rgba(255, 255, 255, 0.2);
 }
 .situation-checked p {
   color: white;
@@ -228,11 +214,6 @@
 }
 @media screen and (max-width: 768px) {
   .cardswiper {
-    padding-top: 50px;
-  }
-}
-@media screen and (max-width: 360px) {
-  .fullscreen {
-    top: 50% !important;
+    padding-top: 30px;
   }
 }

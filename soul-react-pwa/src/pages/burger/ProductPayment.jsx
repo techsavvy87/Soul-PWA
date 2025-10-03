@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { get } from "../../utils/axios";
 import { setIsLoading } from "../../redux/appsettingSlice";
 import { siteBaseUrl } from "../../utils/constants";
@@ -9,6 +9,7 @@ import { PAYPAL_CLIENT_ID } from "../../utils/constants";
 import { post } from "../../utils/axios";
 import ToastLayout from "../../components/ToastLayout";
 import toast from "react-simple-toasts";
+import SubHeader from "../../components/SubHeader";
 
 // PayPal Checkout component
 const Checkout = ({ amount, productId }) => {
@@ -46,11 +47,10 @@ const Checkout = ({ amount, productId }) => {
 
 const ProductPayment = () => {
   const { id } = useParams();
-  const location = useLocation();
   const dispatch = useDispatch();
   const [product, setProduct] = useState(null);
   const [purchasedStatus, setPurchasedStatus] = useState(false);
-  const { type } = location.state || {};
+  const type = window.sessionStorage.getItem("storeType") || "product";
   const hasRendered = useRef(false);
 
   useEffect(() => {
@@ -89,6 +89,7 @@ const ProductPayment = () => {
 
   return (
     <div className="mt-2.5">
+      <SubHeader pageName="" textColor="white" divCss={{ margin: "20px 0" }} />
       {product && (
         <div className="rounded-[20px] shadow-[0_4px_4px_0_#00000033] ">
           {/* Product Image */}
@@ -120,7 +121,7 @@ const ProductPayment = () => {
             </h2>
             <div
               className="overflow-y-auto overscroll-contain hide-scrollbar mb-2.5"
-              style={{ maxHeight: "calc(100vh - 436px)" }}
+              style={{ maxHeight: "calc(100vh - 517px)" }}
             >
               <p className="text-white text-lg mt-2 font-ovo leading-relaxed mb-2.5">
                 {product.description}

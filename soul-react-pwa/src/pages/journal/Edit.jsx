@@ -1,6 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import JournalTop from "../../components/JournalTop";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useNavigate, useParams } from "react-router-dom";
 import ToastLayout from "../../components/ToastLayout";
 import toast from "react-simple-toasts";
@@ -8,9 +6,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { get, post } from "../../utils/axios";
 import LoadingModal from "../../components/LoadingModal";
 import { setIsLoading } from "../../redux/appsettingSlice";
+import AppHeader from "../../components/AppHeader";
+import SubHeader from "../../components/SubHeader";
 
 const JournalEdit = () => {
-  const theme = createTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [journal, setJournal] = useState({ title: "", entry: "" });
@@ -115,12 +114,8 @@ const JournalEdit = () => {
   };
   return (
     <div className="min-h-screen layout-journal px-5 py-8">
-      <ThemeProvider theme={theme}>
-        <JournalTop />
-      </ThemeProvider>
-      <p className="font-poppins font-semibold text-[#3F356E] text-2xl text-center pb-5">
-        My Journal
-      </p>
+      <AppHeader />
+      <SubHeader pageName="My Journal" textColor="#3F356E" />
       <form className="space-y-5">
         <div>
           <label className="font-poppins font-light text-[14px] text-[rgba(63,53,110,0.7)] block mb-[5px]">

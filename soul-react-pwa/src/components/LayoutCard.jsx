@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import LoadingModal from "./LoadingModal";
 import { post } from "../utils/axios";
 import { useNavigate, useLocation } from "react-router-dom";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { IoIosSend } from "react-icons/io";
 import { Modal } from "react-responsive-modal";
 import CloseIcon from "@mui/icons-material/Close";
@@ -15,6 +14,9 @@ import ToastLayout from "./ToastLayout";
 import { setIsLoading } from "../redux/appsettingSlice";
 import { hostingDomain } from "../utils/constants";
 import FlipImg from "../assets/imgs/flip.png";
+import AppHeader from "./AppHeader";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const LayoutCard = ({ children }) => {
   const [isFavorited, setIsFavorited] = useState(false);
@@ -29,6 +31,7 @@ const LayoutCard = ({ children }) => {
   const path = location.pathname;
   const elementEmpty = useSelector((state) => state.appsetting.elementEmpty);
   const type = "card";
+  const theme = createTheme();
 
   const onClickFavoriteIcon = () => {
     try {
@@ -104,23 +107,33 @@ const LayoutCard = ({ children }) => {
     }
   };
 
+  // const goPreviousPage = () => {
+  //   console.log("goPreviousPage", -1);
+  //   navigate(-1);
+  // };
+
   return (
     <div className="min-h-screen layout-card">
-      <div className="sticky top-0 mx-4">
-        <div className="flex items-center justify-between pt-8">
+      <div className="px-5 pt-8 pb-5">
+        <AppHeader />
+      </div>
+      <div className="mx-5 flex items-center justify-center">
+        <ThemeProvider theme={theme}>
           <ArrowBackIcon
-            className="text-[#8690FD] !w-[35px] !h-[35px]"
+            className="!w-[35px] !h-[35px] text-[#8690FD] absolute left-[7%] z-50 cursor-pointer"
             onClick={() => navigate(-1)}
           />
+        </ThemeProvider>
+        <div className="flex">
           {!elementEmpty && (
             <div className="flex">
               {!path.startsWith("/card/detail") && (
-                <button className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition">
+                <button className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white">
                   <IoIosSend size={24} onClick={() => setOpen(true)} />
                 </button>
               )}
               <button
-                className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition mx-2"
+                className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white ml-2"
                 onClick={onClickFavoriteIcon}
               >
                 {isFavorited ? (
@@ -135,7 +148,7 @@ const LayoutCard = ({ children }) => {
                 path.startsWith("/card/detail")
               ) && (
                 <button
-                  className="w-24 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
+                  className="w-24 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white ml-2"
                   onClick={() => navigate("/card/detail/" + cardId)}
                 >
                   <img src={FlipImg} alt="" />
