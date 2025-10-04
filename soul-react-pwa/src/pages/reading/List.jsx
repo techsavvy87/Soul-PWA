@@ -76,7 +76,7 @@ const ReadingList = () => {
   return (
     <div className="cardswiper">
       {readingList.length === 0 ? (
-        <p className="font-poppins text-center text-2xl pt-[50%] px-[10px]">
+        <p className="font-poppins text-center text-[#3F356E] text-2xl pt-[50%] px-[10px]">
           There is no reading to display.
         </p>
       ) : readingList.length === 1 ? (
@@ -99,7 +99,7 @@ const ReadingList = () => {
           className="absolute left-1/2"
           modules={[Pagination, Autoplay]}
           pagination={{ clickable: true }}
-          autoplay={{ delay: 50000 }}
+          autoplay={{ delay: 5000 }}
           spaceBetween={0}
           slidesPerView="auto"
           centeredSlides={true}

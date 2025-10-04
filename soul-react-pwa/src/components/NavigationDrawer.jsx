@@ -3,7 +3,6 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
-import LogoImg from "../assets/imgs/logo.png";
 import cancelImg from "../assets/imgs/cancel.png";
 import Drawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
@@ -17,6 +16,7 @@ import DeckIcon from "@mui/icons-material/Deck";
 import ScheduleIcon from "@mui/icons-material/Schedule";
 import StoreIcon from "@mui/icons-material/Store";
 import EditIcon from "@mui/icons-material/Edit";
+import HomeImg from "../assets/imgs/home.png";
 
 const NavigationDrawer = () => {
   const dispatch = useDispatch();
@@ -70,7 +70,7 @@ const NavigationDrawer = () => {
         >
           <div className="p-4 flex justify-between items-center border-b-[0.5px] border-[#8690FD4D]">
             <Link to="/" className="text-gray-600">
-              <img className="w-11" src={LogoImg} alt="Logo" />
+              <img className="w-11" src={HomeImg} alt="Logo" />
             </Link>
             <button onClick={toggleDrawer(false)} className="text-gray-600">
               <img src={cancelImg} alt="cancel" />
@@ -112,9 +112,15 @@ const NavigationDrawer = () => {
                 />
                 Journal
               </Link>
-              <li className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal py-3">
+              <li className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3">
                 <ScheduleIcon className="w-[15px] mr-3" />
-                Schedule A Session
+                <a
+                  href="https://www.paulwagner.com/intuitive-psychic-readings/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Schedule A Session
+                </a>
               </li>
               <Link
                 to="/store"

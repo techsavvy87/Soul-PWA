@@ -128,7 +128,7 @@ const Home = () => {
 
   return (
     <div>
-      <p className="font-poppins text-[#FFFFFFFA] font-light text-[12px] py-[25px]">
+      <p className="font-poppins text-[#FFFFFFFA] font-light text-[14px] py-[25px]">
         To awaken and heal, choose the reading that resonates.
       </p>
       <div>

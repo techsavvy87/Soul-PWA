@@ -68,7 +68,7 @@ const Faq = () => {
       <SubHeader pageName="FAQ" textColor="white" />
       <div
         className="max-w-2xl mx-auto overflow-y-auto overscroll-contain hide-scrollbar"
-        style={{ maxHeight: "calc(100vh - 158px)" }}
+        style={{ maxHeight: "calc(100vh - 166px)" }}
       >
         {faqs.length === 0 ? (
           <p className="font-poppins text-center text-2xl pt-[50%]">

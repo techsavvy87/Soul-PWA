@@ -69,10 +69,10 @@ const JournalHome = () => {
       </button>
       <div
         className="overflow-y-auto overscroll-contain hide-scrollbar"
-        style={{ maxHeight: "calc(100vh - 206px)" }}
+        style={{ maxHeight: "calc(100vh - 214px)" }}
       >
         {journals.length === 0 ? (
-          <p className="font-poppins text-center text-2xl pt-[50%]">
+          <p className="font-poppins text-center text-[#3F356E] text-2xl pt-[50%]">
             There is no journal to display.
           </p>
         ) : (

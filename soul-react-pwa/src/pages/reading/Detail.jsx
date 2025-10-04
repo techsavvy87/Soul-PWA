@@ -42,7 +42,7 @@ const ReadingDetail = () => {
 
   return (
     <div className="text-center mt-8 mx-4">
-      <div className="bg-white p-[15px]  inline-block">
+      <div className="inline-block">
         <img
           src={siteBaseUrl + "reading/" + readingDetail.img}
           alt="card"

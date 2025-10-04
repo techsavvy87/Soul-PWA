@@ -132,10 +132,10 @@ const Favorites = () => {
           <TabPanel style={{ padding: "0px" }} value="2">
             <div
               className="overflow-y-auto overscroll-contain hide-scrollbar"
-              style={{ maxHeight: "calc(100vh - 208px)" }}
+              style={{ maxHeight: "calc(100vh - 216px)" }}
             >
               {cardFavorites.length === 0 ? (
-                <p className="font-poppins text-center text-2xl  pt-[50%]">
+                <p className="font-poppins text-center text-white text-2xl  pt-[50%]">
                   There is no card to display.
                 </p>
               ) : (
@@ -192,10 +192,10 @@ const Favorites = () => {
           <TabPanel style={{ padding: "0px" }} value="1">
             <div
               className="overflow-y-auto overscroll-contain hide-scrollbar"
-              style={{ maxHeight: "calc(100vh - 208px)" }}
+              style={{ maxHeight: "calc(100vh - 216px)" }}
             >
               {readFavorites.length === 0 ? (
-                <p className="font-poppins text-center text-2xl pt-[50%]">
+                <p className="font-poppins text-center text-white text-2xl pt-[50%]">
                   There is no reading to display.
                 </p>
               ) : (

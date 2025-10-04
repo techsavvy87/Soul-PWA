@@ -60,7 +60,7 @@ const MeditationList = () => {
         style={{ maxHeight: "calc(100vh - 174px)" }}
       >
         {meditations.length === 0 ? (
-          <p className="font-poppins text-center text-2xl pt-[50%]">
+          <p className="font-poppins text-center text-[#3F356E] text-2xl pt-[50%]">
             There are no meditations available.
           </p>
         ) : (

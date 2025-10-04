@@ -113,7 +113,7 @@ const LayoutReading = ({ children }) => {
       <div className="px-5 pt-8 pb-5">
         <AppHeader />
       </div>
-      <div className="mx-5 flex items-center justify-center">
+      <div className="mx-5 mt-[10px] flex items-center justify-center">
         <ThemeProvider theme={theme}>
           <ArrowBackIcon
             className="!w-[35px] !h-[35px] text-[#8690FD] absolute left-[7%]"
@@ -121,7 +121,7 @@ const LayoutReading = ({ children }) => {
           />
         </ThemeProvider>
         <div className="flex">
-          {!elementEmpty ? (
+          {!elementEmpty && (
             <div className="flex">
               {!path.startsWith("/reading/detail") && (
                 <button className="w-12 h-12 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition">
@@ -153,13 +153,6 @@ const LayoutReading = ({ children }) => {
                   </span>
                 </button>
               )}
-            </div>
-          ) : (
-            <div className="flex items-center justify-between mx-4">
-              <ArrowBackIcon
-                className="text-[#8690FD] !w-[35px] !h-[35px]"
-                onClick={() => navigate(-1)}
-              />
             </div>
           )}
         </div>

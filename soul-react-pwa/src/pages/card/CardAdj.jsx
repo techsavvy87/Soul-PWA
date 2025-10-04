@@ -75,7 +75,7 @@ const CardAdj = () => {
   return (
     <div className="cardswiper">
       {cards.length === 0 ? (
-        <p className="font-poppins text-center text-2xl pt-[50%]">
+        <p className="font-poppins text-center text-[#3F356E] text-2xl pt-[50%]">
           There is no card to display.
         </p>
       ) : cards.length === 1 ? (

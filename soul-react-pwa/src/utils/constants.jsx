@@ -1,13 +1,13 @@
 // export const baseURL = "http://127.0.0.1:8000/api/v1";
 // export const siteBaseUrl = "http://127.0.0.1:8000/storage/";
 
-export const baseURL = "http://192.168.13.116:8000/api/v1";
-export const siteBaseUrl = "http://192.168.13.116:8000/storage/";
-export const hostingDomain = "http://localhost:5173/";
+// export const baseURL = "http://192.168.13.116:8000/api/v1";
+// export const siteBaseUrl = "http://192.168.13.116:8000/storage/";
+// export const hostingDomain = "http://localhost:5173/";
 
-// export const baseURL = "https://bsadmin.paulwagner.com/api/v1";
-// export const siteBaseUrl = "https://bsadmin.paulwagner.com/storage/";
-// export const hostingDomain = "https://bsapp.paulwagner.com/";
+export const baseURL = "https://bsadmin.paulwagner.com/api/v1";
+export const siteBaseUrl = "https://bsadmin.paulwagner.com/storage/";
+export const hostingDomain = "https://bsapp.paulwagner.com/";
 
 export const formatTime = (seconds) => {
   const hours = Math.floor(seconds / 3600);

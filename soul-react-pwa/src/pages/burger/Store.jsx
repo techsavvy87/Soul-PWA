@@ -49,7 +49,7 @@ const Store = () => {
       <SubHeader pageName="Store" textColor="white" />
       <div
         className="flex justify-between flex-wrap mt-2.5 overflow-y-auto overscroll-contain hide-scrollbar"
-        style={{ maxHeight: "calc(100vh - 168px)" }}
+        style={{ maxHeight: "calc(100vh - 176px)" }}
       >
         {storeItem.length === 0 ? (
           <p className="font-poppins text-center text-2xl pt-[50%]">
@@ -59,7 +59,7 @@ const Store = () => {
           storeItem.map((item, index) => (
             <div
               key={index}
-              className="mb-[10px] bg-white rounded-[16px] overflow-hidden w-[48%] shadow-[0_4px_20px_rgba(0,0,0,0.1)]"
+              className="mb-[10px] bg-white rounded-[16px] overflow-hidden w-[48%] shadow-[0_4px_20px_rgba(0,0,0,0.1)] relative"
               onClick={() => {
                 window.sessionStorage.setItem("storeType", item.type);
                 navigate(`/product-payment/${item.id}`);
@@ -71,10 +71,10 @@ const Store = () => {
                 className="w-full h-[100px] object-cover"
               />
               <div className="p-2">
-                <h3 className="text-[17px] font-bold text-gray-800 line-clamp-1 text-ellipsis">
+                <h3 className="text-[17px] font-bold text-gray-800 text-center mb-10">
                   {item.title}
                 </h3>
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center mt-[10px] absolute bottom-2 w-full">
                   <p
                     className={`first-letter:uppercase font-poppins font-semibold text-[14px] ${
                       item.type === "product" ? productCss : serviceCss
@@ -82,7 +82,7 @@ const Store = () => {
                   >
                     {item.type}
                   </p>
-                  <span className="text-[#c12888] text-[13px] bg-[#fceef7] px-[15px] py-[3px] rounded-full font-poppins font-semibold">
+                  <span className="text-[#c12888] text-[13px] bg-[#fceef7] px-[15px] py-[3px] rounded-full font-poppins font-semibold absolute right-4">
                     ${item.price}
                   </span>
                 </div>

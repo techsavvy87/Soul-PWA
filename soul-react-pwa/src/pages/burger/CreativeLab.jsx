@@ -51,7 +51,7 @@ const CreativeLab = () => {
 
         <div
           className="overflow-y-auto overscroll-contain hide-scrollbar mt-3 pr-1"
-          style={{ maxHeight: "calc(100vh - 290px)" }}
+          style={{ maxHeight: "calc(100vh - 298px)" }}
         >
           <p
             className="text-white text-lg leading-relaxed font-ovo"

@@ -52,7 +52,7 @@ const About = () => {
           </div>
           <div
             className="overflow-y-auto overscroll-contain hide-scrollbar"
-            style={{ maxHeight: "calc(100vh - 258px)" }}
+            style={{ maxHeight: "calc(100vh - 266px)" }}
           >
             <p className="pr-1 text-white text-[16px] leading-relaxed font-poppins whitespace-pre-wrap">
               {about.description}

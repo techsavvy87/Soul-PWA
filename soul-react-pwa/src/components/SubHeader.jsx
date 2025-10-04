@@ -18,7 +18,7 @@ const SubHeader = ({ pageName, textColor, pageCss, divCss }) => {
         />
       </ThemeProvider>
       <p
-        className="font-poppins font-semibold text-2xl text-center py-3"
+        className="font-poppins font-semibold text-2xl text-center py-4"
         style={{ ...pageCss }}
       >
         {pageName}

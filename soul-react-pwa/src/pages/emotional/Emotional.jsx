@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from "react";
 import Checkbox from "@mui/material/Checkbox";
-import NavigationDrawer from "../../components/NavigationDrawer";
 import { setIsLoading } from "../../redux/appsettingSlice";
 import { useSelector, useDispatch } from "react-redux";
 import LoadingModal from "../../components/LoadingModal";
@@ -10,9 +9,9 @@ import CheckIcon from "@mui/icons-material/Check";
 import ToastLayout from "../../components/ToastLayout";
 import toast from "react-simple-toasts";
 import { useNavigate } from "react-router-dom";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { setPrevPageName } from "../../redux/appsettingSlice";
 import AppHeader from "../../components/AppHeader";
+import SubHeader from "../../components/SubHeader";
 
 const Emotional = () => {
   let tier = sessionStorage.getItem("tier");
@@ -98,15 +97,13 @@ const Emotional = () => {
   return (
     <div className="min-h-screen emotional px-5 pt-8 pb-5">
       <AppHeader />
-      <p className="font-poppins font-semibold text-white text-2xl text-center pt-5">
-        {name}
-      </p>
+      <SubHeader pageName={name} textColor="white" />
       <p className="font-poppins text-white font-light text-[14px] pt-2.5 pb-[30px] text-center">
         Select up to three situations you’re <br /> currently aware of
       </p>
       <div
         className="overflow-y-auto hide-scrollbar grid grid-cols-2"
-        style={{ maxHeight: "calc(100vh - 312px)" }}
+        style={{ maxHeight: "calc(100vh - 324px)" }}
       >
         {emotions.map((emotion) => (
           <div
