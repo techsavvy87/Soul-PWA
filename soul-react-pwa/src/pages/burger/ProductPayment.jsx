@@ -121,7 +121,7 @@ const ProductPayment = () => {
             </h2>
             <div
               className="overflow-y-auto overscroll-contain hide-scrollbar mb-2.5"
-              style={{ maxHeight: "calc(100vh - 517px)" }}
+              style={{ maxHeight: "calc(100vh - 525px)" }}
             >
               <p className="text-white text-lg mt-2 font-ovo leading-relaxed mb-2.5">
                 {product.description}

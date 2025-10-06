@@ -106,6 +106,16 @@ const ReadingList = () => {
           loop={true}
           initialSlide={initialSlideIndex}
           style={{ padding: "0 60px" }}
+          onSwiper={(swiper) => {
+            // Run once on mount to save the initial card
+            const realIndex = swiper.realIndex;
+            const currentReading = readingList?.[realIndex];
+            if (currentReading) {
+              dispatch(setActiveReadingId({ readingId: currentReading.id }));
+              window.sessionStorage.setItem("readingId", currentReading.id);
+              window.sessionStorage.setItem("lastReadingId", currentReading.id);
+            }
+          }}
           onRealIndexChange={(swiper) => {
             // Get the real index in loop mode
             const realIndex = swiper.realIndex;

@@ -1,12 +1,10 @@
 import { useEffect, useState, useRef } from "react";
-import NavigationDrawer from "../../components/NavigationDrawer";
 import { siteBaseUrl } from "../../utils/constants";
 import { setIsLoading } from "../../redux/appsettingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingModal from "../../components/LoadingModal";
 import { getWithParams } from "../../utils/axios";
 import { useNavigate } from "react-router-dom";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { post } from "../../utils/axios";
@@ -42,6 +40,10 @@ const Favorites = () => {
     "&.Mui-selected": {
       color: "white",
       fontWeight: "bold",
+    },
+    "&:not(.Mui-selected)": {
+      color: "#FFFFFF4D", // ✅ unselected tab text color
+      borderColor: "#FFFFFF4D", // ✅ unselected tab border color
     },
   };
 
@@ -120,8 +122,12 @@ const Favorites = () => {
               aria-label="lab API tabs example"
               TabIndicatorProps={{
                 sx: {
-                  backgroundColor: "#FFD141", // your desired color
-                  height: "2px", // optional: change thickness
+                  backgroundColor: "#FFD141",
+                  height: "2px",
+                  "&:not(.Mui-selected)": {
+                    borderColor: "#FFFFFF4D",
+                    color: "#FFFFFF4D",
+                  },
                 },
               }}
             >
@@ -165,7 +171,7 @@ const Favorites = () => {
                         </p>
 
                         <button
-                          className="w-8 h-8 rounded-full bg-[#8690FD] flex items-center justify-center text-white hover:bg-gray-700 transition"
+                          className="w-8 h-8 rounded-full bg-[#8690FD] flex items-center justify-center text-white "
                           onClick={(e) =>
                             onClickCardFavoriteIcon(e, cfavorite.id)
                           }

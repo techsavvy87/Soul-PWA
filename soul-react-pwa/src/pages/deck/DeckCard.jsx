@@ -64,7 +64,7 @@ const DeckCard = () => {
               <img
                 src={siteBaseUrl + "deckcards/" + card.card_img}
                 alt={card.title}
-                className="w-[50px] h-[100px] mr-3"
+                className="max-w-1/4 h-[100px] mr-3"
               />
               <div className="flex flex-col justify-between">
                 <p className="font-poppins font-semibold text-[16px] text-[#3F356E] mb-[10px]">

@@ -56,7 +56,7 @@ const CardDetail = () => {
           style={{ maxHeight: "calc(100vh - 535px)" }}
         >
           <p
-            className="text-[18px] text-[#302853]  text-left whitespace-pre-wrap"
+            className="text-[18px] text-[#302853] text-left whitespace-pre-wrap"
             dangerouslySetInnerHTML={{ __html: cardDetail.description }}
           />
         </div>

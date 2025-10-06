@@ -88,7 +88,7 @@ const Cards = () => {
           There is no card to display.
         </p>
       ) : cards.length === 1 ? (
-        <div className="max-w-[80%] m-auto bg-white p-[10px]">
+        <div className="max-w-[70%] m-auto bg-white p-[10px]">
           <img
             src={siteBaseUrl + "deckcards/" + cards[0].card_img}
             alt={`slide-0`}
@@ -111,6 +111,16 @@ const Cards = () => {
           loop={true}
           initialSlide={initialSlideIndex}
           style={{ padding: "0 60px" }}
+          onSwiper={(swiper) => {
+            // Run once on mount to save the initial card
+            const realIndex = swiper.realIndex;
+            const currentCard = cards?.[realIndex];
+            if (currentCard) {
+              dispatch(setActiveCardId({ cardId: currentCard.id }));
+              window.sessionStorage.setItem("cardId", currentCard.id);
+              window.sessionStorage.setItem("lastCardId", currentCard.id);
+            }
+          }}
           onRealIndexChange={(swiper) => {
             // Get the real index in loop mode
             const realIndex = swiper.realIndex;

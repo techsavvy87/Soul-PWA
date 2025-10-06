@@ -53,10 +53,7 @@ const CreativeLab = () => {
           className="overflow-y-auto overscroll-contain hide-scrollbar mt-3 pr-1"
           style={{ maxHeight: "calc(100vh - 298px)" }}
         >
-          <p
-            className="text-white text-lg leading-relaxed font-ovo"
-            style={{ whiteSpace: "pre-wrap" }}
-          >
+          <p className="text-white text-[16px] leading-relaxed font-poppins whitespace-pre-wrap">
             {description}
           </p>
         </div>

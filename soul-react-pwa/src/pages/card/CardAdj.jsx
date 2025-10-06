@@ -101,6 +101,16 @@ const CardAdj = () => {
           slidesPerView={"auto"}
           initialSlide={initialSlideIndex}
           style={{ padding: "0 60px" }}
+          onSwiper={(swiper) => {
+            // Run once on mount to save the initial card
+            const realIndex = swiper.realIndex;
+            const currentCard = cards?.[realIndex];
+            if (currentCard) {
+              dispatch(setActiveCardId({ cardId: currentCard.id }));
+              window.sessionStorage.setItem("cardId", currentCard.id);
+              window.sessionStorage.setItem("lastCardId", currentCard.id);
+            }
+          }}
           onRealIndexChange={(swiper) => {
             // Get the real index in loop mode
             const realIndex = swiper.realIndex;
