@@ -11,7 +11,6 @@ const CardDetail = () => {
   const renderStatus = useRef(false);
   const { id } = useParams();
   const [cardDetail, setCardDetail] = useState([]);
-  const [imgWidthCss, setImgWidthCss] = useState("w-[190px]");
 
   useEffect(() => {
     const fetchCardDetail = async () => {
@@ -32,23 +31,44 @@ const CardDetail = () => {
     }
   }, [id]);
 
-  // Get width and height of original image.
-  const handleImageLoad = (e) => {
-    const { naturalWidth, naturalHeight } = e.target;
-    if (naturalWidth > naturalHeight) {
-      setImgWidthCss("w-full");
-    }
-  };
-
   return (
     <div className="text-center mt-4 mx-4">
-      <div className="inline-block">
+      <div className="inline-block relative">
         <img
           src={siteBaseUrl + "deckcards/" + cardDetail.card_img}
           alt="card"
-          className={`${imgWidthCss} h-[285px] m-auto object-cover`}
-          onLoad={handleImageLoad}
+          className="w-[190px] h-[285px] m-auto object-cover"
         />
+        {!cardDetail?.category_name?.toLowerCase().includes("personality") && (
+          <>
+            <p
+              className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-2xl font-bold px-[25px] py-[10px] rounded-[15px] whitespace-nowrap ${(() => {
+                const name = cardDetail?.category_name?.toLowerCase() || ""; // ✅ always a string
+
+                if (
+                  ["alchemy", "sacred", "master"].some((w) => name.includes(w))
+                ) {
+                  return "bg-[#0076ba]";
+                } else if (name.includes("transcend")) {
+                  return "bg-[#534eb4]";
+                } else if (name.includes("release")) {
+                  return "bg-[#f17201]";
+                } else {
+                  return "bg-[#333]";
+                }
+              })()}`}
+              style={{
+                fontSize: "10px", // adjust as needed
+              }}
+            >
+              {cardDetail?.title}
+            </p>
+
+            <p className="text-white w-full absolute bottom-7 left-1/2 -translate-x-1/2 text-center text-[12px]">
+              {cardDetail?.category_name}
+            </p>
+          </>
+        )}
       </div>
       <div className="py-4">
         <div

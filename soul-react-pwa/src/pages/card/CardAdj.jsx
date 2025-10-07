@@ -72,6 +72,26 @@ const CardAdj = () => {
       }
     }
   }, []);
+
+  // Helper function to get background color class
+  const getCategoryBg = (categoryName) => {
+    const name = categoryName.toLowerCase();
+
+    if (["alchemy", "sacred", "master"].some((w) => name.includes(w))) {
+      return "bg-[#0076ba]";
+    } else if (name.includes("transcend")) {
+      return "bg-[#534eb4]";
+    } else if (name.includes("release")) {
+      return "bg-[#f17201]";
+    } else {
+      return "bg-[#333]";
+    }
+  };
+
+  // Don't render until API finishes
+  if (isLoading) {
+    return null; // or return <Spinner /> if you want a loader
+  }
   return (
     <div className="cardswiper">
       {cards.length === 0 ? (
@@ -83,7 +103,7 @@ const CardAdj = () => {
           <img
             src={siteBaseUrl + "deckcards/" + cards[0].card_img}
             alt={`slide-0`}
-            className="max-w-[80%] m-auto rounded-[15px]"
+            className="max-w-[80%] m-auto"
             onClick={() => {
               window.sessionStorage.setItem("card", JSON.stringify(cards[0]));
               navigate("/card/fullscreen");
@@ -127,15 +147,34 @@ const CardAdj = () => {
         >
           {cards.map((card, index) => (
             <SwiperSlide key={index} style={{ width: "100%" }}>
-              <img
-                src={siteBaseUrl + "deckcards/" + card.card_img}
-                alt={`slide-${index}`}
-                className="w-full m-auto rounded-[15px] object-cover"
-                onClick={() => {
-                  window.sessionStorage.setItem("card", JSON.stringify(card));
-                  navigate("/card/fullscreen");
-                }}
-              />
+              <div className="relative">
+                <img
+                  src={siteBaseUrl + "deckcards/" + card.card_img}
+                  alt={`slide-${index}`}
+                  className="w-full m-auto object-cover"
+                  onClick={() => {
+                    window.sessionStorage.setItem("card", JSON.stringify(card));
+                    navigate("/card/fullscreen");
+                  }}
+                />
+                {!card.category_name.toLowerCase().includes("personality") && (
+                  <>
+                    <p
+                      className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-2xl font-bold px-[25px] py-[10px] rounded-[15px] 
+                                ${getCategoryBg(card.category_name)}`}
+                      style={{
+                        fontSize: "18px",
+                      }}
+                    >
+                      {card.title}
+                    </p>
+
+                    <p className="text-white w-full absolute bottom-7 left-1/2 -translate-x-1/2 text-center">
+                      {card.category_name}
+                    </p>
+                  </>
+                )}
+              </div>
             </SwiperSlide>
           ))}
         </Swiper>

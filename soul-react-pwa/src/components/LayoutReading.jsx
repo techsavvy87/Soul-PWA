@@ -17,6 +17,7 @@ import FlipImg from "../assets/imgs/flip.png";
 import AppHeader from "./AppHeader";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import SubHeader from "./SubHeader";
 
 const LayoutReading = ({ children }) => {
   const [isFavorited, setIsFavorited] = useState(false);
@@ -112,14 +113,17 @@ const LayoutReading = ({ children }) => {
     <div className="min-h-screen layout-card">
       <div className="px-5 pt-8 pb-5">
         <AppHeader />
+        {elementEmpty && <SubHeader pageName="Reading" textColor="#3F356E" />}
       </div>
       <div className="mx-5 mt-[10px] flex items-center justify-center">
-        <ThemeProvider theme={theme}>
-          <ArrowBackIcon
-            className="!w-[35px] !h-[35px] text-[#8690FD] absolute left-[7%]"
-            onClick={() => navigate(-1)}
-          />
-        </ThemeProvider>
+        {!elementEmpty && (
+          <ThemeProvider theme={theme}>
+            <ArrowBackIcon
+              className="!w-[35px] !h-[35px] text-[#8690FD] absolute left-[7%]"
+              onClick={() => navigate(-1)}
+            />
+          </ThemeProvider>
+        )}
         <div className="flex">
           {!elementEmpty && (
             <div className="flex">

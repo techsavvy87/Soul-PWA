@@ -48,7 +48,11 @@ class CardController extends Controller
                 }
                 
             }
-            
+            // Add category name to each card
+            foreach ($cardArr as $card) {
+                $category = DeckCardCategory::find($card->category_id);
+                $card->category_name = $category ? $category->cname : null;
+            }
             return response()->json([
                 'status' => true,
                 'message' => 'OK',
@@ -121,6 +125,11 @@ class CardController extends Controller
                     ->get();
             }
             $cardArr = $cardArr->merge($addCards);
+            // Add category name to each card
+            foreach ($cardArr as $card) {
+                $category = DeckCardCategory::find($card->category_id);
+                $card->category_name = $category ? $category->cname : null;
+            }
             return response()->json([
                 'status' => true,
                 'message' => 'OK',
@@ -144,6 +153,12 @@ class CardController extends Controller
         ->take(rand(3,5)) // pick 3 to 5 random results
         ->get();
 
+        // Add category name to each card
+        foreach ($cards as $card) {
+            $category = DeckCardCategory::find($card->category_id);
+            $card->category_name = $category ? $category->cname : null;
+        }
+
         return response()->json([
             'status' => true,
             'message' => 'OK',
@@ -157,6 +172,8 @@ class CardController extends Controller
         if (!$card) {
             return response()->json(['status' => false, 'message' => 'Card not found.'], 404);
         }
+        $category = DeckCardCategory::find($card->category_id);
+        $card->category_name = $category ? $category->cname : null;
 
         return response()->json(['status' => true, 'data' => $card]);
     }

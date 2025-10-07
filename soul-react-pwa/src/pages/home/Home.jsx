@@ -131,7 +131,10 @@ const Home = () => {
       <p className="font-poppins text-[#FFFFFFFA] font-light text-[14px] py-[25px]">
         To awaken and heal, choose the reading that resonates.
       </p>
-      <div>
+      <div
+        className="overflow-y-auto overscroll-contain hide-scrollbar"
+        style={{ maxHeight: "calc(100vh - 194px)" }}
+      >
         {events.map((event, index) => (
           <div
             className={`flex justify-between items-center border border-[#FFFFFF80] rounded-[12px] pl-3 pr-[14px] py-2 mb-3 

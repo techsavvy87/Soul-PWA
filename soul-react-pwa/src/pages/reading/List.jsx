@@ -80,16 +80,19 @@ const ReadingList = () => {
           There is no reading to display.
         </p>
       ) : readingList.length === 1 ? (
-        <div className="max-w-[80%] m-auto bg-white p-[10px]">
+        <div className="max-w-[80%] m-auto bg-white">
           <img
             src={siteBaseUrl + "reading/" + readingList[0].img}
             alt={`slide-0`}
-            className="w-full m-auto rounded-[15px]"
+            className="w-full m-auto"
             onClick={() => {
               window.sessionStorage.setItem(
                 "reading",
                 JSON.stringify(readingList[0])
               );
+              dispatch(setActiveReadingId({ readingId: readingList[0].id }));
+              window.sessionStorage.setItem("readingId", readingList[0].id);
+              window.sessionStorage.setItem("lastReadingId", readingList[0].id);
               navigate("/reading/fullscreen");
             }}
           />
@@ -137,7 +140,7 @@ const ReadingList = () => {
               <img
                 src={siteBaseUrl + "reading/" + reading.img}
                 alt={`slide-${index}`}
-                className="w-full m-auto rounded-[15px] object-cover"
+                className="w-full m-auto object-cover"
                 onClick={() => {
                   window.sessionStorage.setItem(
                     "reading",

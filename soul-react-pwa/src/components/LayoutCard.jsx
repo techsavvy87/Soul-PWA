@@ -111,14 +111,17 @@ const LayoutCard = ({ children }) => {
     <div className="min-h-screen layout-card">
       <div className="px-5 pt-8 pb-5">
         <AppHeader />
+        {elementEmpty && <SubHeader pageName="Card" textColor="#3F356E" />}
       </div>
       <div className="mx-5 flex items-center justify-center">
-        <ThemeProvider theme={theme}>
-          <ArrowBackIcon
-            className="!w-[35px] !h-[35px] text-[#8690FD] absolute left-[7%] z-50 cursor-pointer"
-            onClick={() => navigate(-1)}
-          />
-        </ThemeProvider>
+        {!elementEmpty && (
+          <ThemeProvider theme={theme}>
+            <ArrowBackIcon
+              className="!w-[35px] !h-[35px] text-[#8690FD] absolute left-[7%]"
+              onClick={() => navigate(-1)}
+            />
+          </ThemeProvider>
+        )}
         <div className="flex">
           {!elementEmpty && (
             <div className="flex">

@@ -16,15 +16,47 @@ const CardFullScreen = () => {
       className="relative w-screen"
       style={{ minHeight: "calc(100vh - 150px)" }}
     >
-      <div className="flex justify-center">
-        {card?.card_img && (
+      {card?.card_img && (
+        <div className="flex justify-center relative">
           <img
             src={siteBaseUrl + "deckcards/" + card.card_img}
             alt={`Card ${card.id}`}
             className="w-auto max-w-[70vw] h-auto object-contain mt-5"
           />
-        )}
-      </div>
+          {!card.category_name.toLowerCase().includes("personality") && (
+            <>
+              <p
+                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-2xl font-bold px-[25px] py-[10px] rounded-[15px] whitespace-nowrap ${(() => {
+                  const name = card.category_name.toLowerCase();
+
+                  if (
+                    ["alchemy", "sacred", "master"].some((w) =>
+                      name.includes(w)
+                    )
+                  ) {
+                    return "bg-[#0076ba]"; // A color
+                  } else if (name.includes("transcend")) {
+                    return "bg-[#534eb4]";
+                  } else if (name.includes("release")) {
+                    return "bg-[#f17201]";
+                  } else {
+                    return "bg-[#333]"; // fallback
+                  }
+                })()}`}
+                style={{
+                  fontSize: "clamp(18px, 3vw, 32px)", // min 18px, max 32px, scales with viewport width
+                }}
+              >
+                {card.title}
+              </p>
+
+              <p className="text-white w-full absolute bottom-7 left-1/2 -translate-x-1/2 text-center">
+                {card.category_name}
+              </p>
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 };
