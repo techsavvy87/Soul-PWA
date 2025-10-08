@@ -28,7 +28,7 @@ Route::post('/verify/code', [AuthController::class, 'verifyCode']);
 Route::post('/reset/password', [AuthController::class, 'resetPassword']);
 
 
-Route::post('/paypal/webhook', [PayPalWebhookController::class, 'handleWebhook']);
+// Route::post('/paypal/webhook', [PayPalWebhookController::class, 'handleWebhook']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
 

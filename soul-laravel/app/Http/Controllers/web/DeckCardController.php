@@ -22,6 +22,14 @@ class DeckCardController extends Controller
                          ->orWhere('description', 'like', "%{$search}%");
         })
         ->paginate($length);
+        // $cards = DeckCard::when($search, function ($query, $search) {
+        //     return $query->where(function ($q) use ($search) {
+        //         $q->where('title', 'like', "%{$search}%")
+        //           ->orWhere('description', 'like', "%{$search}%");
+        //     });
+        // })
+        // ->where('category_id', 17)
+        // ->paginate(80);
         $emotions = Emotion::all()->keyBy('id');
         $guidances = Guidance::all()->keyBy('id');
         $active = 'deckcard';
@@ -82,13 +90,10 @@ class DeckCardController extends Controller
         $deckCard->emotions_id = $request->input('emotions', []);
         $deckCard->guidances_id = $request->input('guidances', []);
         $deckCard->status = $request->status;
-        // echo gettype($request->status); exit;
 
         if ($request->status === 'published') {
-
             $deckCard->published_at = Carbon::now();
         }
-
 
         if (isset($request->card_img))
         {

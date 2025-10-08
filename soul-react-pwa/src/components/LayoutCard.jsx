@@ -17,6 +17,7 @@ import FlipImg from "../assets/imgs/flip.png";
 import AppHeader from "./AppHeader";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import SubHeader from "./SubHeader";
 
 const LayoutCard = ({ children }) => {
   const [isFavorited, setIsFavorited] = useState(false);

@@ -103,22 +103,38 @@ const Cards = () => {
           There is no card to display.
         </p>
       ) : cards.length === 1 ? (
-        <div className="max-w-[70%] m-auto bg-white p-[10px]">
+        <div
+          className="max-w-[70%] m-auto relative"
+          onClick={() => {
+            window.sessionStorage.setItem("card", JSON.stringify(cards[0]));
+            navigate("/card/fullscreen");
+          }}
+        >
           <img
             src={siteBaseUrl + "deckcards/" + cards[0].card_img}
             alt={`slide-0`}
             className="w-full m-auto"
-            onClick={() => {
-              window.sessionStorage.setItem("card", JSON.stringify(cards[0]));
-              navigate("/card/fullscreen");
-            }}
           />
+          {!cards[0].category_name.toLowerCase().includes("personality") && (
+            <>
+              <p
+                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-[18px] font-bold px-[25px] py-[10px] rounded-[15px] whitespace-nowrap
+                                ${getCategoryBg(cards[0].category_name)}`}
+              >
+                {cards[0].title}
+              </p>
+
+              <p className="text-white w-full absolute bottom-7 left-1/2 -translate-x-1/2 text-center">
+                {cards[0].category_name}
+              </p>
+            </>
+          )}
         </div>
       ) : (
         <Swiper
           modules={[Pagination, Autoplay]}
           pagination={{ clickable: true }}
-          // autoplay={{ delay: 5000 }}
+          autoplay={{ delay: 5000 }}
           spaceBetween={0}
           slidesPerView="auto"
           centeredSlides={true}
@@ -151,24 +167,23 @@ const Cards = () => {
         >
           {cards.map((card, index) => (
             <SwiperSlide key={index} style={{ width: "100%" }}>
-              <div className="relative">
+              <div
+                className="relative"
+                onClick={() => {
+                  window.sessionStorage.setItem("card", JSON.stringify(card));
+                  navigate("/card/fullscreen");
+                }}
+              >
                 <img
                   src={siteBaseUrl + "deckcards/" + card.card_img}
                   alt={`slide-${index}`}
                   className="w-full m-auto object-cover"
-                  onClick={() => {
-                    window.sessionStorage.setItem("card", JSON.stringify(card));
-                    navigate("/card/fullscreen");
-                  }}
                 />
                 {!card.category_name.toLowerCase().includes("personality") && (
                   <>
                     <p
-                      className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-2xl font-bold px-[25px] py-[10px] rounded-[15px] 
+                      className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-[18px] font-bold px-[25px] py-[10px] rounded-[15px] whitespace-nowrap
                                 ${getCategoryBg(card.category_name)}`}
-                      style={{
-                        fontSize: "18px",
-                      }}
                     >
                       {card.title}
                     </p>

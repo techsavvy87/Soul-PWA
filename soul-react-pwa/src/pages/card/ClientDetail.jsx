@@ -34,28 +34,54 @@ const CardClientDetail = () => {
     }
   }, [id]);
 
-  // Get width and height of original image.
-  const handleImageLoad = (e) => {
-    const { naturalWidth, naturalHeight } = e.target;
-    if (naturalWidth > naturalHeight) {
-      setImgWidthCss("w-full");
+  // Helper function to get background color class
+  const getCategoryBg = (categoryName) => {
+    const name = categoryName.toLowerCase();
+
+    if (["alchemy", "sacred", "master"].some((w) => name.includes(w))) {
+      return "bg-[#0076ba]";
+    } else if (name.includes("transcend")) {
+      return "bg-[#534eb4]";
+    } else if (name.includes("release")) {
+      return "bg-[#f17201]";
+    } else {
+      return "bg-[#333]";
     }
   };
 
   return (
-    <div className="text-center mt-8 mx-4">
-      <div className="inline-block">
+    <div className="client-detail text-center pt-8 pb-4 px-4">
+      <div className="inline-block relative">
         <img
           src={siteBaseUrl + "deckcards/" + cardDetail.card_img}
           alt="card"
-          className={`${imgWidthCss} h-[285px] m-auto object-cover`}
-          onLoad={handleImageLoad}
+          className="w-[190px] h-[285px] m-auto object-cover"
         />
+        {cardDetail && cardDetail.category_name && (
+          <>
+            {!cardDetail.category_name
+              .toLowerCase()
+              .includes("personality") && (
+              <>
+                <p
+                  className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-[14px] font-bold px-[20px] py-[5px] rounded-[15px] whitespace-nowrap
+                        ${getCategoryBg(cardDetail.category_name)}`}
+                >
+                  {cardDetail.title}
+                </p>
+
+                <p className="text-white w-full absolute bottom-7 left-1/2 -translate-x-1/2 text-center text-[12px]">
+                  {cardDetail.category_name}
+                </p>
+              </>
+            )}
+          </>
+        )}
       </div>
-      <div className="py-4">
+      <div className="pt-4">
         <div
           className="overflow-y-auto overscroll-contain card-detail"
-          style={{ maxHeight: "calc(100vh - 485px)" }}
+          style={{ maxHeight: "calc(100vh - 355px)" }}
         >
           <p
             className="text-[16px] text-[#302853]  text-left whitespace-pre-wrap"
