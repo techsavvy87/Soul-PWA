@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import NavigationDrawer from "../../components/NavigationDrawer";
 import { get } from "../../utils/axios";
 import { siteBaseUrl } from "../../utils/constants";
 import { setIsLoading, setPrevPageName } from "../../redux/appsettingSlice";
@@ -13,6 +12,7 @@ import { post } from "../../utils/axios";
 import toast from "react-simple-toasts";
 import ToastLayout from "../../components/ToastLayout";
 import ArrowImg from "../../assets/imgs/arrow.png";
+import PaulImg from "../../assets/imgs/paul.jpg";
 
 const Home = () => {
   const [events, setEvents] = useState([]);
@@ -187,6 +187,32 @@ const Home = () => {
             </div>
           </div>
         ))}
+        <div
+          className="flex justify-between items-center border border-[#FFFFFF80] rounded-[12px] pl-3 pr-[14px] py-2 mb-3"
+          style={{
+            boxShadow: "inset 0px 4px 24px 0px rgba(252, 230, 255, 0.2)",
+          }}
+          onClick={() =>
+            window.open(
+              "https://www.paulwagner.com/intuitive-psychic-readings/",
+              "_blank"
+            )
+          }
+        >
+          <div className="flex items-center">
+            <img
+              src={PaulImg}
+              className="w-[58px] h-[57px] object-cover rounded-[10px]"
+              alt="paul"
+            />
+            <p className="font-poppins text-[18px] text-white text-center font-normal leading-[130%] ml-5">
+              Sessions with Paul
+            </p>
+          </div>
+          <div className="flex items-center">
+            <img className="w-[7px] h-[14px]" src={ArrowImg} alt="arrow" />
+          </div>
+        </div>
       </div>
       <LoadingModal open={isLoading} />
     </div>

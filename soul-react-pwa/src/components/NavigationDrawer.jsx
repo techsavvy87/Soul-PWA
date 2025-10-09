@@ -37,6 +37,7 @@ const NavigationDrawer = () => {
       if (resResult.status) {
         dispatch(logout());
         sessionStorage.clear();
+        localStorage.clear();
         dispatch(setIsLoading({ isLoading: false }));
         navigate("/login");
       }

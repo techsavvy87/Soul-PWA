@@ -7,14 +7,14 @@
   --font-poppins: "Poppins";
 }
 .layout-auth {
-  background-image: url("/auth-bg.png");
+  background-image: url("/auth-bg.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 .layout-home {
   position: relative;
-  background-image: url("/home-bg.png");
+  background-image: url("/home-bg.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -36,7 +36,7 @@
 .emotional,
 .favorite {
   position: relative;
-  background-image: url("/emo-bg.png");
+  background-image: url("/emo-bg.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -59,7 +59,7 @@
 }
 .layout-card,
 .client-detail {
-  background-image: url("/card-bg.png");
+  background-image: url("/card-bg.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -121,7 +121,7 @@
 
 .layout-burger {
   position: relative;
-  background-image: url("/emo-bg.png");
+  background-image: url("/emo-bg.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -151,7 +151,7 @@
 }
 .journal-home {
   position: relative;
-  background-image: url("/j-h-bg.png");
+  background-image: url("/j-h-bg.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -159,7 +159,7 @@
   z-index: 0;
 }
 .layout-journal {
-  background-image: url("/auth-bg.png");
+  background-image: url("/auth-bg.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -192,13 +192,13 @@
   backdrop-filter: blur(5px);
 }
 .meditation-list {
-  background-image: url("/m-list.png");
+  background-image: url("/m-list.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 .meditation-media {
-  background-image: url("/m-media.png");
+  background-image: url("/m-media.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

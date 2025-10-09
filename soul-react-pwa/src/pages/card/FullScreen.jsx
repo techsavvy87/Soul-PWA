@@ -8,6 +8,8 @@ const CardFullScreen = () => {
   const card = JSON.parse(window.sessionStorage.getItem("card"));
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const sacCardDeckNameCss =
+    "bg-gray-500 opacity-70 px-[15px] py-[5px] rounded-[10px]";
 
   useEffect(() => {
     dispatch(setPrevPageName({ pageName: "card" }));
@@ -51,8 +53,17 @@ const CardFullScreen = () => {
               >
                 {card.title}
               </p>
-
-              <p className="text-white w-full absolute bottom-10 left-1/2 -translate-x-1/2 text-center text-[18px]">
+              <p
+                className={`text-white absolute bottom-10 left-1/2 -translate-x-1/2 text-center whitespace-nowrap text-[18px]
+                            ${
+                              card.category_name
+                                .toLowerCase()
+                                .includes("sacred")
+                                ? sacCardDeckNameCss
+                                : ""
+                            }
+                          `}
+              >
                 {card.category_name}
               </p>
             </>

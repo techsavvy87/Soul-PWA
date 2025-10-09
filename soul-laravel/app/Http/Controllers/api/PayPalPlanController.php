@@ -54,15 +54,32 @@ class PayPalPlanController extends Controller
         ]);
 
         $plan = PaypalPlan::where('plan_id', $request->plan_id)->first();
+        
+        // Check if a subscription already exists for this user and plan
+        $existing = PlanSubscription::where('user_id', auth()->id())
+            ->where('plan_id', $request->plan_id)
+            ->first();
 
-        $subscription = PlanSubscription::create([
+        if ($existing) {
+            // Update the existing subscription
+            $existing->update([
+            'paypal_subscription_id' => $request->subscription_id,
+            'status' => $request->status,
+            'subscribed_at' => Carbon::parse($request->period_start),
+            'current_period_end' => Carbon::parse($request->period_end),
+            ]);
+            $subscription = $existing;
+        } else {
+            // Create a new subscription
+            $subscription = PlanSubscription::create([
             'user_id' => auth()->id(),
             'paypal_subscription_id' => $request->subscription_id,
             'plan_id' => $request->plan_id,
             'status' => $request->status,
             'subscribed_at' => Carbon::parse($request->period_start),
             'current_period_end' => Carbon::parse($request->period_end),
-        ]);
+            ]);
+        }
         
         return response()->json([
             'success' => true,

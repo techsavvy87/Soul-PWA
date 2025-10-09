@@ -31,6 +31,9 @@ const CardAdj = () => {
   const lastCardAdjId = Number(window.sessionStorage.getItem("lastCardAdjId"));
   let initialSlideIndex = cards?.findIndex((r) => r.id === lastCardAdjId) ?? 0;
 
+  const sacCardDeckNameCss =
+    "bg-gray-500 opacity-70 px-[15px] py-[5px] rounded-[10px]";
+
   useEffect(() => {
     const getCards = async () => {
       const url = "/get-adj-cards";
@@ -120,7 +123,17 @@ const CardAdj = () => {
                 {cards[0].title}
               </p>
 
-              <p className="text-white w-full absolute bottom-7 left-1/2 -translate-x-1/2 text-center">
+              <p
+                className={`text-white absolute bottom-7 left-1/2 -translate-x-1/2 text-center whitespace-nowrap
+                            ${
+                              cards[0].category_name
+                                .toLowerCase()
+                                .includes("sacred")
+                                ? sacCardDeckNameCss
+                                : ""
+                            }
+                          `}
+              >
                 {cards[0].category_name}
               </p>
             </>
@@ -184,7 +197,17 @@ const CardAdj = () => {
                       {card.title}
                     </p>
 
-                    <p className="text-white w-full absolute bottom-7 left-1/2 -translate-x-1/2 text-center">
+                    <p
+                      className={`text-white absolute bottom-7 left-1/2 -translate-x-1/2 text-center whitespace-nowrap
+                            ${
+                              card.category_name
+                                .toLowerCase()
+                                .includes("sacred")
+                                ? sacCardDeckNameCss
+                                : ""
+                            }
+                          `}
+                    >
                       {card.category_name}
                     </p>
                   </>

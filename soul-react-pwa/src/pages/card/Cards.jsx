@@ -27,6 +27,9 @@ const Cards = () => {
   const lastCardId = Number(window.sessionStorage.getItem("lastCardId"));
   let initialSlideIndex = cards?.findIndex((r) => r.id === lastCardId) ?? 0;
 
+  const sacCardDeckNameCss =
+    "bg-gray-500 opacity-70 px-[15px] py-[5px] rounded-[10px]";
+
   useEffect(() => {
     let tier = sessionStorage.getItem("tier");
     let type = sessionStorage.getItem("type");
@@ -124,7 +127,17 @@ const Cards = () => {
                 {cards[0].title}
               </p>
 
-              <p className="text-white w-full absolute bottom-7 left-1/2 -translate-x-1/2 text-center">
+              <p
+                className={`text-white absolute bottom-7 left-1/2 -translate-x-1/2 text-center whitespace-nowrap
+                            ${
+                              cards[0].category_name
+                                .toLowerCase()
+                                .includes("sacred")
+                                ? sacCardDeckNameCss
+                                : ""
+                            }
+                          `}
+              >
                 {cards[0].category_name}
               </p>
             </>
@@ -188,7 +201,17 @@ const Cards = () => {
                       {card.title}
                     </p>
 
-                    <p className="text-white w-full absolute bottom-7 left-1/2 -translate-x-1/2 text-center">
+                    <p
+                      className={`text-white absolute bottom-7 left-1/2 -translate-x-1/2 text-center whitespace-nowrap
+                            ${
+                              card.category_name
+                                .toLowerCase()
+                                .includes("sacred")
+                                ? sacCardDeckNameCss
+                                : ""
+                            }
+                          `}
+                    >
                       {card.category_name}
                     </p>
                   </>

@@ -12,6 +12,8 @@ const CardDetail = () => {
   const { id } = useParams();
   const [cardDetail, setCardDetail] = useState({});
   const { isLoading } = useSelector((state) => state.appsetting);
+  const sacCardDeckNameCss =
+    "bg-gray-500 opacity-70 px-[15px] py-[5px] rounded-[10px]";
 
   useEffect(() => {
     const fetchCardDetail = async () => {
@@ -72,8 +74,17 @@ const CardDetail = () => {
                 >
                   {cardDetail.title}
                 </p>
-
-                <p className="text-white w-full absolute bottom-7 left-1/2 -translate-x-1/2 text-center text-[12px]">
+                <p
+                  className={`text-white absolute bottom-7 left-1/2 -translate-x-1/2 text-center whitespace-nowrap text-[12px]
+                            ${
+                              cardDetail.category_name
+                                .toLowerCase()
+                                .includes("sacred")
+                                ? sacCardDeckNameCss
+                                : ""
+                            }
+                          `}
+                >
                   {cardDetail.category_name}
                 </p>
               </>
