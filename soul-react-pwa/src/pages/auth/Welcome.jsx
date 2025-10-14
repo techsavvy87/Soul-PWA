@@ -77,11 +77,11 @@ const Welcome = () => {
         subscription: userInfo.subscription,
       })
     );
-    window.sessionStorage.setItem("isAuthenticated", "done");
-    window.sessionStorage.setItem("user", JSON.stringify(userInfo.user));
-    window.sessionStorage.setItem("token", userInfo.access_token);
-    window.sessionStorage.setItem("tier", userInfo.tier);
-    window.sessionStorage.setItem("subscription", userInfo.subscription);
+    window.localStorage.setItem("isAuthenticated", "done");
+    window.localStorage.setItem("user", JSON.stringify(userInfo.user));
+    window.localStorage.setItem("token", userInfo.access_token);
+    window.localStorage.setItem("tier", userInfo.tier);
+    window.localStorage.setItem("subscription", userInfo.subscription);
     navigate("/");
   };
 

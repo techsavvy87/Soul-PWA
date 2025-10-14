@@ -64,10 +64,10 @@ const Home = () => {
 
   // Free Iamge Click
   const onClickFreeImg = (type, name, level, id) => {
-    window.sessionStorage.setItem("tier", userTier);
-    window.sessionStorage.setItem("type", type);
-    window.sessionStorage.setItem("eventName", name);
-    window.sessionStorage.setItem("eventId", id);
+    window.localStorage.setItem("tier", userTier);
+    window.localStorage.setItem("type", type);
+    window.localStorage.setItem("eventName", name);
+    window.localStorage.setItem("eventId", id);
 
     if (userTier === "Free" && level === "Paid") {
       navigate("/subscription");

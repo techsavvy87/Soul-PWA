@@ -108,8 +108,8 @@ const Subscription = () => {
 
       // 3. Redirect after backend confirmation
       if (subscription.status === "ACTIVE") {
-        window.sessionStorage.setItem("tier", "Paid");
-        window.sessionStorage.setItem("subscription", true);
+        window.localStorage.setItem("tier", "Paid");
+        window.localStorage.setItem("subscription", true);
         dispatch(
           login({
             ...authState,
@@ -170,8 +170,8 @@ const Subscription = () => {
       const resResult = result.data;
 
       if (resResult.status) {
-        window.sessionStorage.setItem("tier", "Free");
-        window.sessionStorage.setItem("subscription", false);
+        window.localStorage.setItem("tier", "Free");
+        window.localStorage.setItem("subscription", false);
         dispatch(
           login({
             ...authState,

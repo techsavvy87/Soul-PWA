@@ -24,7 +24,7 @@ const LayoutCard = ({ children }) => {
   const [email, setEmail] = useState("");
   const { isLoading } = useSelector((state) => state.appsetting);
   const userId = useSelector((state) => state.auth.user.id);
-  const cardId = window.sessionStorage.getItem("cardId");
+  const cardId = useSelector((state) => state.appsetting.cardId);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();

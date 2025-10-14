@@ -22,8 +22,8 @@ const CardIcon = ({
   }, [isFavorited]);
 
   const showCardView = () => {
-    window.sessionStorage.setItem("cardId", cardId);
-    window.sessionStorage.setItem("description", description);
+    window.localStorage.setItem("cardId", cardId);
+    window.localStorage.setItem("description", description);
 
     navigate("/card-view", {
       state: { title, description, imgUrl },

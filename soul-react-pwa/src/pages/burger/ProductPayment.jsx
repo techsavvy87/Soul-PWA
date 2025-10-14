@@ -50,7 +50,7 @@ const ProductPayment = () => {
   const dispatch = useDispatch();
   const [product, setProduct] = useState(null);
   const [purchasedStatus, setPurchasedStatus] = useState(false);
-  const type = window.sessionStorage.getItem("storeType") || "product";
+  const type = window.localStorage.getItem("storeType") || "product";
   const hasRendered = useRef(false);
 
   useEffect(() => {

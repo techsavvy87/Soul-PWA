@@ -14,9 +14,9 @@ import AppHeader from "../../components/AppHeader";
 import SubHeader from "../../components/SubHeader";
 
 const Emotional = () => {
-  let tier = sessionStorage.getItem("tier");
-  let type = sessionStorage.getItem("type");
-  let name = sessionStorage.getItem("eventName");
+  let tier = localStorage.getItem("tier");
+  let type = localStorage.getItem("type");
+  let name = localStorage.getItem("eventName");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

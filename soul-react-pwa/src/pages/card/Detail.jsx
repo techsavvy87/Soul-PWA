@@ -64,30 +64,44 @@ const CardDetail = () => {
         />
         {cardDetail && cardDetail.category_name && (
           <>
-            {!cardDetail.category_name
-              .toLowerCase()
-              .includes("personality") && (
+            {cardDetail.category_name.toLowerCase().includes("transcend") ? (
               <>
+                <p className="text-white text-[15px] absolute top-6 left-1/2 -translate-x-1/2 text-center whitespace-nowrap">
+                  {cardDetail.category_name}
+                </p>
                 <p
-                  className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-[14px] font-bold px-[20px] py-[5px] rounded-[15px] whitespace-nowrap
-                        ${getCategoryBg(cardDetail.category_name)}`}
+                  className={`absolute bottom-0 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-[15px] font-bold px-[25px] py-[5px] rounded-[15px] whitespace-nowrap
+                                ${getCategoryBg(cardDetail.category_name)}`}
                 >
                   {cardDetail.title}
                 </p>
-                <p
-                  className={`text-white absolute bottom-7 left-1/2 -translate-x-1/2 text-center whitespace-nowrap text-[12px]
-                            ${
-                              cardDetail.category_name
-                                .toLowerCase()
-                                .includes("sacred")
-                                ? sacCardDeckNameCss
-                                : ""
-                            }
-                          `}
-                >
-                  {cardDetail.category_name}
-                </p>
               </>
+            ) : (
+              !cardDetail.category_name
+                .toLowerCase()
+                .includes("personality") && (
+                <>
+                  <p
+                    className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-[18px] font-bold px-[25px] py-[10px] rounded-[15px] whitespace-nowrap
+                                  ${getCategoryBg(cardDetail.category_name)}`}
+                  >
+                    {cardDetail.title}
+                  </p>
+                  <p
+                    className={`text-white absolute bottom-7 left-1/2 -translate-x-1/2 text-center whitespace-nowrap
+                          ${
+                            cardDetail.category_name
+                              .toLowerCase()
+                              .includes("sacred")
+                              ? sacCardDeckNameCss
+                              : ""
+                          }
+                        `}
+                  >
+                    {cardDetail.category_name}
+                  </p>
+                </>
+              )
             )}
           </>
         )}
@@ -98,7 +112,7 @@ const CardDetail = () => {
           style={{ maxHeight: "calc(100vh - 500px)" }}
         >
           <p
-            className="text-[18px] text-[#302853] text-left whitespace-pre-wrap"
+            className="text-[19px] text-[#302853] text-left whitespace-pre-wrap"
             dangerouslySetInnerHTML={{ __html: cardDetail.description }}
           />
         </div>

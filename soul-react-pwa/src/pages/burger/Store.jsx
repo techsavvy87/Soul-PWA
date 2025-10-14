@@ -61,7 +61,7 @@ const Store = () => {
               key={index}
               className="mb-[10px] bg-white rounded-[16px] overflow-hidden w-[48%] shadow-[0_4px_20px_rgba(0,0,0,0.1)] relative"
               onClick={() => {
-                window.sessionStorage.setItem("storeType", item.type);
+                window.localStorage.setItem("storeType", item.type);
                 navigate(`/product-payment/${item.id}`);
               }}
             >

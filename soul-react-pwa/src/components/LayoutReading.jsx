@@ -26,7 +26,7 @@ const LayoutReading = ({ children }) => {
   const { isLoading } = useSelector((state) => state.appsetting);
   const userId = useSelector((state) => state.auth.user.id);
   const elementEmpty = useSelector((state) => state.appsetting.elementEmpty);
-  const readingId = window.sessionStorage.getItem("readingId");
+  const readingId = window.localStorage.getItem("readingId");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();

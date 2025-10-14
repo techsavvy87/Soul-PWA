@@ -25,7 +25,7 @@ const ReadingList = () => {
   const storedReadings = useSelector((state) => state.appsetting.readings);
   const { isLoading } = useSelector((state) => state.appsetting);
 
-  const lastReadingId = Number(window.sessionStorage.getItem("lastReadingId"));
+  const lastReadingId = Number(window.localStorage.getItem("lastReadingId"));
   let initialSlideIndex =
     readingList?.findIndex((r) => r.id === lastReadingId) ?? 0;
 
@@ -86,13 +86,13 @@ const ReadingList = () => {
             alt={`slide-0`}
             className="w-full m-auto"
             onClick={() => {
-              window.sessionStorage.setItem(
+              window.localStorage.setItem(
                 "reading",
                 JSON.stringify(readingList[0])
               );
               dispatch(setActiveReadingId({ readingId: readingList[0].id }));
-              window.sessionStorage.setItem("readingId", readingList[0].id);
-              window.sessionStorage.setItem("lastReadingId", readingList[0].id);
+              window.localStorage.setItem("readingId", readingList[0].id);
+              window.localStorage.setItem("lastReadingId", readingList[0].id);
               navigate("/reading/fullscreen");
             }}
           />
@@ -115,8 +115,8 @@ const ReadingList = () => {
             const currentReading = readingList?.[realIndex];
             if (currentReading) {
               dispatch(setActiveReadingId({ readingId: currentReading.id }));
-              window.sessionStorage.setItem("readingId", currentReading.id);
-              window.sessionStorage.setItem("lastReadingId", currentReading.id);
+              window.localStorage.setItem("readingId", currentReading.id);
+              window.localStorage.setItem("lastReadingId", currentReading.id);
             }
           }}
           onRealIndexChange={(swiper) => {
@@ -130,9 +130,9 @@ const ReadingList = () => {
 
             setReadingId(currentReading.id);
             dispatch(setActiveReadingId({ readingId: currentReading.id }));
-            window.sessionStorage.setItem("readingId", currentReading.id);
-            // Save to sessionStorage so it persists across pages
-            window.sessionStorage.setItem("lastReadingId", currentReading.id);
+            window.localStorage.setItem("readingId", currentReading.id);
+            // Save to localStorage so it persists across pages
+            window.localStorage.setItem("lastReadingId", currentReading.id);
           }}
         >
           {readingList.map((reading, index) => (
@@ -142,7 +142,7 @@ const ReadingList = () => {
                 alt={`slide-${index}`}
                 className="w-full m-auto object-cover"
                 onClick={() => {
-                  window.sessionStorage.setItem(
+                  window.localStorage.setItem(
                     "reading",
                     JSON.stringify(reading)
                   );

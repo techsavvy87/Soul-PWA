@@ -17,12 +17,12 @@ const AuthRequire = ({ children }) => {
   if (!isAuthenticated) {
     // when redux store is initialized but data in localstorage is still alive, then get data from
     // localstorage and restructure the redux store auth data.
-    let isAuthStorage = sessionStorage.getItem("isAuthenticated");
+    let isAuthStorage = localStorage.getItem("isAuthenticated");
     if (isAuthStorage === "done") {
-      let userStorage = sessionStorage.getItem("user");
-      let tokenStorage = sessionStorage.getItem("token");
-      let tierStorage = sessionStorage.getItem("tier");
-      let subscriptionStorage = sessionStorage.getItem("subscription");
+      let userStorage = localStorage.getItem("user");
+      let tokenStorage = localStorage.getItem("token");
+      let tierStorage = localStorage.getItem("tier");
+      let subscriptionStorage = localStorage.getItem("subscription");
 
       dispatch(
         login({

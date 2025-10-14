@@ -115,14 +115,14 @@ const ResetPassword = () => {
             subscription: resResult.result.subscription,
           })
         );
-        window.sessionStorage.setItem("isAuthenticated", "done");
-        window.sessionStorage.setItem(
+        window.localStorage.setItem("isAuthenticated", "done");
+        window.localStorage.setItem(
           "user",
           JSON.stringify(resResult.result.user)
         );
-        window.sessionStorage.setItem("token", resResult.result.access_token);
-        window.sessionStorage.setItem("tier", resResult.result.tier);
-        window.sessionStorage.setItem(
+        window.localStorage.setItem("token", resResult.result.access_token);
+        window.localStorage.setItem("tier", resResult.result.tier);
+        window.localStorage.setItem(
           "subscription",
           resResult.result.subscription
         );

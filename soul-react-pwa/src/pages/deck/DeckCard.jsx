@@ -35,8 +35,8 @@ const DeckCard = () => {
   }, []);
 
   const showCardView = (card_id, title, description, imgUrl) => {
-    window.sessionStorage.setItem("cardId", card_id);
-    window.sessionStorage.setItem("description", description);
+    window.localStorage.setItem("cardId", card_id);
+    window.localStorage.setItem("description", description);
 
     navigate("/card/detail/" + card_id);
   };

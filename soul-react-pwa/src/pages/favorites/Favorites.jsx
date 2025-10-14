@@ -80,7 +80,7 @@ const Favorites = () => {
   }, []);
 
   const showCardView = (id, title, description, imgUrl, type) => {
-    window.sessionStorage.setItem(type + "Id", id);
+    window.localStorage.setItem(type + "Id", id);
     if (type === "reading") {
       navigate(`/reading/detail/${id}`);
     } else {

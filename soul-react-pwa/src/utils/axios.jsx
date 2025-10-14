@@ -4,7 +4,7 @@ import { baseURL } from "./constants";
 export const getAxios = (isFormData = false) => {
   let axiosInstance;
 
-  const token = window.sessionStorage.getItem("token");
+  const token = window.localStorage.getItem("token");
 
   const headers = {
     Accept: "application/json",

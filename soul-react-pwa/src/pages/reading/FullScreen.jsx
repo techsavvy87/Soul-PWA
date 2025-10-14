@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { setPrevPageName } from "../../redux/appsettingSlice";
 
 const ReadingFullScreen = () => {
-  const reading = JSON.parse(window.sessionStorage.getItem("reading"));
+  const reading = JSON.parse(window.localStorage.getItem("reading"));
 
   const dispatch = useDispatch();
 

@@ -44,8 +44,8 @@ function App() {
             tier: "Free",
           })
         );
-        sessionStorage.setItem("subscription", false);
-        sessionStorage.setItem("tier", "Free");
+        localStorage.setItem("subscription", false);
+        localStorage.setItem("tier", "Free");
       }
     });
   };

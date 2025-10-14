@@ -27,7 +27,9 @@
     "react-responsive-modal": "^7.0.0",
     "react-router-dom": "^7.7.1",
     "react-simple-toasts": "^6.1.0",
+    "react-slick": "^0.31.0",
     "redux-devtools-extension": "^2.13.9",
+    "slick-carousel": "^1.8.1",
     "swiper": "^11.2.10"
   },
   "devDependencies": {

@@ -22,19 +22,18 @@ const Cards = () => {
   const [cards, setCards] = useState([]);
   const prevPageName = useSelector((state) => state.appsetting.prevPageName);
   const storedCards = useSelector((state) => state.appsetting.cards);
-  const { isLoading } = useSelector((state) => state.appsetting);
 
-  const lastCardId = Number(window.sessionStorage.getItem("lastCardId"));
+  const lastCardId = Number(window.localStorage.getItem("lastCardId"));
   let initialSlideIndex = cards?.findIndex((r) => r.id === lastCardId) ?? 0;
 
   const sacCardDeckNameCss =
     "bg-gray-500 opacity-70 px-[15px] py-[5px] rounded-[10px]";
 
   useEffect(() => {
-    let tier = sessionStorage.getItem("tier");
-    let type = sessionStorage.getItem("type");
-    let name = sessionStorage.getItem("eventName");
-    let id = sessionStorage.getItem("eventId");
+    let tier = localStorage.getItem("tier");
+    let type = localStorage.getItem("type");
+    let name = localStorage.getItem("eventName");
+    let id = localStorage.getItem("eventId");
     const getCards = async () => {
       const url = "/get-cards";
       const data = {
@@ -47,7 +46,8 @@ const Cards = () => {
       try {
         const response = await post(url, data);
         if (response.data.result.length === 1) {
-          window.sessionStorage.setItem("cardId", response.data.result[0].id);
+          dispatch(setActiveCardId({ cardId: response.data.result[0].id }));
+          window.localStorage.setItem("cardId", response.data.result[0].id);
         }
         setCards(response.data.result);
         dispatch(setExtraCards({ cards: response.data.result }));
@@ -94,11 +94,6 @@ const Cards = () => {
     }
   };
 
-  // Don't render until API finishes
-  if (isLoading) {
-    return null; // or return <Spinner /> if you want a loader
-  }
-
   return (
     <div className="cardswiper">
       {cards.length === 0 ? (
@@ -109,7 +104,7 @@ const Cards = () => {
         <div
           className="max-w-[70%] m-auto relative"
           onClick={() => {
-            window.sessionStorage.setItem("card", JSON.stringify(cards[0]));
+            window.localStorage.setItem("card", JSON.stringify(cards[0]));
             navigate("/card/fullscreen");
           }}
         >
@@ -146,8 +141,18 @@ const Cards = () => {
       ) : (
         <Swiper
           modules={[Pagination, Autoplay]}
+          lazy={{
+            loadPrevNext: true, // preload left/right slides
+            loadPrevNextAmount: 2, // how many neighbor slides to preload
+            preloadImages: false,
+            enabled: true,
+            checkInView: true,
+          }}
+          watchSlidesProgress={true}
+          observer={true}
+          observeParents={true}
           pagination={{ clickable: true }}
-          autoplay={{ delay: 5000 }}
+          autoplay={false}
           spaceBetween={0}
           slidesPerView="auto"
           centeredSlides={true}
@@ -160,8 +165,8 @@ const Cards = () => {
             const currentCard = cards?.[realIndex];
             if (currentCard) {
               dispatch(setActiveCardId({ cardId: currentCard.id }));
-              window.sessionStorage.setItem("cardId", currentCard.id);
-              window.sessionStorage.setItem("lastCardId", currentCard.id);
+              window.localStorage.setItem("cardId", currentCard.id);
+              window.localStorage.setItem("lastCardId", currentCard.id);
             }
           }}
           onRealIndexChange={(swiper) => {
@@ -173,9 +178,9 @@ const Cards = () => {
               return;
             }
             dispatch(setActiveCardId({ cardId: currentCard.id }));
-            window.sessionStorage.setItem("cardId", currentCard.id);
-            // Save to sessionStorage so it persists across pages
-            window.sessionStorage.setItem("lastCardId", currentCard.id);
+            window.localStorage.setItem("cardId", currentCard.id);
+            // Save to localStorage so it persists across pages
+            window.localStorage.setItem("lastCardId", currentCard.id);
           }}
         >
           {cards.map((card, index) => (
@@ -183,38 +188,51 @@ const Cards = () => {
               <div
                 className="relative"
                 onClick={() => {
-                  window.sessionStorage.setItem("card", JSON.stringify(card));
+                  window.localStorage.setItem("card", JSON.stringify(card));
+                  window.localStorage.setItem("cardId", card.id);
+                  window.localStorage.setItem("lastCardId", card.id);
                   navigate("/card/fullscreen");
                 }}
               >
                 <img
                   src={siteBaseUrl + "deckcards/" + card.card_img}
                   alt={`slide-${index}`}
-                  className="w-full m-auto object-cover"
+                  className="swiper-lazy w-full m-auto object-cover"
                 />
-                {!card.category_name.toLowerCase().includes("personality") && (
+                {card.category_name.toLowerCase().includes("transcend") ? (
                   <>
+                    <p className="text-white absolute top-7 left-1/2 -translate-x-1/2 text-center whitespace-nowrap">
+                      {card.category_name}
+                    </p>
                     <p
-                      className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-[18px] font-bold px-[25px] py-[10px] rounded-[15px] whitespace-nowrap
+                      className={`absolute bottom-0 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-[18px] font-bold px-[25px] py-[5px] rounded-[15px] whitespace-nowrap
                                 ${getCategoryBg(card.category_name)}`}
                     >
                       {card.title}
                     </p>
-
-                    <p
-                      className={`text-white absolute bottom-7 left-1/2 -translate-x-1/2 text-center whitespace-nowrap
-                            ${
-                              card.category_name
-                                .toLowerCase()
-                                .includes("sacred")
-                                ? sacCardDeckNameCss
-                                : ""
-                            }
-                          `}
-                    >
-                      {card.category_name}
-                    </p>
                   </>
+                ) : (
+                  !card.category_name.toLowerCase().includes("personality") && (
+                    <>
+                      <p
+                        className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-[18px] font-bold px-[25px] py-[10px] rounded-[15px] whitespace-nowrap
+                                  ${getCategoryBg(card.category_name)}`}
+                      >
+                        {card.title}
+                      </p>
+                      <p
+                        className={`text-white absolute bottom-7 left-1/2 -translate-x-1/2 text-center whitespace-nowrap
+                          ${
+                            card.category_name.toLowerCase().includes("sacred")
+                              ? sacCardDeckNameCss
+                              : ""
+                          }
+                        `}
+                      >
+                        {card.category_name}
+                      </p>
+                    </>
+                  )
                 )}
               </div>
             </SwiperSlide>

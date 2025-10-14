@@ -5,7 +5,7 @@ import { setPrevPageName } from "../../redux/appsettingSlice";
 import { useNavigate } from "react-router-dom";
 
 const CardFullScreen = () => {
-  const card = JSON.parse(window.sessionStorage.getItem("card"));
+  const card = JSON.parse(window.localStorage.getItem("card"));
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const sacCardDeckNameCss =
@@ -45,28 +45,40 @@ const CardFullScreen = () => {
             alt={`Card ${card.id}`}
             className="w-full h-auto object-contain mt-5 px-5"
           />
-          {!card.category_name.toLowerCase().includes("personality") && (
+          {card.category_name.toLowerCase().includes("transcend") ? (
             <>
+              <p className="text-white text-[20px] absolute top-13 left-1/2 -translate-x-1/2 text-center whitespace-nowrap">
+                {card.category_name}
+              </p>
               <p
-                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-[20px] font-bold px-[25px] py-[10px] rounded-[15px] whitespace-nowrap
+                className={`absolute bottom-2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-[18px] font-bold px-[25px] py-[10px] rounded-[15px] whitespace-nowrap
                                 ${getCategoryBg(card.category_name)}`}
               >
                 {card.title}
               </p>
-              <p
-                className={`text-white absolute bottom-10 left-1/2 -translate-x-1/2 text-center whitespace-nowrap text-[18px]
-                            ${
-                              card.category_name
-                                .toLowerCase()
-                                .includes("sacred")
-                                ? sacCardDeckNameCss
-                                : ""
-                            }
-                          `}
-              >
-                {card.category_name}
-              </p>
             </>
+          ) : (
+            !card.category_name.toLowerCase().includes("personality") && (
+              <>
+                <p
+                  className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-[18px] font-bold px-[25px] py-[10px] rounded-[15px] whitespace-nowrap
+                                  ${getCategoryBg(card.category_name)}`}
+                >
+                  {card.title}
+                </p>
+                <p
+                  className={`text-white absolute bottom-7 left-1/2 -translate-x-1/2 text-center whitespace-nowrap
+                          ${
+                            card.category_name.toLowerCase().includes("sacred")
+                              ? sacCardDeckNameCss
+                              : ""
+                          }
+                        `}
+                >
+                  {card.category_name}
+                </p>
+              </>
+            )
           )}
         </div>
       )}
