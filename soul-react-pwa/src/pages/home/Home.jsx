@@ -6,16 +6,17 @@ import { setIsLoading, setPrevPageName } from "../../redux/appsettingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingModal from "../../components/LoadingModal";
 import lockImg from "../../assets/imgs/lock.png";
-import Tooltip from "@mui/material/Tooltip";
 import { NEW_PUSH_NOTI_PUBLIC_KEY } from "../../utils/constants";
 import { post } from "../../utils/axios";
 import toast from "react-simple-toasts";
 import ToastLayout from "../../components/ToastLayout";
 import ArrowImg from "../../assets/imgs/arrow.png";
 import PaulImg from "../../assets/imgs/paul.jpg";
+import InfoModal from "../../components/InfoModal";
 
 const Home = () => {
   const [events, setEvents] = useState([]);
+  const [session, setSession] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -31,7 +32,8 @@ const Home = () => {
       dispatch(setIsLoading({ isLoading: true }));
       try {
         const response = await get("/all-events");
-        setEvents(response.data.result);
+        setEvents(response.data.result.events);
+        setSession(response.data.result.session);
       } catch (error) {
         console.log("Error:", error);
       } finally {
@@ -129,7 +131,8 @@ const Home = () => {
   return (
     <div>
       <p className="font-poppins text-[#FFFFFFFA] font-light text-[14px] py-[25px]">
-        To awaken and heal, choose the reading that resonates.
+        Go on a journey of healing and awakening. Think of a question and choose
+        a card reading below.
       </p>
       <div
         className="overflow-y-auto overscroll-contain hide-scrollbar"
@@ -170,12 +173,19 @@ const Home = () => {
               </p>
             </div>
             <div className="flex items-center">
-              {userTier === "Free" && event.level === "Paid" && (
+              {userTier === "Free" && event.level === "Paid" ? (
                 <img
                   className="w-[21px] h-[26px] mr-5"
                   src={lockImg}
                   alt="lock"
                 />
+              ) : (
+                <div className="mr-5" onClick={(e) => e.stopPropagation()}>
+                  <InfoModal
+                    title={event.name}
+                    description={event.description}
+                  />
+                </div>
               )}
               <img
                 className={`w-[7px] h-[14px] ${
@@ -201,15 +211,21 @@ const Home = () => {
         >
           <div className="flex items-center">
             <img
-              src={PaulImg}
+              src={siteBaseUrl + "sessions/" + session.cover_img}
               className="w-[58px] h-[57px] object-cover rounded-[10px]"
               alt="paul"
             />
-            <p className="font-poppins text-[18px] text-white text-center font-normal leading-[130%] ml-5">
-              Sessions with Paul
+            <p className="font-poppins text-[18px] text-white text-left font-normal leading-[130%] ml-5">
+              {session.title}
             </p>
           </div>
           <div className="flex items-center">
+            <div className="mr-5" onClick={(e) => e.stopPropagation()}>
+              <InfoModal
+                title={session.title}
+                description={session.description}
+              />
+            </div>
             <img className="w-[7px] h-[14px]" src={ArrowImg} alt="arrow" />
           </div>
         </div>

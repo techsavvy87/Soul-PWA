@@ -80,11 +80,15 @@ Route::middleware(['auth'])->group(function (){
 
     Route::controller(SettingsController::class)->group(function () {
         Route::get('/about/fetch', 'fetchAbout')->name('fetch-about');
+        Route::get('/about/soul/fetch', 'fetchAboutSoul')->name('fetch-about-soul');
         Route::post('/about/save', 'saveAbout')->name('save-about');
+        Route::post('/about/soul/save', 'saveAboutSoul')->name('save-about-soul');
         Route::get('/creative/fetch', 'fetchCreative')->name('fetch-creative');
         Route::post('/creative/save', 'saveCreative')->name('save-creative');
         Route::get('/concept/fetch', 'fetchConcept')->name('fetch-concept');
         Route::post('/concept/save', 'saveConcept')->name('save-concept');
+        Route::get('/sessions/fetch', 'fetchSessions')->name('fetch-sessions');
+        Route::post('/sessions/save', 'saveSessions')->name('save-sessions');
     });
 
     Route::controller(StoreItemController::class)->group(function () {

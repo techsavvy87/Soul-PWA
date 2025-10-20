@@ -30,6 +30,7 @@ class EventCategoryController extends Controller
 
         $event = new Event;
         $event->name = $request->category_name;
+        $event->description = $request->description;
         $event->level = $request->category_level;
         
         // Save the button image file
@@ -63,6 +64,7 @@ class EventCategoryController extends Controller
         $id = $request->category_id;
         $event = Event::find($id);
         $event->name = $request->category_name;
+        $event->description = $request->description;
         $event->level = $request->category_level;
 
         if (isset($request->info_img))

@@ -1,10 +1,13 @@
+import { useEffect, useState } from "react";
 import { useNavigate, useLocation, matchPath } from "react-router-dom";
 import HomeImg from "../assets/imgs/home.png";
-import LogoWhiteText from "../assets/imgs/logo-white-text.png";
-import LogoPurpleText from "../assets/imgs/logo-purple-text.png";
 import NavigationDrawer from "./NavigationDrawer";
+import { FaInfo } from "react-icons/fa6";
+import InfoModal from "./InfoModal";
+import { get } from "../utils/axios";
 
 const AppHeader = () => {
+  const [infoData, setInfoData] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
   const pageList = [
@@ -28,11 +31,30 @@ const AppHeader = () => {
   const isInPageList = pageList.some((path) =>
     matchPath(path, location.pathname)
   );
-  const LogoText = isInPageList ? LogoPurpleText : LogoWhiteText;
+  const LogoTextColor = isInPageList ? "text-[#3F356E]" : "text-white";
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await get("/app/info");
+        setInfoData(response.data.info);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className="app-header flex items-center justify-between">
       <img src={HomeImg} alt="Home" onClick={() => navigate("/")} />
-      <img src={LogoText} alt="Soul" />
+      <div className="flex items-center">
+        <p className={`font-poppins text-[22px] ${LogoTextColor} font-bold`}>
+          Blended Soul
+        </p>
+        <InfoModal title="About Blended Soul" description={infoData} />
+      </div>
       <NavigationDrawer />
     </div>
   );

@@ -84,6 +84,7 @@
                         <th class="checkbox-column"> No. </th>
                         <th>Image</th>
                         <th>Name</th>
+                        <th>Description</th>
                         <th>Level</th>
                         <th>Actions</th>
                     </tr>
@@ -98,6 +99,12 @@
                         </td>
                         <td>
                             <span class="inv-number">{{ $event->name }}</span>
+                        </td>
+                        <td class="mobile-hide">
+                            <p class="align-self-center mb-0 user-name"
+                                style="white-space:normal; word-wrap:break-word; width: 300px;">
+                                {{ strlen(html_entity_decode(strip_tags($event->description), ENT_QUOTES | ENT_HTML5, 'UTF-8')) > 140 ? substr(html_entity_decode(strip_tags($event->description), ENT_QUOTES | ENT_HTML5, 'UTF-8'), 0, 140)."..." : html_entity_decode(strip_tags($event->description), ENT_QUOTES | ENT_HTML5, 'UTF-8') }}
+                            </p>
                         </td>
                         <td>
                             @if ($event->level === 'Paid')
@@ -176,7 +183,13 @@
                                         <input type="text" id="category_name" class="form-control form-control-sm"
                                             name="category_name">
                                     </div>
-
+                                    <div class="contact-name">
+                                        <label
+                                            style="margin-bottom: 4px; margin-top: 10px; color: white">Description*</label>
+                                        <textarea class="form-control" id="description" name="description"
+                                            placeholder="Write the description here..." style="height: 180px;">
+                                        </textarea>
+                                    </div>
                                     <div class="row">
                                         <div class="contact-name mt-3 col-md-6 mb-3">
                                             <label style="margin-bottom: 4px; color: white">Level*</label>
@@ -423,6 +436,7 @@ function openAddModal() {
     $('#category_form').attr('action', "{{ route('create-event-category') }}");
     $('#category_form #category_id').val('');
     $('#category_form #category_name').val('');
+    $("#description").val('');
     $('#category_form #category_level option:eq(0)').prop('selected', true);
     $('#category_form #free_deck_type option:eq(0)').prop('selected', true);
     $('#category_form #paid_combined_deck_type option:eq(0)').prop('selected', true);
@@ -465,6 +479,7 @@ function openEditModal(event) {
     $('#category_form').attr('action', "{{ route('update-event-category') }}")
     $('#category_form #category_id').val(event.id)
     $('#category_form #category_name').val(event.name);
+    $('#description').val(event.description);
     $(`#category_form #category_level option[value='${event.level}']`).prop('selected', true);
     $('input[type=file]').val('');
 
@@ -542,6 +557,7 @@ function openEditModal(event) {
 
 function submitCategory() {
     const categoryName = $('#category_name').val();
+    const description = $('#description').val();
     const categoryLevel = $('#category_level').val();
     const isInfoImg = $('input[name=info_img]')[0].files.length !== 0;
     const categoryId = $('#category_id').val();
@@ -574,9 +590,11 @@ function submitCategory() {
 
     let errMsg = '';
     if (!categoryName) {
-        errMsg = 'Category Name is required.';
+        errMsg = 'Event name is required.';
+    } else if (!description) {
+        errMsg = "Event description is required.";
     } else if (!categoryLevel) {
-        errMsg = 'Category Level is required.';
+        errMsg = 'Event level is required.';
     } else if (!isFreeCardCntDefined) {
         errMsg = 'Free User Deck card count is required.';
     } else if (combinedSelectedPaidOptions.length > 0 && combinedCardCount === 0) {

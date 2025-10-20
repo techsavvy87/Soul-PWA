@@ -337,13 +337,19 @@
                         <ul class="collapse submenu list-unstyled @if ($active === 'setting') show @endif" id="settings"
                             data-bs-parent="#accordionExample">
                             <li>
-                                <a href="{{ route('fetch-about') }}"> About </a>
+                                <a href="{{ route('fetch-about') }}"> About Paul</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('fetch-about-soul') }}"> About Blended Soul</a>
                             </li>
                             <li>
                                 <a href="{{ route('fetch-creative') }}"> Creative Lab </a>
                             </li>
                             <li>
                                 <a href="{{ route('fetch-concept') }}"> What is Blended Soul? </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('fetch-sessions') }}"> Sessions with Paul</a>
                             </li>
                         </ul>
                     </li>

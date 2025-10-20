@@ -5,8 +5,11 @@ namespace App\Http\Controllers\web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\About;
+use App\Models\AboutSoul;
 use App\Models\CreativeLab;
 use App\Models\Concept;
+use App\Models\SessionAuthor;
+use Illuminate\Support\Facades\Storage;
 
 class SettingsController extends Controller
 {
@@ -22,8 +25,36 @@ class SettingsController extends Controller
         }
 
         $active = 'setting';
-
         return view('setting.detail_about', compact('active', 'aboutInfo'));
+    }
+
+
+    public function fetchSessions(Request $request)
+    {
+        $session = SessionAuthor::first();
+        if (isset($session)) {
+            $sessionInfo = $session->toArray();
+        } else {
+            $sessionInfo['title'] = '';
+            $sessionInfo['description'] = '';
+            $sessionInfo['cover_img'] = '';
+        }
+
+        $active = 'setting';
+        return view('setting.session', compact('active', 'sessionInfo'));
+    }
+
+    public function fetchAboutSoul(Request $request)
+    {
+        $about = AboutSoul::first();
+        if (isset($about)) {
+            $aboutInfo = $about->toArray();
+        } else {
+            $aboutInfo['description'] = '';
+        }
+
+        $active = 'setting';
+        return view('setting.detail_about_soul', compact('active', 'aboutInfo'));
     }
 
     public function saveAbout(Request $request)
@@ -73,6 +104,76 @@ class SettingsController extends Controller
         ]);
     }
 
+    public function saveSessions(Request $request)
+    {
+        $request->validate([
+            'cover_img' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'title' => 'required|string',
+            'description' => 'required|string',
+        ]);
+
+        $session = SessionAuthor::first();
+
+        if (isset($session)) {
+            $session->title = $request->title;
+            $session->description = $request->description;
+
+            if (isset($request->cover_img)) {
+                // delete existing file
+                if (!empty($session->cover_img)) {
+                    Storage::delete('public/sessions/' . $session->cover_img);
+                }
+
+                // save the image file
+                $path = $request->cover_img->store('public/sessions');
+                $paths = explode("/", $path);
+                $session->cover_img = end($paths);
+            }
+        } else {
+            $session = new SessionAuthor;
+
+            $session->title = $request->title;
+            $session->description = $request->description;
+
+            if (isset($request->cover_img)) {
+                // save the image file
+                $path = $request->cover_img->store('public/sessions');
+                $paths = explode("/", $path);
+                $session->cover_img = end($paths);
+            }
+        }
+
+        $session->save();
+
+        return back()->with([
+            'status' => 'success',
+            'message' => 'Sessions with Paul setting has been updated now.'
+        ]);
+    }
+
+    public function saveAboutSoul(Request $request)
+    {
+        $request->validate([
+            'description' => 'required|string',
+        ]);
+
+        $about = AboutSoul::first();
+
+        if (isset($about)) {
+            $about->description = $request->description;
+        } else {
+            $about = new AboutSoul;
+            $about->description = $request->description;
+        }
+
+        $about->save();
+
+        return back()->with([
+            'status' => 'success',
+            'message' => 'About Blended Soul setting has been updated now.'
+        ]);
+    }
+
     public function fetchCreative(Request $request)
     {
         $creative = CreativeLab::first();
@@ -83,7 +184,6 @@ class SettingsController extends Controller
         }
 
         $active = 'setting';
-
         return view('setting.detail_creative', compact('active', 'creativeLab'));
     }
 

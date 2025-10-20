@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\About;
 use App\Models\CreativeLab;
 use App\Models\Concept;
+use App\Models\AboutSoul;
 
 class SettingsController extends Controller
 {
@@ -46,6 +47,17 @@ class SettingsController extends Controller
             'status' => true,
             'message' => 'Fetched the concept successfully',
             'result' => $conceptData
+        ], 200);
+    }
+
+    public function appInfo(Request $request)
+    {
+        $AboutSoul = AboutSoul::first();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Fetched the app info successfully',
+            'info' => isset($AboutSoul) ? $AboutSoul->description : null,
         ], 200);
     }
 }

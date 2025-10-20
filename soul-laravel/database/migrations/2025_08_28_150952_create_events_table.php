@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->text('description');
             $table->string('img_url');
             $table->enum('level', ['Free', 'Paid'])->default('Free');
             $table->string('scroll_sort')->nullable();
