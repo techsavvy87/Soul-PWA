@@ -17,13 +17,15 @@ import ScheduleIcon from "@mui/icons-material/Schedule";
 import StoreIcon from "@mui/icons-material/Store";
 import EditIcon from "@mui/icons-material/Edit";
 import HomeImg from "../assets/imgs/home.png";
+import PsychologyIcon from "@mui/icons-material/Psychology";
+import InfoModal from "./InfoModal";
 
 const NavigationDrawer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const [open, setOpen] = useState(false);
   const { isLoading } = useSelector((state) => state.appsetting);
+  const mediInfo = useSelector((state) => state.appsetting.Info.meditation);
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
@@ -36,7 +38,6 @@ const NavigationDrawer = () => {
       const resResult = result.data;
       if (resResult.status) {
         dispatch(logout());
-        localStorage.clear();
         localStorage.clear();
         dispatch(setIsLoading({ isLoading: false }));
         navigate("/login");
@@ -77,7 +78,7 @@ const NavigationDrawer = () => {
               <img src={cancelImg} alt="cancel" />
             </button>
           </div>
-          <div className="py-2.5 px-9">
+          <div className="py-2.5 px-5">
             <p className="uppercase font-poppins font-semibold text-[14px] bg-gradient-to-r from-[#574A98] to-[#C12888] bg-clip-text text-transparent">
               Explore the app
             </p>
@@ -102,6 +103,24 @@ const NavigationDrawer = () => {
               >
                 <FavoriteIcon className="w-[15px] mr-3" />
                 Favorites
+              </Link>
+              <Link
+                to="/meditation"
+                className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
+              >
+                <PsychologyIcon className="w-[15px] mr-3" />
+                Guided Meditations
+                <div
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                >
+                  <InfoModal
+                    title={mediInfo.title}
+                    description={mediInfo.description}
+                  />
+                </div>
               </Link>
               <Link
                 to="/journal"
@@ -176,7 +195,7 @@ const NavigationDrawer = () => {
                 About Creative Lab
               </Link>
 
-              <Link
+              {/* <Link
                 to="/reading"
                 onClick={() =>
                   dispatch(setPrevPageName({ pageName: "burger" }))
@@ -184,13 +203,7 @@ const NavigationDrawer = () => {
                 className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
               >
                 Reading
-              </Link>
-              <Link
-                to="/meditation"
-                className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
-              >
-                Meditation
-              </Link>
+              </Link> */}
             </ul>
           </div>
         </Box>

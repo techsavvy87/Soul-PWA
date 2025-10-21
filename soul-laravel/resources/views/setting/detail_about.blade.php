@@ -125,7 +125,19 @@
 @endsection
 
 @section('page-js')
+<script src="https://cdn.tiny.cloud/1/1okcindws6nfj21mgjbkioz8h4pk8dywvqhvquwztzmoy1ci/tinymce/8/tinymce.min.js"
+    referrerpolicy="origin" crossorigin="anonymous">
+</script>
 <script>
+tinymce.init({
+    selector: 'textarea',
+    plugins: [
+        'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'link', 'lists', 'media',
+        'searchreplace', 'table', 'visualblocks', 'wordcount',
+    ],
+    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography uploadcare | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+    uploadcare_public_key: '1114b17e8b338420f727',
+});
 $(document).ready(function() {
     $('.uploadFile').change(function() {
         var maxSizeInBytes = 1024 * 1024 * 2; //2M
@@ -172,7 +184,7 @@ $(document).ready(function() {
 
 function save() {
     const title = $('#title').val();
-    const description = $('#description').val();
+    const description = tinymce.get('description').getContent();
 
     if (!title || !description) {
         Swal.fire({

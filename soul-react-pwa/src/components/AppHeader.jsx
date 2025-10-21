@@ -1,15 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation, matchPath } from "react-router-dom";
 import HomeImg from "../assets/imgs/home.png";
 import NavigationDrawer from "./NavigationDrawer";
-import { FaInfo } from "react-icons/fa6";
 import InfoModal from "./InfoModal";
 import { get } from "../utils/axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setInfo } from "../redux/appsettingSlice";
 
 const AppHeader = () => {
   const [infoData, setInfoData] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
+  const renderStatus = useRef(false);
+  const dispatch = useDispatch();
+  const appInfo = useSelector((state) => state.appsetting.Info.app);
   const pageList = [
     "/cards",
     "/card/detail/:id",
@@ -37,13 +41,28 @@ const AppHeader = () => {
     const fetchData = async () => {
       try {
         const response = await get("/app/info");
-        setInfoData(response.data.info);
+        dispatch(
+          setInfo({
+            Info: {
+              app: response.data.app_info,
+              meditation: response.data.meditation_info,
+            },
+          })
+        );
+        setInfoData(response.data.app_info);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
-    fetchData();
+    if (!renderStatus.current) {
+      renderStatus.current = true;
+      if (!appInfo) {
+        fetchData();
+      } else {
+        setInfoData(appInfo);
+      }
+    }
   }, []);
 
   return (

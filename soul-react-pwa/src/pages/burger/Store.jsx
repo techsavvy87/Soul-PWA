@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toast from "react-simple-toasts";
@@ -10,14 +10,14 @@ import SubHeader from "../../components/SubHeader";
 
 const Store = () => {
   const [storeItem, setStoreItem] = useState([]);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const productCss = "text-[12px] text-[#5E6BFD]";
-  const serviceCss = "text-[12px] text-[#3D9EFF]";
+  const renderStatus = useRef(false);
   const { isLoading } = useSelector((state) => state.appsetting);
 
   useEffect(() => {
+    if (renderStatus.current) return;
+    renderStatus.current = true;
     getStoreItems();
   }, []);
 
@@ -49,7 +49,7 @@ const Store = () => {
       <SubHeader pageName="Store" textColor="white" />
       <div
         className="flex justify-between flex-wrap mt-2.5 overflow-y-auto overscroll-contain hide-scrollbar"
-        style={{ maxHeight: "calc(100vh - 176px)" }}
+        style={{ maxHeight: "calc(100vh - 226px)" }}
       >
         {storeItem.length === 0 ? (
           <p className="font-poppins text-center text-2xl pt-[50%]">
@@ -59,38 +59,41 @@ const Store = () => {
           storeItem.map((item, index) => (
             <div
               key={index}
-              className="mb-[10px] bg-white rounded-[16px] overflow-hidden w-[48%] shadow-[0_4px_20px_rgba(0,0,0,0.1)] relative"
+              className="mb-[10px] px-3 py-4 bg-white rounded-[16px] w-full shadow-[0_4px_20px_rgba(0,0,0,0.1)] flex justify-between items-center"
               onClick={() => {
-                window.localStorage.setItem("storeType", item.type);
-                navigate(`/product-payment/${item.id}`);
+                if (item.type === "service") {
+                  window.open(
+                    "https://www.paulwagner.com/intuitive-psychic-readings/",
+                    "_blank"
+                  );
+                } else {
+                  window.localStorage.setItem("storeType", item.type);
+                  navigate(`/product-payment/${item.id}`);
+                }
               }}
             >
               <img
                 src={`${siteBaseUrl}store/${item.img}`}
                 alt={item.title}
-                className="w-full h-[100px] object-cover"
+                className="min-w-[100px] h-[100px] object-cover"
               />
-              <div className="p-2">
-                <h3 className="text-[17px] font-bold text-gray-800 text-center mb-10">
+              <div className="pl-3">
+                <h3 className="text-[17px] font-bold text-gray-800 text-center">
                   {item.title}
                 </h3>
-                <div className="flex justify-between items-center mt-[10px] absolute bottom-2 w-full">
-                  <p
-                    className={`first-letter:uppercase font-poppins font-semibold text-[14px] ${
-                      item.type === "product" ? productCss : serviceCss
-                    }`}
-                  >
-                    {item.type}
-                  </p>
-                  <span className="text-[#c12888] text-[13px] bg-[#fceef7] px-[15px] py-[3px] rounded-full font-poppins font-semibold absolute right-4">
-                    ${item.price}
-                  </span>
-                </div>
+
+                <p className="font-poppins text-[14px] leading-[20px]">
+                  {item.description}
+                </p>
               </div>
             </div>
           ))
         )}
       </div>
+      <p className="font-poppins text-[16px] leading-[20px] text-white text-center pt-[10px]">
+        For International Orders (outside US), <br /> please email
+        paul@paulwagner.com
+      </p>
     </div>
   );
 };

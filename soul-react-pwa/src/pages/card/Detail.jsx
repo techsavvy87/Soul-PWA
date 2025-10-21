@@ -1,12 +1,11 @@
 import { useState, useRef, useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { siteBaseUrl } from "../../utils/constants";
 import { getWithParams } from "../../utils/axios";
 import { setIsLoading } from "../../redux/appsettingSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 const CardDetail = () => {
-  const location = useLocation();
   const dispatch = useDispatch();
   const renderStatus = useRef(false);
   const { id } = useParams();
@@ -107,9 +106,29 @@ const CardDetail = () => {
         )}
       </div>
       <div className="py-4">
+        {cardDetail?.category_name?.toLowerCase().includes("personality") ? (
+          <p className="text-[21px] text-[#302853] text-left font-bold mb-4">
+            {cardDetail.title}
+          </p>
+        ) : (
+          <>
+            <p className="text-[21px] text-[#302853] text-center font-bold">
+              {cardDetail.category_name}
+            </p>
+            <p className="text-[21px] text-[#302853] text-left font-bold mb-4">
+              {cardDetail.title}
+            </p>
+          </>
+        )}
         <div
           className="overflow-y-auto overscroll-contain card-detail"
-          style={{ maxHeight: "calc(100vh - 500px)" }}
+          style={{
+            maxHeight: cardDetail?.category_name
+              ?.toLowerCase()
+              .includes("personality")
+              ? "calc(100vh - 537px)"
+              : "calc(100vh - 568px)",
+          }}
         >
           <p
             className="text-[19px] text-[#302853] text-left whitespace-pre-wrap"

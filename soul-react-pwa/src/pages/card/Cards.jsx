@@ -18,7 +18,7 @@ import "swiper/css/pagination";
 const Cards = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const hasSubmitted = useRef(false);
+  const renderStatus = useRef(false);
   const [cards, setCards] = useState([]);
   const prevPageName = useSelector((state) => state.appsetting.prevPageName);
   const storedCards = useSelector((state) => state.appsetting.cards);
@@ -63,8 +63,8 @@ const Cards = () => {
         dispatch(setIsLoading({ isLoading: false }));
       }
     };
-    if (!hasSubmitted.current) {
-      hasSubmitted.current = true;
+    if (!renderStatus.current) {
+      renderStatus.current = true;
       if (prevPageName === "home") {
         initialSlideIndex = 1; // Always start from the second slide when coming from burger menu
         getCards();

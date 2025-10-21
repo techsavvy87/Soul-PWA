@@ -83,6 +83,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/meditation/detail/{id}', [MeditationController::class, 'getMeditationById']);
 
     Route::get('/app/info', [SettingsController::class, 'appInfo']);
+    Route::get('/meditation/info', [SettingsController::class, 'meditationInfo']);
 });
 
 // Client-specific on Email reading details

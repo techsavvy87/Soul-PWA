@@ -220,7 +220,8 @@
 
 @section('page-js')
 <script src="https://cdn.tiny.cloud/1/1okcindws6nfj21mgjbkioz8h4pk8dywvqhvquwztzmoy1ci/tinymce/8/tinymce.min.js"
-    referrerpolicy="origin" crossorigin="anonymous"></script>
+    referrerpolicy="origin" crossorigin="anonymous">
+</script>
 <script>
 tinymce.init({
     selector: 'textarea',

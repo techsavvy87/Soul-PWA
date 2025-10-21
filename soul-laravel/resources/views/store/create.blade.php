@@ -196,9 +196,13 @@ function save() {
     const image = $('.uploadFile')[0].files[0];
     const title = $('#title').val();
     const description = $('#description').val();
-    const price = $('#price').val();
+    let price = $('#price').val();
     const type = $('input[name="type"]:checked').val();
 
+    if (type === 'service') {
+        price = 100;
+        $('#price').val(price);
+    }
     if (!image || title === '' || description === '' || price === '' || !type) {
         Swal.fire({
             icon: 'error',

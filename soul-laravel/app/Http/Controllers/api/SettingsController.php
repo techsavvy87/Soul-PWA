@@ -8,6 +8,7 @@ use App\Models\About;
 use App\Models\CreativeLab;
 use App\Models\Concept;
 use App\Models\AboutSoul;
+use App\Models\AboutMeditation;
 
 class SettingsController extends Controller
 {
@@ -53,11 +54,13 @@ class SettingsController extends Controller
     public function appInfo(Request $request)
     {
         $AboutSoul = AboutSoul::first();
+        $AboutMeditation = AboutMeditation::first();
 
         return response()->json([
             'status' => true,
             'message' => 'Fetched the app info successfully',
-            'info' => isset($AboutSoul) ? $AboutSoul->description : null,
+            'app_info' => isset($AboutSoul) ? $AboutSoul->description : null,
+            'meditation_info' => isset($AboutMeditation) ? $AboutMeditation : null,
         ], 200);
     }
 }

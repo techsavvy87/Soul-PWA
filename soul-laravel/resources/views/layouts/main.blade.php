@@ -351,6 +351,9 @@
                             <li>
                                 <a href="{{ route('fetch-sessions') }}"> Sessions with Paul</a>
                             </li>
+                            <li>
+                                <a href="{{ route('fetch-meditation') }}"> About Meditation</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="menu @if ($active === 'store') active @endif">

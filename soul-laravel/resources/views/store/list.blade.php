@@ -56,7 +56,9 @@
                             </p>
                         </td>
                         <td>
+                            @if ($storeItem->type === 'product')
                             <span style="white-space:pre-wrap; word-wrap:break-word">{{ $storeItem->price }}</span>
+                            @endif
                         </td>
                         <td>
                             @if ($storeItem->type === 'product')

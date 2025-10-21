@@ -90,12 +90,32 @@ const CardClientDetail = () => {
         )}
       </div>
       <div className="pt-4">
+        {cardDetail?.category_name?.toLowerCase().includes("personality") ? (
+          <p className="text-[21px] text-[#302853] text-left font-bold mb-4">
+            {cardDetail.title}
+          </p>
+        ) : (
+          <>
+            <p className="text-[21px] text-[#302853] text-center font-bold">
+              {cardDetail.category_name}
+            </p>
+            <p className="text-[21px] text-[#302853] text-left font-bold mb-4">
+              {cardDetail.title}
+            </p>
+          </>
+        )}
         <div
           className="overflow-y-auto overscroll-contain card-detail"
-          style={{ maxHeight: "calc(100vh - 355px)" }}
+          style={{
+            maxHeight: cardDetail?.category_name
+              ?.toLowerCase()
+              .includes("personality")
+              ? "calc(100vh - 392px)"
+              : "calc(100vh - 423px)",
+          }}
         >
           <p
-            className="text-[16px] text-[#302853]  text-left whitespace-pre-wrap"
+            className="text-[19px] text-[#302853] text-left whitespace-pre-wrap"
             dangerouslySetInnerHTML={{ __html: cardDetail.description }}
           />
         </div>

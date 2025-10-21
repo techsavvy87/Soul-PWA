@@ -9,6 +9,7 @@ const initialState = {
   readings: [],
   prevPageName: "",
   elementEmpty: false,
+  Info: { app: "", meditation: "" },
 };
 
 const appsettingSlice = createSlice({
@@ -39,6 +40,12 @@ const appsettingSlice = createSlice({
     setElementEmpty(state, action) {
       state.elementEmpty = action.payload.elementEmpty;
     },
+    setInfo(state, action) {
+      state.Info = {
+        ...state.Info,
+        ...action.payload.Info,
+      };
+    },
   },
 });
 
@@ -51,6 +58,7 @@ export const {
   setExtraReadings,
   setPrevPageName,
   setElementEmpty,
+  setInfo,
 } = appsettingSlice.actions;
 
 export default appsettingSlice.reducer;

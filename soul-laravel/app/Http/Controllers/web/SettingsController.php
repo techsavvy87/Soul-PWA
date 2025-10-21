@@ -9,6 +9,7 @@ use App\Models\AboutSoul;
 use App\Models\CreativeLab;
 use App\Models\Concept;
 use App\Models\SessionAuthor;
+use App\Models\AboutMeditation;
 use Illuminate\Support\Facades\Storage;
 
 class SettingsController extends Controller
@@ -245,6 +246,46 @@ class SettingsController extends Controller
         return back()->with([
             'status' => 'success',
             'message' => 'Concept setting has been updated now.'
+        ]);
+    }
+
+    public function fetchMeditation(Request $request)
+    {
+        $meditation = AboutMeditation::first();
+        if (isset($meditation)) {
+            $meditationData = $meditation->toArray();
+        } else {
+            $meditationData = ['description' => ''];
+            $meditationData['title'] = '';
+        }
+
+        $active = 'setting';
+        return view('setting.detail_meditation', compact('active', 'meditationData'));
+    }
+
+    public function saveMeditation(Request $request)
+    {
+        $request->validate([
+            'description' => 'required|string',
+            'title' => 'required|string', 
+        ]);
+
+        $meditation = AboutMeditation::first();
+
+        if (isset($meditation)) {
+            $meditation->description = $request->description;
+            $meditation->title = $request->title;
+        } else {
+            $meditation = new AboutMeditation;
+            $meditation->description = $request->description;
+            $meditation->title = $request->title;
+        }
+
+        $meditation->save();
+
+        return back()->with([
+            'status' => 'success',
+            'message' => 'About Meditation setting has been updated now.'
         ]);
     }
 }

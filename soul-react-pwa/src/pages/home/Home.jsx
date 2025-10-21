@@ -11,7 +11,6 @@ import { post } from "../../utils/axios";
 import toast from "react-simple-toasts";
 import ToastLayout from "../../components/ToastLayout";
 import ArrowImg from "../../assets/imgs/arrow.png";
-import PaulImg from "../../assets/imgs/paul.jpg";
 import InfoModal from "../../components/InfoModal";
 
 const Home = () => {
@@ -20,7 +19,7 @@ const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
-  const hasSubmitted = useRef(false);
+  const renderStatus = useRef(false);
 
   const { isLoading } = useSelector((state) => state.appsetting);
 
@@ -41,9 +40,10 @@ const Home = () => {
       }
     };
 
-    if (!hasSubmitted.current) {
-      hasSubmitted.current = true;
+    if (!renderStatus.current) {
+      renderStatus.current = true;
       getEvents();
+      subscribeNotification();
 
       const fromPage = location.state?.from;
       if (fromPage === "subscription") {
@@ -60,8 +60,6 @@ const Home = () => {
         navigate(location.pathname, { replace: true, state: {} });
       }
     }
-
-    subscribeNotification();
   }, []);
 
   // Free Iamge Click
@@ -128,6 +126,9 @@ const Home = () => {
     }
   };
 
+  if (isLoading) {
+    return true;
+  }
   return (
     <div>
       <p className="font-poppins text-[#FFFFFFFA] font-light text-[14px] py-[25px]">

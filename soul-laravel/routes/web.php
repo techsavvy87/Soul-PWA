@@ -89,6 +89,8 @@ Route::middleware(['auth'])->group(function (){
         Route::post('/concept/save', 'saveConcept')->name('save-concept');
         Route::get('/sessions/fetch', 'fetchSessions')->name('fetch-sessions');
         Route::post('/sessions/save', 'saveSessions')->name('save-sessions');
+        Route::get('/meditation/fetch', 'fetchMeditation')->name('fetch-meditation');
+        Route::post('/meditation/save', 'saveMeditation')->name('save-meditation');
     });
 
     Route::controller(StoreItemController::class)->group(function () {

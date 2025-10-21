@@ -54,7 +54,7 @@ export default function InfoModal({ title, description }) {
         <DialogTitle
           sx={{
             m: 0,
-            p: "16px 8px 0px",
+            p: "16px 30px 0px",
             color: "white",
             textAlign: "center",
             fontFamily: "Poppins",

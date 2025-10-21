@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useSelector, useDispatch } from "react-redux";
@@ -33,6 +33,7 @@ const LayoutCard = ({ children }) => {
   const elementEmpty = useSelector((state) => state.appsetting.elementEmpty);
   const type = "card";
   const theme = createTheme();
+  const renderStatus = useRef(false);
 
   const onClickFavoriteIcon = () => {
     try {
@@ -59,7 +60,11 @@ const LayoutCard = ({ children }) => {
         console.error("Error checking favorite status:", error);
       }
     };
-    checkIfFavorited();
+
+    if (!renderStatus.current) {
+      renderStatus.current = true;
+      checkIfFavorited();
+    }
   }, [userId, cardId]);
 
   const handleSendEmail = async () => {
