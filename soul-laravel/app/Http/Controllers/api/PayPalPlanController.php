@@ -141,4 +141,25 @@ class PayPalPlanController extends Controller
             return response()->json(['message' => $e->getMessage()], 500);
         }
     }
+
+    public function getSubscriptionEndDate($userId)
+    {
+        $subscription = PlanSubscription::where('user_id', $userId)->first();
+
+        if ($subscription) {
+            return response()->json([
+                'status' => true,
+                'message' => 'Subscription end date retrieved successfully.',
+                'result' => [
+                    'plan_ended_date' => $subscription->plan_ended_date,
+                ],
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'No active subscription found for the user.',
+                'result' => null,
+            ], 404);
+        }
+    }
 }

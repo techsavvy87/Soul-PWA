@@ -60,80 +60,92 @@ class CardController extends Controller
             ], 200);
         } else {
             // If the user is on a paid plan
-            $deckCom = $event->paid_com_decks_id;
-            $deckIndi = $event->paid_indi_decks_id;
-            $deckComCnt = $event->paid_com_cards_cnt;
-            $deckAddCnt = $event->add_cards_cnt;
-            $deckComIds = [];
-            $deckIndiArr = [];
+            // $deckCom = $event->paid_com_decks_id;
+            // $deckIndi = $event->paid_indi_decks_id;
+            // $deckComCnt = $event->paid_com_cards_cnt;
+            // $deckAddCnt = $event->add_cards_cnt;
+            // $deckComIds = [];
+            // $deckIndiArr = [];
 
-            if ($deckCom) {
-                foreach($deckCom as $deck) {
-                    $deckComIds[] = $deck['id'];
-                }
-            }
+            // if ($deckCom) {
+            //     foreach($deckCom as $deck) {
+            //         $deckComIds[] = $deck['id'];
+            //     }
+            // }
 
-            if ($deckIndi) {
-                foreach($deckIndi as $deck) {
-                    $deckIndiArr[] = [
-                        'id' => $deck['id'],
-                        'cnt' => $deck['cnt']
-                    ];
-                }
-            }
+            // if ($deckIndi) {
+            //     foreach($deckIndi as $deck) {
+            //         $deckIndiArr[] = [
+            //             'id' => $deck['id'],
+            //             'cnt' => $deck['cnt']
+            //         ];
+            //     }
+            // }
 
-            // If combined and individual decks all exist
-            $cardArr = [];
-            $selComCard = DeckCard::whereIn('category_id', $deckComIds)
-                        ->where('status', 'published')
-                        ->inRandomOrder()
-                        ->limit($deckComCnt)
-                        ->get();
+            // // If combined and individual decks all exist
+            // $cardArr = [];
+            // $selComCard = DeckCard::whereIn('category_id', $deckComIds)
+            //             ->where('status', 'published')
+            //             ->inRandomOrder()
+            //             ->limit($deckComCnt)
+            //             ->get();
             
-            $comDeckFlag = 'comdeck';
-            $indiDeckIds = collect($deckIndiArr)->pluck('id');
+            // $comDeckFlag = 'comdeck';
+            // $indiDeckIds = collect($deckIndiArr)->pluck('id');
 
-            foreach($deckIndiArr as $item) {
-                $deck = DeckCardCategory::find($item['id']);
-                $cards = $deck->cards()
+            // foreach($deckIndiArr as $item) {
+            //     $deck = DeckCardCategory::find($item['id']);
+            //     $cards = $deck->cards()
+            //                 ->where('status', 'published')
+            //                 ->inRandomOrder()
+            //                 ->limit($item['cnt'])
+            //                 ->get();
+            //     foreach($cards as $card) {
+            //         $cardArr[] = $card;
+            //     }
+            // }
+            // $cardArr = $selComCard->merge($cardArr);
+            // $selCardIds = $cardArr->pluck('id');
+            // $selDeckIds = collect([$comDeckFlag])->merge($indiDeckIds);
+            // // Get additional cards without duplication
+            // $addRandDeckId = $selDeckIds[array_rand($selDeckIds->toArray())];
+            // if ($addRandDeckId === 'comdeck') {
+            //     $addCards = DeckCard::whereIn('category_id', $deckComIds)
+            //         ->where('status', 'published')
+            //         ->whereNotIn('id', $selCardIds) // Exclude selected card IDs
+            //         ->inRandomOrder()
+            //         ->limit($deckAddCnt)
+            //         ->get();
+            // } else {
+            //     $addCards = DeckCard::where('category_id', $addRandDeckId)
+            //         ->where('status', 'published')
+            //         ->whereNotIn('id', $selCardIds) // Exclude selected card IDs
+            //         ->inRandomOrder()
+            //         ->limit($deckAddCnt)
+            //         ->get();
+            // }
+            // $cardArr = $cardArr->merge($addCards);
+            $cardArr = collect(); // use a collection to merge easily
+            $categories = DeckCardCategory::all();
+
+            foreach ($categories as $category) {
+                $cards = $category->cards()
                             ->where('status', 'published')
                             ->inRandomOrder()
-                            ->limit($item['cnt'])
                             ->get();
-                foreach($cards as $card) {
-                    $cardArr[] = $card;
-                }
+                $cardArr = $cardArr->merge($cards);
             }
-            $cardArr = $selComCard->merge($cardArr);
-            $selCardIds = $cardArr->pluck('id');
-            $selDeckIds = collect([$comDeckFlag])->merge($indiDeckIds);
-            // Get additional cards without duplication
-            $addRandDeckId = $selDeckIds[array_rand($selDeckIds->toArray())];
-            if ($addRandDeckId === 'comdeck') {
-                $addCards = DeckCard::whereIn('category_id', $deckComIds)
-                    ->where('status', 'published')
-                    ->whereNotIn('id', $selCardIds) // Exclude selected card IDs
-                    ->inRandomOrder()
-                    ->limit($deckAddCnt)
-                    ->get();
-            } else {
-                $addCards = DeckCard::where('category_id', $addRandDeckId)
-                    ->where('status', 'published')
-                    ->whereNotIn('id', $selCardIds) // Exclude selected card IDs
-                    ->inRandomOrder()
-                    ->limit($deckAddCnt)
-                    ->get();
-            }
-            $cardArr = $cardArr->merge($addCards);
+            // finally, pick 5 random cards from the merged collection
+            $cards = $cardArr->shuffle()->take(5);
             // Add category name to each card
-            foreach ($cardArr as $card) {
+            foreach ($cards as $card) {
                 $category = DeckCardCategory::find($card->category_id);
                 $card->category_name = $category ? $category->cname : null;
             }
             return response()->json([
                 'status' => true,
                 'message' => 'OK',
-                'result' => $cardArr
+                'result' => $cards
             ], 200);
         }
     }

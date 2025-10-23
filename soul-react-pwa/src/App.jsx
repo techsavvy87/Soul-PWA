@@ -6,6 +6,7 @@ import NotificationModal from "./components/NotificationModal";
 import { useDispatch } from "react-redux";
 import { setIsShowPlan } from "./redux/appsettingSlice";
 import { updateUser } from "./redux/authSlice";
+import { getWithParams } from "./utils/axios";
 import "react-simple-toasts/dist/style.css";
 import "react-simple-toasts/dist/theme/success.css";
 import "react-simple-toasts/dist/theme/failure.css";
@@ -18,20 +19,34 @@ function App() {
   const [notificationTitle, setNotificationTitle] = useState("");
   const [notificationDescription, setNotificationDescription] = useState("");
   const dispatch = useDispatch();
+  const userId = JSON.parse(localStorage.getItem("user")).id;
 
   useEffect(() => {
-    onPushNotification();
-    // Show subscription modal and check subscription expiration every 5 minutes.
-    const subscriptionModal = setInterval(() => {
-      dispatch(setIsShowPlan({ isShowPlan: true }));
-      // Check subscription expiration
-      const planEndedDate = localStorage.getItem("plan_ended_date");
-      if (planEndedDate && new Date(planEndedDate) < new Date()) {
-        dispatch(updateUser({ tier: "free" }));
-        localStorage.setItem("tier", "free");
-      }
-    }, 1000 * 60 * 5); // 5 minutes
+    const checkSubscription = async () => {
+      try {
+        dispatch(setIsShowPlan({ isShowPlan: true }));
 
+        // Check subscription expiration
+        const result = await getWithParams(
+          `/users/${userId}/subscription/end-date`
+        );
+        const planEndedDate = result.data.result.plan_ended_date;
+        localStorage.setItem("plan_ended_date", planEndedDate);
+
+        if (planEndedDate && new Date(planEndedDate) < new Date()) {
+          dispatch(updateUser({ tier: "free" }));
+          localStorage.setItem("tier", "free");
+        }
+      } catch (error) {
+        console.error("Error checking subscription:", error);
+      }
+    };
+
+    // Run immediately, then every 5 minutes
+    checkSubscription();
+    const subscriptionModal = setInterval(checkSubscription, 1000 * 60 * 5);
+
+    // Clean up on unmount
     return () => clearInterval(subscriptionModal);
   }, []);
 
