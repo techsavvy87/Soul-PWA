@@ -59,7 +59,7 @@ const Store = () => {
           storeItem.map((item, index) => (
             <div
               key={index}
-              className="mb-[10px] px-3 py-4 bg-white rounded-[16px] w-full shadow-[0_4px_20px_rgba(0,0,0,0.1)] flex justify-between items-center"
+              className="mb-[10px] px-3 py-4 bg-white rounded-[16px] w-full shadow-[0_4px_20px_rgba(0,0,0,0.1)] flex justify-between items-start"
               onClick={() => {
                 if (item.type === "service") {
                   window.open(
@@ -82,7 +82,7 @@ const Store = () => {
                   {item.title}
                 </h3>
 
-                <p className="font-poppins text-[14px] leading-[20px]">
+                <p className="font-poppins text-[14px] leading-[20px] line-clamp-4 text-ellipsis">
                   {item.description}
                 </p>
               </div>

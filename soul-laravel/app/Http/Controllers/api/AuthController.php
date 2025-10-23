@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\VerifyEmail;
 use App\Models\VerifyPassword;
+use App\Models\PlanSubscription;
 use App\Mail\VerifyRegister;
 use App\Mail\VerifyResetPassword;
 use Illuminate\Support\Facades\Auth;
@@ -42,16 +43,16 @@ class AuthController extends Controller
             $token = $user->createToken('Personal Access Token')->plainTextToken;
 
             // Check if the user has an active subscription
-            $hasActiveSubscription = $user->planSubscriptions()
-                ->where('current_period_end', '>', now())
+            $hasActiveSubscription = $user->planSubscription()
+                ->where('plan_ended_date', '>', now())
                 ->exists();
 
             $result = [
                 'user'  => $user,
                 'access_token' => $token,
                 'token_type'   => 'Bearer',
-                'tier'         => $hasActiveSubscription ? 'Paid' : 'Free',
-                'subscription' => $hasActiveSubscription,
+                'tier'         => $hasActiveSubscription ? 'Paid' : 'free',
+                'plan_ended_date' => $user->planSubscription->plan_ended_date,
             ];
 
             return response()->json([
@@ -139,6 +140,14 @@ class AuthController extends Controller
             );
         }
         $verifyEmail->delete();
+        // Save on plan_subscriptions table as trial plan
+        $subscription = PlanSubscription::create([
+            'user_id' => $userId,
+            'plan_started_date' => Carbon::now(),
+            'plan_ended_date' => Carbon::now()->addDays(3), // 3-day trial
+            'subscription_status' => 'trial'
+        ]);
+        $planEnd = $subscription->plan_ended_date;
 
         $user = User::find($userId);
         $user->email_verified_at = Carbon::now();
@@ -152,8 +161,8 @@ class AuthController extends Controller
                 'user' => $user,
                 'access_token' => $token,
                 'token_type' => 'Bearer',
-                'tier' => 'Free',
-                'subscription' => false
+                'tier' => 'trial',
+                'plan_ended_date' => $planEnd
             ];
             
             return response()->json([
@@ -258,7 +267,7 @@ class AuthController extends Controller
         $token = $user->createToken('Personal Access Token')->plainTextToken;
 
         // Check if the user has an active subscription
-        $hasActiveSubscription = $user->planSubscriptions()
+        $hasActiveSubscription = $user->planSubscription()
             ->where('current_period_end', '>', now())
             ->exists();
 
@@ -266,7 +275,7 @@ class AuthController extends Controller
                 'user' => $user,
                 'access_token' => $token,
                 'token_type' => 'Bearer',
-                'tier'         => $hasActiveSubscription ? 'Paid' : 'Free',
+                'tier'         => $hasActiveSubscription ? 'Paid' : 'free',
                 'subscription' => $hasActiveSubscription,
             ];
 

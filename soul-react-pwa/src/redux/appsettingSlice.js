@@ -46,6 +46,7 @@ const appsettingSlice = createSlice({
         ...action.payload.Info,
       };
     },
+    resetAppSetting: () => initialState,
   },
 });
 
@@ -59,6 +60,7 @@ export const {
   setPrevPageName,
   setElementEmpty,
   setInfo,
+  resetAppSetting,
 } = appsettingSlice.actions;
 
 export default appsettingSlice.reducer;

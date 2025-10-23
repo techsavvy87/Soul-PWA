@@ -15,18 +15,22 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import AppHeader from "../../components/AppHeader";
 import SubHeader from "../../components/SubHeader";
+import lockImg from "../../assets/imgs/lock.png";
+import Popup from "../../components/Popup";
 
 const Favorites = () => {
   const hasSubmitted = useRef(false);
   const [cardFavorites, setCardFavorites] = useState([]);
   const [readFavorites, setReadFavorites] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
+  // Tab setting
+  const [value, setValue] = useState("1");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLoading = useSelector((state) => state.appsetting.isLoading);
   const userId = useSelector((state) => state.auth.user.id);
+  const userTier = useSelector((state) => state.auth.tier);
   const type = "card";
-  // Tab setting
-  const [value, setValue] = useState("1");
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -79,7 +83,7 @@ const Favorites = () => {
     }
   }, []);
 
-  const showCardView = (id, title, description, imgUrl, type) => {
+  const showCardView = (id, type) => {
     window.localStorage.setItem(type + "Id", id);
     if (type === "reading") {
       navigate(`/reading/detail/${id}`);
@@ -107,6 +111,9 @@ const Favorites = () => {
       .catch((error) => {
         console.error("Error updating favorite status:", error);
       });
+  };
+  const handleClosePopup = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -148,16 +155,17 @@ const Favorites = () => {
                 cardFavorites.map((cfavorite, index) => (
                   <div
                     key={index}
-                    className="rounded-[12px] flex justify-start items-stretch bg-white py-2.5 px-[9px] mt-[10px]"
-                    onClick={() =>
-                      showCardView(
-                        cfavorite.id,
-                        cfavorite.title,
-                        cfavorite.description,
-                        cfavorite.card_img,
-                        cfavorite.type
-                      )
-                    }
+                    className="relative rounded-[12px] flex justify-start items-stretch bg-white py-2.5 px-[9px] mt-[10px]"
+                    onClick={(e) => {
+                      if (
+                        userTier === "free" &&
+                        cfavorite.category_level === "Paid"
+                      ) {
+                        setAnchorEl(e.currentTarget);
+                        return;
+                      }
+                      showCardView(cfavorite.id, cfavorite.type);
+                    }}
                   >
                     <img
                       src={siteBaseUrl + "deckcards/" + cfavorite.card_img}
@@ -190,6 +198,17 @@ const Favorites = () => {
                         }}
                       />
                     </div>
+                    {userTier === "free" &&
+                      cfavorite.category_level === "Paid" && (
+                        <>
+                          <div className="absolute inset-0 rounded-[12px] bg-black/50"></div>
+                          <img
+                            className="w-[30px] h-auto absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                            src={lockImg}
+                            alt="lock"
+                          />
+                        </>
+                      )}
                   </div>
                 ))
               )}
@@ -241,8 +260,8 @@ const Favorites = () => {
           </TabPanel>
         </TabContext>
       </Box>
-
       <LoadingModal open={isLoading} />
+      <Popup anchorEl={anchorEl} onClose={handleClosePopup} />
     </div>
   );
 };

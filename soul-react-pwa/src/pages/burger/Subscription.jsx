@@ -14,6 +14,8 @@ import { login } from "../../redux/authSlice";
 import { useNavigate } from "react-router-dom";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import SubHeader from "../../components/SubHeader";
+import Radio from "@mui/material/Radio";
+import DoneIcon from "@mui/icons-material/Done";
 
 const Subscription = () => {
   const [plans, setPlans] = useState([]);
@@ -22,10 +24,14 @@ const Subscription = () => {
   const [checkedPlanId, setCheckedPlanId] = useState(null);
   const [savePercent, setSavePercent] = useState(0);
   const [showCancelDialog, setShowCancelDialog] = useState(false);
+  const [selectedRadioTier, setSelectedRadioTier] = useState(null);
+  const [planTier, setPlanTier] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const authState = useSelector((state) => state.auth);
-  const userSubscribedStatus = useSelector((state) => state.auth.subscription);
+  let realSubscriptionStatus = "";
+  const userPlanEndedDate = useSelector((state) => state.auth.plan_ended_date);
+  const userEmail = useSelector((state) => state.auth.user.email);
 
   // Subscription ID for the current user
   const [subscriptionID, setSubscriptionID] = useState("");
@@ -34,11 +40,38 @@ const Subscription = () => {
   // Ref to check if the plan is already subscribed.
   const onlyOnce = useRef(false);
 
-  const CHECKLIST = [
-    "Mystical & body-based card decks",
-    "Audio meditations from Susan",
-    "Member-only sessions & perks",
+  const FREEACCESSLIST = [
+    "4 Reading Types",
+    "1 Personality Deck",
+    "The Shankara Release Deck",
+    "Basic Features Forever",
   ];
+  const PAIDACCESSLIST = [
+    "All 7 Reading Types - Unlocked",
+    "All 3 Personality Card Decks - Unlocked",
+    "All 3 Shankara Oracle Decks - Unlocked",
+    "The Transcend Deck - Unlocked",
+    "The Blended Soul Journal - Unlocked",
+    "Quarterly Live Group Session - Unlocked",
+  ];
+
+  // const handleRadioChange = (event) => {
+  //   setSelectedRadioTier(event.target.value);
+  //   if (event.target.value === "free") {
+  //     setSelectedPlan(null);
+  //     setCheckedPlanId(null);
+  //     setPlanTier(null);
+  //   }
+  // };
+
+  const handleRadioChange = (value) => {
+    setSelectedRadioTier(value);
+    if (value === "free") {
+      setSelectedPlan(null);
+      setCheckedPlanId(null);
+      setPlanTier(null);
+    }
+  };
 
   useEffect(() => {
     const getPlans = async () => {
@@ -47,11 +80,14 @@ const Subscription = () => {
         const result = await get("/get-plans");
         const resResult = result.data;
         if (resResult.status) {
-          setPlans(resResult.result);
-          const monthlyTier = resResult.result.find(
+          setPlans(resResult.result.plans);
+          // Determine if user is subscribed to free plan.
+          realSubscriptionStatus = resResult.result.realSubscription;
+
+          const monthlyTier = resResult.result.plans.find(
             (tier) => tier.interval_unit === "month"
           );
-          const annualTier = resResult.result.find(
+          const annualTier = resResult.result.plans.find(
             (tier) => tier.interval_unit === "year"
           );
           if (monthlyTier && annualTier) {
@@ -64,7 +100,7 @@ const Subscription = () => {
           }
 
           // Determine if plan is subscribed
-          const subscribedPlan = resResult.result.find(
+          const subscribedPlan = resResult.result.plans.find(
             (plan) => plan.is_subscribed === true
           );
 
@@ -91,7 +127,6 @@ const Subscription = () => {
   const handleSubscriptionApprove = async (data, actions, navigate) => {
     try {
       // 1. Get subscription details from PayPal
-
       const subscription = await actions.subscription.get();
       const periodStart =
         subscription.billing_info.last_payment?.time || subscription.start_time;
@@ -100,21 +135,22 @@ const Subscription = () => {
       // 2. Save subscription to backend
       const response = await post("/subscriptions", {
         subscription_id: subscription.id,
-        status: subscription.status,
+        plan_status: subscription.status,
         plan_id: checkedPlanId,
-        period_start: periodStart,
-        period_end: periodEnd,
+        plan_started_date: periodStart,
+        plan_ended_date: periodEnd,
+        subscription_status: planTier,
       });
 
       // 3. Redirect after backend confirmation
       if (subscription.status === "ACTIVE") {
         window.localStorage.setItem("tier", "Paid");
-        window.localStorage.setItem("subscription", true);
+        window.localStorage.setItem("plan_ended_date", periodEnd);
         dispatch(
           login({
             ...authState,
             tier: "Paid",
-            subscription: true,
+            plan_ended_date: periodEnd,
           })
         );
         navigate("/", { state: { from: "subscription" } });
@@ -145,8 +181,21 @@ const Subscription = () => {
 
   const handlePlanSelect = (plan) => {
     if (!onlyOnce.current) {
-      setSelectedPlan(plan);
-      setCheckedPlanId(plan.id);
+      if (selectedRadioTier === "paid") {
+        setSelectedPlan(plan);
+        setCheckedPlanId(plan.id);
+        setPlanTier(plan.tier);
+      } else {
+        toast(
+          <ToastLayout
+            message="Sorry, you have to check paid plan first."
+            type="fail-toast"
+          />,
+          {
+            className: "fail-toast",
+          }
+        );
+      }
     } else {
       toast(
         <ToastLayout
@@ -160,25 +209,26 @@ const Subscription = () => {
     }
   };
 
-  // Subscription cancel
-  const onDialogClosed = async (flag) => {
+  // Subscription Popup
+  const handlePlanCancel = async (flag) => {
+    // If user click "Keep Subscription" button
+    if (!flag) {
+      setShowCancelDialog(false);
+      return;
+    }
+
     setShowCancelDialog(false);
     dispatch(setIsLoading({ isLoading: true }));
     try {
       const cancelUrl = "/cancel-subscription";
-      const result = await post(cancelUrl, { subscription_id: subscriptionID });
+      const result = await post(cancelUrl, {
+        subscription_id: subscriptionID,
+        plan_ended_date: userPlanEndedDate,
+        email: userEmail,
+      });
       const resResult = result.data;
 
       if (resResult.status) {
-        window.localStorage.setItem("tier", "Free");
-        window.localStorage.setItem("subscription", false);
-        dispatch(
-          login({
-            ...authState,
-            tier: "Free",
-            subscription: false,
-          })
-        );
         setCheckedPlanId(null);
         setSelectedPlan(null);
         toast(
@@ -207,7 +257,7 @@ const Subscription = () => {
     }
   };
 
-  const onCloseDialog = () => {
+  const handleCloseDialog = () => {
     setShowCancelDialog(false);
   };
 
@@ -223,25 +273,68 @@ const Subscription = () => {
       <div className="flex items-center">
         <div>
           <SubHeader pageName="Choose Your Plan" textColor="white" />
-          <p className="text-center text-[18px] font-ovo text-gray-300 mt-7 mx-8 leading-6">
-            Enjoy these perks when you subscribe to the Blended Soul app
-          </p>
-          <div className="flex justify-center mt-7">
-            <ul className="space-y-1.5 text-gray-300 list-inside font-lora text-[17px]">
-              {CHECKLIST.map((item, idx) => (
+          <div>
+            <div
+              className="flex items-center"
+              onClick={() => handleRadioChange("free")}
+            >
+              <Radio
+                checked={selectedRadioTier === "free"}
+                name="radio-buttons"
+                sx={{
+                  color: "white", // default border color (gray)
+                  "&.Mui-checked": {
+                    color: "white", // circle color when selected
+                  },
+                  "& .MuiSvgIcon-root": {
+                    fontSize: 28, // optional: make radio larger
+                  },
+                }}
+              />
+              <p className="font-poppins text-white text-[20px] font-bold">
+                FREE - Limited Access
+              </p>
+            </div>
+            <ul className="text-white font-poppins text-[14px]">
+              {FREEACCESSLIST.map((item, idx) => (
                 <li className="flex items-center" key={idx}>
-                  <svg
-                    className="w-5 h-5 me-2 text-gray-300 shrink-0 opacity-60"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
-                  </svg>
+                  <DoneIcon className="mx-[9px]" />
                   {item}
                 </li>
               ))}
+            </ul>
+            <div
+              className="flex items-center mt-5"
+              onClick={() => handleRadioChange("paid")}
+            >
+              <Radio
+                checked={selectedRadioTier === "paid"}
+                name="radio-buttons"
+                sx={{
+                  color: "white", // default border color (gray)
+                  "&.Mui-checked": {
+                    color: "white", // circle color when selected
+                  },
+                  "& .MuiSvgIcon-root": {
+                    fontSize: 28, // optional: make radio larger
+                  },
+                }}
+              />
+              <p className="font-poppins text-white text-[20px] font-bold">
+                PAID - Unlimited Access
+              </p>
+            </div>
+            <ul className="text-white font-poppins text-[14px]">
+              {PAIDACCESSLIST.map((item, idx) => (
+                <li className="flex items-center" key={idx}>
+                  <DoneIcon className="mx-[9px]" />
+                  {item}
+                </li>
+              ))}
+              <li className="flex items-center">
+                <DoneIcon className="mx-[9px]" />
+                {`${savePercent}% Discount On Paul's Sessions (Annual)`}
+              </li>
             </ul>
           </div>
 
@@ -297,7 +390,8 @@ const Subscription = () => {
               onError={(err) => console.error(err)}
             />
           </div>
-          {userSubscribedStatus && (
+          {(realSubscriptionStatus === "monthly" ||
+            realSubscriptionStatus === "annual") && (
             <p
               className="text-[18px] text-center font-poppins pt-6 font-semibold"
               onClick={() => setShowCancelDialog(true)}
@@ -308,9 +402,9 @@ const Subscription = () => {
         </div>
         <ConfirmDialog
           isOpen={showCancelDialog}
-          onClick={onDialogClosed}
-          onClose={onCloseDialog}
-          description="Once you cancel, you will need to subscribe to the new plan."
+          onClick={handlePlanCancel}
+          onClose={handleCloseDialog}
+          planEndedDate={userPlanEndedDate}
         />
       </div>
     </PayPalScriptProvider>

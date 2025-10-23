@@ -1,4 +1,5 @@
 self.addEventListener("push", onPush);
+console.log("Service Worker: Push event listener registered.");
 
 function onPush(event) {
   if (event.data) {

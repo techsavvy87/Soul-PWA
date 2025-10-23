@@ -74,14 +74,14 @@ const Welcome = () => {
         user: userInfo.user,
         token: userInfo.access_token,
         tier: userInfo.tier,
-        subscription: userInfo.subscription,
+        plan_ended_date: userInfo.plan_ended_date,
       })
     );
     window.localStorage.setItem("isAuthenticated", "done");
     window.localStorage.setItem("user", JSON.stringify(userInfo.user));
     window.localStorage.setItem("token", userInfo.access_token);
     window.localStorage.setItem("tier", userInfo.tier);
-    window.localStorage.setItem("subscription", userInfo.subscription);
+    window.localStorage.setItem("plan_ended_date", userInfo.plan_ended_date);
     navigate("/");
   };
 

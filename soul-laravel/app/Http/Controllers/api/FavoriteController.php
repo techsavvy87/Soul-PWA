@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Favorite;
 use App\Models\DeckCard;
 use App\Models\Reading;
+use App\Models\DeckCardCategory;
 use Illuminate\Support\Facades\Log;
 
 class FavoriteController extends Controller
@@ -81,6 +82,13 @@ class FavoriteController extends Controller
         $favoritedCards = $cardFavoritesIds->map(function ($cardId) {
             return DeckCard::find($cardId);
         });
+
+        foreach ($favoritedCards as $card) {
+            if ($card) {
+                $category = DeckCardCategory::find($card->category_id);
+                $card->category_level = $category ? $category->level : null;
+            }
+        }
 
         // Get all favorited readings ids for the user
         $readingFavoritesIds = Favorite::where([

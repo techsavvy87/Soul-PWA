@@ -1,7 +1,13 @@
 import { useEffect, useRef } from "react";
 
-const ConfirmDialog = ({ isOpen, onClose, onClick, description }) => {
+const ConfirmDialog = ({ isOpen, onClose, onClick, planEndedDate }) => {
   const ref = useRef(null);
+  const date = new Date(planEndedDate);
+  const formattedEndDate = date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short", // gives "Nov"
+    day: "2-digit",
+  });
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -32,20 +38,29 @@ const ConfirmDialog = ({ isOpen, onClose, onClick, description }) => {
       <div className="relative px-6 py-4 text-white text-left">
         <div className="w-10 h-1 bg-gray-400 rounded-full mx-auto mb-4" />
 
-        <h2 className="font-ovo text-xl mb-2">Are you sure?</h2>
+        <h2 className="font-poppins text-xl mb-2">Cancel Subscription?</h2>
 
-        <p className="font-lora text-md leading-relaxed">
-          {description ??
-            "Once you press ok, you won't be able to undo your action."}
+        <p className="font-poppins text-md leading-relaxed">
+          You'll keep your unlimited access until {formattedEndDate}. After
+          that, you can still use Blended Soul for free with limited decks and
+          readings. Your account and saved content will be preserved.
         </p>
-
-        <button
-          type="button"
-          className={`mt-6 text-black bg-gradient-to-r from-amber-400 via-amber-200 to-amber-400 hover:bg-gradient-to-br focus:ring-0 focus:outline-none focus:ring-blue-300 font-lora font-bold rounded-md text-md w-full px-5 py-2.5 text-center`}
-          onClick={() => onClick(true)}
-        >
-          OK
-        </button>
+        <div className="flex justify-between gap-4">
+          <button
+            type="button"
+            className={`font-poppins mt-6 text-black bg-gradient-to-r from-amber-400 via-amber-200 to-amber-400 font-bold rounded-md text-md w-full px-5 py-2.5 text-center`}
+            onClick={() => onClick(false)}
+          >
+            Keep Subscription
+          </button>
+          <button
+            type="button"
+            className={`font-poppins mt-6 text-black bg-gradient-to-r from-amber-400 via-amber-200 to-amber-400 font-bold rounded-md text-md w-full px-5 py-2.5 text-center`}
+            onClick={() => onClick(true)}
+          >
+            Yes, Cancel
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ const AuthRequire = ({ children }) => {
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const isShowPlan = useSelector((state) => state.appsetting.isShowPlan);
-  const subscription = useSelector((state) => state.auth.subscription);
+  const subscriptionStatus = useSelector((state) => state.auth.tier);
 
   if (!isAuthenticated) {
     // when redux store is initialized but data in localstorage is still alive, then get data from
@@ -22,7 +22,7 @@ const AuthRequire = ({ children }) => {
       let userStorage = localStorage.getItem("user");
       let tokenStorage = localStorage.getItem("token");
       let tierStorage = localStorage.getItem("tier");
-      let subscriptionStorage = localStorage.getItem("subscription");
+      let planEndedDate = localStorage.getItem("plan_ended_date");
 
       dispatch(
         login({
@@ -30,7 +30,7 @@ const AuthRequire = ({ children }) => {
           user: JSON.parse(userStorage),
           token: tokenStorage,
           tier: tierStorage,
-          subscription: subscriptionStorage === "true",
+          plan_ended_date: planEndedDate,
         })
       );
     } else {
@@ -44,7 +44,7 @@ const AuthRequire = ({ children }) => {
 
       {pagePath !== "/subscription" && (
         <SubscriptionModal
-          open={isShowPlan && !subscription}
+          open={isShowPlan && subscriptionStatus === "free"}
           onClose={() => dispatch(setIsShowPlan({ isShowPlan: false }))}
           closeOnOverlayClick={true}
           title="Ready to go deeper?"

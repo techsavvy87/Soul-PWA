@@ -69,7 +69,7 @@ const Login = () => {
             user: resResult.result.user,
             token: resResult.result.access_token,
             tier: resResult.result.tier,
-            subscription: resResult.result.subscription,
+            plan_ended_date: resResult.result.plan_ended_date,
           })
         );
         window.localStorage.setItem("isAuthenticated", "done");
@@ -80,8 +80,8 @@ const Login = () => {
         window.localStorage.setItem("token", resResult.result.access_token);
         window.localStorage.setItem("tier", resResult.result.tier);
         window.localStorage.setItem(
-          "subscription",
-          resResult.result.subscription
+          "plan_ended_date",
+          resResult.result.plan_ended_date
         );
         navigate(from, { replace: true });
       } else {

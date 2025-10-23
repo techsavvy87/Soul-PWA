@@ -21,11 +21,16 @@ function App() {
 
   useEffect(() => {
     onPushNotification();
-
-    // Show subscription modal every 5 seconds
+    // Show subscription modal and check subscription expiration every 5 minutes.
     const subscriptionModal = setInterval(() => {
       dispatch(setIsShowPlan({ isShowPlan: true }));
-    }, 1000 * 60 * 5);
+      // Check subscription expiration
+      const planEndedDate = localStorage.getItem("plan_ended_date");
+      if (planEndedDate && new Date(planEndedDate) < new Date()) {
+        dispatch(updateUser({ tier: "free" }));
+        localStorage.setItem("tier", "free");
+      }
+    }, 1000 * 60 * 5); // 5 minutes
 
     return () => clearInterval(subscriptionModal);
   }, []);
@@ -40,12 +45,10 @@ function App() {
         console.log("PayPal");
         dispatch(
           updateUser({
-            subscription: false,
-            tier: "Free",
+            tier: "free",
           })
         );
-        localStorage.setItem("subscription", false);
-        localStorage.setItem("tier", "Free");
+        localStorage.setItem("tier", "free");
       }
     });
   };

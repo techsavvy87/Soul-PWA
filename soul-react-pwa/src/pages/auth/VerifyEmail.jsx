@@ -10,7 +10,6 @@ const VerifyEmail = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = location.state || "";
-  const dispatch = useDispatch();
 
   const [code, setCode] = useState("");
   const onSubmitCode = (codeTxt) => {

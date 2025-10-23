@@ -25,7 +25,7 @@ class CardController extends Controller
         $event = Event::find($event_id);
 
         // If the user is on a free plan
-        if ($tier === 'Free') {
+        if ($tier === 'free') {
             $decks = $event->free_decks_id;
             $deckArr = [];
             foreach($decks as $deck) {
@@ -41,22 +41,22 @@ class CardController extends Controller
                 $cards = $deck->cards()
                             ->where('status', 'published')
                             ->inRandomOrder()
-                            ->limit($item['cnt'])
+                            // ->limit($item['cnt'])
                             ->get();
                 foreach($cards as $card) {
                     $cardArr[] = $card;
                 }
-                
             }
+            $randomCards = collect($cardArr)->random(5);
             // Add category name to each card
-            foreach ($cardArr as $card) {
+            foreach ($randomCards as $card) {
                 $category = DeckCardCategory::find($card->category_id);
                 $card->category_name = $category ? $category->cname : null;
             }
             return response()->json([
                 'status' => true,
                 'message' => 'OK',
-                'result' => $cardArr
+                'result' => $randomCards
             ], 200);
         } else {
             // If the user is on a paid plan

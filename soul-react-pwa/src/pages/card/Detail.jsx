@@ -17,11 +17,50 @@ const CardDetail = () => {
   useEffect(() => {
     const fetchCardDetail = async () => {
       dispatch(setIsLoading({ isLoading: true }));
+
       try {
+        if (!navigator.onLine) {
+          console.warn("Offline: loading cached card detail...");
+
+          // Try cached data from localStorage
+          const cachedCardDetails = JSON.parse(
+            localStorage.getItem("cachedCardDetails") || "{}"
+          );
+          if (cachedCardDetails[id]) {
+            setCardDetail(cachedCardDetails[id]);
+          } else {
+            console.warn("No cached card detail found for this ID.");
+          }
+
+          dispatch(setIsLoading({ isLoading: false }));
+          return;
+        }
+
+        // Online fetch
         const result = await getWithParams(`/card/detail/${id}`);
-        setCardDetail(result.data.data);
+        const cardData = result.data.data;
+
+        setCardDetail(cardData);
+
+        // Cache this card detail
+        const cachedCardDetails = JSON.parse(
+          localStorage.getItem("cachedCardDetails") || "{}"
+        );
+        cachedCardDetails[id] = cardData;
+        localStorage.setItem(
+          "cachedCardDetails",
+          JSON.stringify(cachedCardDetails)
+        );
       } catch (error) {
         console.error("Error fetching card detail:", error);
+
+        // Fallback: use cache if API fails
+        const cachedCardDetails = JSON.parse(
+          localStorage.getItem("cachedCardDetails") || "{}"
+        );
+        if (cachedCardDetails[id]) {
+          setCardDetail(cachedCardDetails[id]);
+        }
       } finally {
         dispatch(setIsLoading({ isLoading: false }));
       }

@@ -21,18 +21,55 @@ const DeckCard = () => {
   useEffect(() => {
     const fetchDeck = async () => {
       dispatch(setIsLoading({ isLoading: true }));
-      try {
-        const response = await get(`/deck-cards/${id}`);
 
-        setCards(response.data.result);
+      try {
+        if (!navigator.onLine) {
+          console.warn("Offline: loading cached deck...");
+
+          // Try to get cached deck data by ID
+          const cachedDecks = JSON.parse(
+            localStorage.getItem("cachedDecksById") || "{}"
+          );
+          if (cachedDecks[id]) {
+            setCards(cachedDecks[id]);
+          } else {
+            console.warn("No cached data found for this deck.");
+          }
+
+          dispatch(setIsLoading({ isLoading: false }));
+          return;
+        }
+
+        // Online: fetch from API
+        const response = await get(`/deck-cards/${id}`);
+        const deckCards = response.data.result;
+
+        // Update state
+        setCards(deckCards);
+
+        // Cache it locally by ID
+        const cachedDecks = JSON.parse(
+          localStorage.getItem("cachedDecksById") || "{}"
+        );
+        cachedDecks[id] = deckCards;
+        localStorage.setItem("cachedDecksById", JSON.stringify(cachedDecks));
       } catch (error) {
         console.error("Error fetching deck:", error);
+
+        // Try fallback cache on error
+        const cachedDecks = JSON.parse(
+          localStorage.getItem("cachedDecksById") || "{}"
+        );
+        if (cachedDecks[id]) {
+          setCards(cachedDecks[id]);
+        }
       } finally {
         dispatch(setIsLoading({ isLoading: false }));
       }
     };
+
     fetchDeck();
-  }, []);
+  }, [id]);
 
   const showCardView = (card_id, title, description, imgUrl) => {
     window.localStorage.setItem("cardId", card_id);

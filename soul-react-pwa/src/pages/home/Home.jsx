@@ -12,15 +12,16 @@ import toast from "react-simple-toasts";
 import ToastLayout from "../../components/ToastLayout";
 import ArrowImg from "../../assets/imgs/arrow.png";
 import InfoModal from "../../components/InfoModal";
+import Popup from "../../components/Popup";
 
 const Home = () => {
   const [events, setEvents] = useState([]);
   const [session, setSession] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
   const renderStatus = useRef(false);
-
   const { isLoading } = useSelector((state) => state.appsetting);
 
   // Check if user is paid or free.
@@ -62,15 +63,15 @@ const Home = () => {
     }
   }, []);
 
-  // Free Iamge Click
-  const onClickFreeImg = (type, name, level, id) => {
+  // Free Image Click
+  const onClickFreeImg = (type, name, level, id, e) => {
     window.localStorage.setItem("tier", userTier);
     window.localStorage.setItem("type", type);
     window.localStorage.setItem("eventName", name);
     window.localStorage.setItem("eventId", id);
 
-    if (userTier === "Free" && level === "Paid") {
-      navigate("/subscription");
+    if (userTier === "free" && level === "Paid") {
+      setAnchorEl(e.currentTarget);
     } else {
       if (type) {
         navigate("/emotional");
@@ -126,6 +127,10 @@ const Home = () => {
     }
   };
 
+  const handleClosePopup = () => {
+    setAnchorEl(null);
+  };
+
   if (isLoading) {
     return true;
   }
@@ -141,9 +146,9 @@ const Home = () => {
       >
         {events.map((event, index) => (
           <div
-            className={`flex justify-between items-center border border-[#FFFFFF80] rounded-[12px] pl-3 pr-[14px] py-2 mb-3 
+            className={`flex justify-between items-center border border-[#FFFFFF80] rounded-[12px] pl-3 pr-[14px] py-2 mb-3
                         ${
-                          userTier === "Free" && event.level === "Paid"
+                          userTier === "free" && event.level === "Paid"
                             ? "bg-[#4333B2]/30"
                             : ""
                         }`}
@@ -151,18 +156,19 @@ const Home = () => {
               boxShadow: "inset 0px 4px 24px 0px rgba(252, 230, 255, 0.2)",
             }}
             key={index}
-            onClick={() =>
+            onClick={(e) =>
               onClickFreeImg(
                 event.scroll_sort,
                 event.name,
                 event.level,
-                event.id
+                event.id,
+                e
               )
             }
           >
             <div
               className={`flex items-center ${
-                userTier === "Free" && event.level === "Paid" ? "z-[-1]" : ""
+                userTier === "free" && event.level === "Paid" ? "z-[-1]" : ""
               }`}
             >
               <img
@@ -174,9 +180,9 @@ const Home = () => {
               </p>
             </div>
             <div className="flex items-center">
-              {userTier === "Free" && event.level === "Paid" ? (
+              {userTier === "free" && event.level === "Paid" ? (
                 <img
-                  className="w-[21px] h-[26px] mr-5"
+                  className="w-[30px] h-auto mr-5"
                   src={lockImg}
                   alt="lock"
                 />
@@ -232,6 +238,7 @@ const Home = () => {
         </div>
       </div>
       <LoadingModal open={isLoading} />
+      <Popup anchorEl={anchorEl} onClose={handleClosePopup} />
     </div>
   );
 };

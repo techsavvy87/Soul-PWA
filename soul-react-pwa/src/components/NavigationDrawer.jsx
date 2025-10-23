@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/authSlice";
+import { resetAppSetting } from "../redux/appsettingSlice";
 import { get } from "../utils/axios";
 import LoadingModal from "./LoadingModal";
 import { setIsLoading, setPrevPageName } from "../redux/appsettingSlice";
@@ -19,32 +20,71 @@ import EditIcon from "@mui/icons-material/Edit";
 import HomeImg from "../assets/imgs/home.png";
 import PsychologyIcon from "@mui/icons-material/Psychology";
 import InfoModal from "./InfoModal";
+import Popup from "./Popup";
+import lockImg from "../assets/imgs/lock.png";
 
 const NavigationDrawer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
   const { isLoading } = useSelector((state) => state.appsetting);
-  const mediInfo = useSelector((state) => state.appsetting.Info.meditation);
+  let mediInfo = useSelector((state) => state.appsetting.Info.meditation);
+  const userTier = useSelector((state) => state.auth.tier);
+
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
 
+  if (!navigator.onLine) {
+    mediInfo = JSON.parse(window.localStorage.getItem("meditationInfo"));
+  }
   // Handle user logout
   const onClickLogout = async () => {
     try {
       dispatch(setIsLoading({ isLoading: true }));
-      const result = await get("/logout");
-      const resResult = result.data;
-      if (resResult.status) {
+
+      // Check if offline
+      if (!navigator.onLine) {
+        console.warn("Offline: Logging out locally.");
+
+        // Local-only logout
         dispatch(logout());
+        dispatch(resetAppSetting());
         localStorage.clear();
         dispatch(setIsLoading({ isLoading: false }));
         navigate("/login");
+        return; // stop further execution
+      }
+
+      // Online logout
+      const result = await get("/logout");
+      const resResult = result.data;
+
+      if (resResult.status) {
+        dispatch(logout());
+        dispatch(resetAppSetting());
+        localStorage.clear();
+        dispatch(setIsLoading({ isLoading: false }));
+        navigate("/login");
+      } else {
+        console.error("Logout failed:", resResult);
+        dispatch(setIsLoading({ isLoading: false }));
       }
     } catch (error) {
+      console.error("Logout error:", error);
+
+      // Optional: fallback to local logout even if API fails
+      dispatch(logout());
+      dispatch(resetAppSetting());
+      localStorage.clear();
       dispatch(setIsLoading({ isLoading: false }));
+      navigate("/login");
     }
+  };
+
+  const handleClosePopup = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -85,28 +125,28 @@ const NavigationDrawer = () => {
             <ul className="py-4">
               <Link
                 to="/subscription"
-                className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
+                className="cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
               >
                 <SubscriptionsIcon className="w-[15px] mr-3" />
                 Subscription
               </Link>
               <Link
                 to="/deck-list"
-                className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
+                className="cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
               >
                 <DeckIcon className="w-[15px] mr-3" />
                 Browse Decks
               </Link>
               <Link
                 to="/favorites"
-                className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
+                className="cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
               >
                 <FavoriteIcon className="w-[15px] mr-3" />
                 Favorites
               </Link>
               <Link
                 to="/meditation"
-                className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
+                className="cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
               >
                 <PsychologyIcon className="w-[15px] mr-3" />
                 Guided Meditations
@@ -124,15 +164,28 @@ const NavigationDrawer = () => {
               </Link>
               <Link
                 to="/journal"
-                className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
+                onClick={(e) => {
+                  if (userTier === "free") {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setAnchorEl(e.currentTarget);
+                  }
+                }}
+                className="cursor-pointer flex items-center justify-between font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
               >
-                <EditIcon
-                  className="w-[15px] mr-3"
-                  sx={{ transform: "rotate(-45deg)" }}
-                />
-                Journal
+                <div>
+                  <EditIcon
+                    className="w-[15px] mr-3"
+                    sx={{ transform: "rotate(-45deg)" }}
+                  />
+                  Journal
+                </div>
+                {userTier === "free" && (
+                  <img className="w-[21px] h-[26px]" src={lockImg} alt="lock" />
+                )}
               </Link>
-              <li className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3">
+
+              <li className="cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3">
                 <ScheduleIcon className="w-[15px] mr-3" />
                 <a
                   href="https://www.paulwagner.com/intuitive-psychic-readings/"
@@ -144,14 +197,14 @@ const NavigationDrawer = () => {
               </li>
               <Link
                 to="/store"
-                className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
+                className="cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
               >
                 <StoreIcon className="w-[15px] mr-3" />
                 Store
               </Link>
               <li
                 onClick={() => onClickLogout()}
-                className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
+                className="cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
               >
                 <LogoutIcon className="w-[15px] mr-3" />
                 Log Out
@@ -163,23 +216,23 @@ const NavigationDrawer = () => {
             <ul className="py-4">
               <Link
                 to="/concept"
-                className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
+                className="cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
               >
                 What is Blended Soul?
               </Link>
               <Link
                 to="/faq"
-                className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
+                className="cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
               >
                 FAQ
               </Link>
               <Link
                 to="/about"
-                className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
+                className="cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
               >
                 About Paul
               </Link>
-              <li className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3">
+              <li className="cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3">
                 <a
                   href="https://paulwagner.com/"
                   target="_blank"
@@ -190,7 +243,7 @@ const NavigationDrawer = () => {
               </li>
               <Link
                 to="/creative-lab"
-                className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
+                className="cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
               >
                 About Creative Lab
               </Link>
@@ -200,7 +253,7 @@ const NavigationDrawer = () => {
                 onClick={() =>
                   dispatch(setPrevPageName({ pageName: "burger" }))
                 }
-                className="hover:text-blue-500 cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
+                className="cursor-pointer flex items-center font-poppins text-[16px] text-[#3F356E] font-normal border-b-[0.5px] border-[#8690FD4D] py-3"
               >
                 Reading
               </Link> */}
@@ -208,6 +261,7 @@ const NavigationDrawer = () => {
           </div>
         </Box>
       </Drawer>
+      <Popup anchorEl={anchorEl} onClose={handleClosePopup} />
       <LoadingModal open={isLoading} />
     </div>
   );

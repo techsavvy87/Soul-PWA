@@ -112,7 +112,7 @@
                                 </div>
                                 <div class="d-flex flex-row-reverse">
                                     <div>
-                                        <a href="" class="btn btn-outline-secondary">Cancel</a>
+                                        <a href="{{ route('list-plan') }}" class="btn btn-outline-secondary">Cancel</a>
                                         <a href="javascript:save();" class="btn btn-primary">Save</a>
                                     </div>
                                 </div>
