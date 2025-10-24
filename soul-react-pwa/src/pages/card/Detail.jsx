@@ -100,7 +100,7 @@ const CardDetail = () => {
           alt="card"
           className="w-[190px] h-[285px] m-auto object-cover"
         />
-        {cardDetail && cardDetail.category_name && (
+        {/* {cardDetail && cardDetail.category_name && (
           <>
             {cardDetail.category_name.toLowerCase().includes("transcend") ? (
               <>
@@ -142,19 +142,19 @@ const CardDetail = () => {
               )
             )}
           </>
-        )}
+        )} */}
       </div>
       <div className="py-4">
         {cardDetail?.category_name?.toLowerCase().includes("personality") ? (
-          <p className="text-[21px] text-[#302853] text-left font-bold mb-4">
+          <p className="text-[21px] text-[#302853] text-center font-bold mb-4 lowercase first-letter:uppercase">
             {cardDetail.title}
           </p>
         ) : (
           <>
-            <p className="text-[21px] text-[#302853] text-center font-bold">
+            <p className="text-[19px] text-[#302853] text-center">
               {cardDetail.category_name}
             </p>
-            <p className="text-[21px] text-[#302853] text-left font-bold mb-4">
+            <p className="text-[21px] text-[#302853] text-center font-bold mt-2 mb-4 lowercase first-letter:uppercase">
               {cardDetail.title}
             </p>
           </>
@@ -166,7 +166,7 @@ const CardDetail = () => {
               ?.toLowerCase()
               .includes("personality")
               ? "calc(100vh - 537px)"
-              : "calc(100vh - 568px)",
+              : "calc(100vh - 576px)",
           }}
         >
           <p
