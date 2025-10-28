@@ -146,7 +146,7 @@ const CardDetail = () => {
       </div>
       <div className="py-4">
         {cardDetail?.category_name?.toLowerCase().includes("personality") ? (
-          <p className="text-[21px] text-[#302853] text-center font-bold mb-4 lowercase first-letter:uppercase">
+          <p className="text-[24px] text-[#302853] text-center font-bold mb-4 lowercase first-letter:uppercase">
             {cardDetail.title}
           </p>
         ) : (
@@ -154,7 +154,7 @@ const CardDetail = () => {
             <p className="text-[19px] text-[#302853] text-center">
               {cardDetail.category_name}
             </p>
-            <p className="text-[21px] text-[#302853] text-center font-bold mt-2 mb-4 lowercase first-letter:uppercase">
+            <p className="text-[24px] text-[#302853] text-center font-bold mt-2 mb-4 lowercase first-letter:uppercase">
               {cardDetail.title}
             </p>
           </>
@@ -165,8 +165,8 @@ const CardDetail = () => {
             maxHeight: cardDetail?.category_name
               ?.toLowerCase()
               .includes("personality")
-              ? "calc(100vh - 537px)"
-              : "calc(100vh - 576px)",
+              ? "calc(100vh - 541px)"
+              : "calc(100vh - 579px)",
           }}
         >
           <p

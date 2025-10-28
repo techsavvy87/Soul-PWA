@@ -69,6 +69,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/subscriptions', [PayPalPlanController::class, 'storeSubscription']);
     Route::post('/cancel-subscription', [PayPalPlanController::class, 'cancelSubscription']);
     Route::get('/users/{userId}/subscription/end-date', [PayPalPlanController::class, 'getSubscriptionEndDate']);
+    Route::get('/users/{userId}/subscription/status', [PayPalPlanController::class, 'makeFreeSubscription']);
 
     Route::post('/journal/create', [JournalController::class, 'createJournal']);
     Route::get('/journal/all', [JournalController::class, 'getAllJournals']);

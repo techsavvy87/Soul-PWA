@@ -10,7 +10,6 @@ import { getWithParams } from "./utils/axios";
 import "react-simple-toasts/dist/style.css";
 import "react-simple-toasts/dist/theme/success.css";
 import "react-simple-toasts/dist/theme/failure.css";
-// import "./App.css";
 
 toastConfig({ theme: "success", position: "top-center" });
 
@@ -19,36 +18,43 @@ function App() {
   const [notificationTitle, setNotificationTitle] = useState("");
   const [notificationDescription, setNotificationDescription] = useState("");
   const dispatch = useDispatch();
-  const userId = JSON.parse(localStorage.getItem("user")).id;
+
+  // ✅ Safely parse user from localStorage
+  const storedUser = JSON.parse(localStorage.getItem("user") || "null");
+  const userId = storedUser?.id;
 
   useEffect(() => {
     const checkSubscription = async () => {
+      if (!userId) return; // ✅ Skip if no user logged in
+
       try {
         dispatch(setIsShowPlan({ isShowPlan: true }));
 
-        // Check subscription expiration
         const result = await getWithParams(
           `/users/${userId}/subscription/end-date`
         );
+
         const planEndedDate = result.data.result.plan_ended_date;
         localStorage.setItem("plan_ended_date", planEndedDate);
 
         if (planEndedDate && new Date(planEndedDate) < new Date()) {
           dispatch(updateUser({ tier: "free" }));
           localStorage.setItem("tier", "free");
+          getWithParams(`/users/${userId}/subscription/status`).catch((err) =>
+            console.error("Error subscription:", err)
+          );
         }
       } catch (error) {
         console.error("Error checking subscription:", error);
       }
     };
 
-    // Run immediately, then every 5 minutes
     checkSubscription();
     const subscriptionModal = setInterval(checkSubscription, 1000 * 60 * 5);
 
-    // Clean up on unmount
+    onPushNotification();
     return () => clearInterval(subscriptionModal);
-  }, []);
+  }, [userId, dispatch]);
 
   const onPushNotification = async () => {
     navigator.serviceWorker.addEventListener("message", (event) => {
@@ -56,13 +62,10 @@ function App() {
       setNotificationDescription(event.data.body || "");
       setIsNotification(true);
       console.log("Push notification received:", event.data);
+
       if (event.data.data?.context === "paypal") {
         console.log("PayPal");
-        dispatch(
-          updateUser({
-            tier: "free",
-          })
-        );
+        dispatch(updateUser({ tier: "free" }));
         localStorage.setItem("tier", "free");
       }
     });
@@ -90,6 +93,7 @@ function App() {
           })}
         </Routes>
       </BrowserRouter>
+
       <NotificationModal
         open={isNotification}
         onClose={() => setIsNotification(false)}

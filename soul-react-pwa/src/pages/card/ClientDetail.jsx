@@ -91,7 +91,7 @@ const CardClientDetail = () => {
       </div>
       <div className="pt-4">
         {cardDetail?.category_name?.toLowerCase().includes("personality") ? (
-          <p className="text-[21px] text-[#302853] text-left font-bold mb-4">
+          <p className="text-[24px] text-[#302853] text-left font-bold mb-4">
             {cardDetail.title}
           </p>
         ) : (
@@ -99,7 +99,7 @@ const CardClientDetail = () => {
             <p className="text-[21px] text-[#302853] text-center font-bold">
               {cardDetail.category_name}
             </p>
-            <p className="text-[21px] text-[#302853] text-left font-bold mb-4">
+            <p className="text-[24px] text-[#302853] text-left font-bold mb-4">
               {cardDetail.title}
             </p>
           </>
@@ -110,8 +110,8 @@ const CardClientDetail = () => {
             maxHeight: cardDetail?.category_name
               ?.toLowerCase()
               .includes("personality")
-              ? "calc(100vh - 392px)"
-              : "calc(100vh - 423px)",
+              ? "calc(100vh - 395px)"
+              : "calc(100vh - 426px)",
           }}
         >
           <p

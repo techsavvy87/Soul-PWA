@@ -162,4 +162,28 @@ class PayPalPlanController extends Controller
             ], 404);
         }
     }
+
+    public function makeFreeSubscription($userId)
+    {
+        $subscription = PlanSubscription::where('user_id', $userId)->first();
+
+        if ($subscription) {
+            $subscription->update([
+                'subscription_status' => 'free',
+                'plan_status' => null,
+            ]);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Subscription status updated to free successfully.',
+                'result' => null,
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'No active subscription found for the user.',
+                'result' => null,
+            ], 404);
+        }
+    }
 }
