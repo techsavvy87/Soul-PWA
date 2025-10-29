@@ -1,13 +1,19 @@
+import { useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate, matchPath } from "react-router-dom";
 import HomeImg from "../assets/imgs/home.png";
 import NavigationDrawer from "./NavigationDrawer";
 import InfoModal from "./InfoModal";
-import { useAppInfo } from "../hooks/useAppInfo";
+import { get } from "../utils/axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setInfo } from "../redux/appsettingSlice";
 
 const AppHeader = () => {
+  const [infoData, setInfoData] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
-  const infoData = useAppInfo();
+  const renderStatus = useRef(false);
+  const dispatch = useDispatch();
+  const appInfo = useSelector((state) => state.appsetting.Info.app);
 
   const pageList = [
     "/cards",
@@ -31,6 +37,34 @@ const AppHeader = () => {
   const isInPageList = pageList.some((path) =>
     matchPath(path, location.pathname)
   );
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await get("/app/info");
+        dispatch(
+          setInfo({
+            Info: {
+              app: response.data.app_info,
+              meditation: response.data.meditation_info,
+            },
+          })
+        );
+        setInfoData(response.data.app_info);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    if (!renderStatus.current) {
+      renderStatus.current = true;
+      if (!appInfo) {
+        fetchData();
+      } else {
+        setInfoData(appInfo);
+      }
+    }
+  }, []);
 
   const LogoTextColor = isInPageList ? "text-[#3F356E]" : "text-white";
 
