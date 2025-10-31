@@ -25,6 +25,27 @@ body.dark .table>tbody>tr>td:first-child {
     .mobile-hide {
         display: none;
     }
+
+    #cancel-row {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    #cancel-row>div:nth-child(2) {
+        flex-direction: column;
+    }
+
+    nav>div:first-child {
+        justify-content: center !important;
+    }
+
+    body.dark .page-item:first-child .page-link {
+        width: 100px !important;
+    }
+
+    body.dark .page-item:last-child .page-link {
+        width: 100px !important;
+    }
 }
 </style>
 @endsection

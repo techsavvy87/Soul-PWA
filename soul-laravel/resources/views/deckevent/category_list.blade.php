@@ -68,6 +68,11 @@
     .mobile-hide {
         display: none;
     }
+
+    #cancel-row {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
 }
 </style>
 @endsection

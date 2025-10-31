@@ -1,7 +1,7 @@
 <div class="row" id="cancel-row">
     <div class="col-xl-12 col-lg-12 col-sm-12 layout-spacing">
         @include('layouts.alerts')
-        <div class="widget-content widget-content-area br-8">
+        <div class="table-responsive">
             <table id="deck-list" class="table dt-table-hover" style="width:100%">
                 <thead>
                     <tr>
