@@ -29,12 +29,12 @@
         <header class="header navbar navbar-expand-sm expand-header">
             <ul class="navbar-item theme-brand flex-row text-center">
                 <li class="nav-item theme-logo">
-                    <a href="index.html">
+                    <a href={{ url('/') }}>
                         <img src="{{ asset('images/logo.png') }}" class="navbar-logo" alt="logo">
                     </a>
                 </li>
                 <li class="nav-item theme-text">
-                    <a href="index.html" class="nav-link"> Blended Soul </a>
+                    <a href={{ url('/') }} class="nav-link"> Blended Soul </a>
                 </li>
             </ul>
             <header class="header navbar navbar-expand-sm" style="margin-right: 26px">

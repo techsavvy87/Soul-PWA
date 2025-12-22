@@ -24,6 +24,7 @@ class PayPalWebhookController extends Controller
         if ($eventType === 'BILLING.SUBSCRIPTION.CANCELLED' && $subscriptionId) {
             PlanSubscription::where('paypal_subscription_id', $subscriptionId)->delete();
         }
+        Long::info('Subscription Type: '.$eventType);
         // Only handle successful payments
         if ($eventType === 'BILLING.SUBSCRIPTION.PAYMENT.SUCCEEDED') {
             $paypalId = $webhookEvent['resource']['id'];

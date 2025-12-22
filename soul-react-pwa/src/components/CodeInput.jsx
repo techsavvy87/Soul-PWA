@@ -103,4 +103,3 @@ const CodeInput = ({ callback }) => {
   );
 };
 export default CodeInput;
-123456;
